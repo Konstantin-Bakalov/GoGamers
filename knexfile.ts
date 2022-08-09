@@ -1,4 +1,5 @@
 import type { Knex } from 'knex';
+import { knexSnakeCaseMappers } from 'objection';
 import { config as convictConfig } from './config';
 
 // Update with your config settings.
@@ -14,6 +15,7 @@ const knexConfig: { [key: string]: Knex.Config } = {
     migrations: {
       tableName: 'knex_migrations',
     },
+    ...knexSnakeCaseMappers(),
   },
 };
 
