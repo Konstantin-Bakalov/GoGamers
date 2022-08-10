@@ -31,6 +31,10 @@ const config = convict({
       default: 5432,
     },
   },
+  salt: {
+    env: 'SALT_ROUNDS',
+    format: 'int',
+  },
 });
 
 config.validate();

@@ -1,13 +1,13 @@
-import { Model, QueryContext } from 'objection';
+import { Model } from 'objection';
+import { BaseModel } from './base-model';
 import { UserModel } from './user-model';
 
-export class GameModel extends Model {
-  id!: number;
+export class GameModel extends BaseModel {
   name!: string;
   minAge!: number;
   userId!: number;
-  createdAt!: Date;
   creator?: UserModel;
+  likedBy?: UserModel[];
 
   static get tableName() {
     return 'games';
@@ -19,15 +19,22 @@ export class GameModel extends Model {
         relation: Model.HasOneRelation,
         modelClass: UserModel,
         join: {
-          from: 'games.user_id',
+          from: 'games.userId',
+          to: 'users.id',
+        },
+      },
+      likedBy: {
+        relation: Model.ManyToManyRelation,
+        modelClass: UserModel,
+        join: {
+          from: 'games.id',
+          through: {
+            from: 'likes.gameId',
+            to: 'likes.userId',
+          },
           to: 'users.id',
         },
       },
     };
-  }
-
-  async $beforInsert(queryContext: QueryContext) {
-    await super.$beforeInsert(queryContext);
-    this.createdAt = new Date();
   }
 }
