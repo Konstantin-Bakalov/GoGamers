@@ -1,6 +1,6 @@
 import Knex from 'knex';
 import { Model } from 'objection';
-import knexConfig from './knexfile';
+import knexConfig from '../knexfile';
 import gameService from './services/game-service';
 
 async function f() {
@@ -15,5 +15,3 @@ async function f() {
     await knexClient.destroy();
   }
 }
-
-f();

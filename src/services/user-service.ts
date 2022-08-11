@@ -1,11 +1,12 @@
 import bcrypt from 'bcrypt';
+import { config } from '../../config';
 import { UserModel } from '../models/user-model';
-
-const SALT_ROUNDS = 10;
 
 class UserService {
   async register(name: string, plainTextPassowrd: string, age: number) {
-    const password = await bcrypt.hash(plainTextPassowrd, SALT_ROUNDS);
+    const rounds = config.get('hash.rounds');
+
+    const password = await bcrypt.hash(plainTextPassowrd, rounds);
 
     const user = await UserModel.query().insertAndFetch({
       name,
@@ -26,8 +27,12 @@ class UserService {
     return false;
   }
 
-  listAll() {
-    const users = UserModel.query()
+  async getUser(id: number) {
+    return await UserModel.query().findById(id);
+  }
+
+  async listAll() {
+    const users = await UserModel.query()
       .modifiers({
         usersWithoutPasswords: (query) => query.select('name', 'age'),
       })

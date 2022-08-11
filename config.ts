@@ -31,9 +31,19 @@ const config = convict({
       default: 5432,
     },
   },
-  salt: {
-    env: 'SALT_ROUNDS',
-    format: 'int',
+  server: {
+    port: {
+      env: 'SERVER_PORT',
+      format: 'port',
+      default: 3001,
+    },
+  },
+  hash: {
+    rounds: {
+      env: 'SALT_ROUNDS',
+      format: 'int',
+      default: 10,
+    },
   },
 });
 
