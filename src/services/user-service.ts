@@ -28,7 +28,7 @@ class UserService {
   }
 
   async getUser(id: number) {
-    return await UserModel.query().findById(id);
+    return await UserModel.query().findById(id).throwIfNotFound();
   }
 
   async listAll() {
