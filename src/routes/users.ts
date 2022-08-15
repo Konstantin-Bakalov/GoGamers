@@ -1,15 +1,16 @@
 import { Router } from 'express';
+import auth from '../middlewares/auth-middleware';
 import userService from '../services/user-service';
 
 const usersRouter = Router();
 
-usersRouter.get('/', async (request, response) => {
+usersRouter.get('/', auth, async (request, response) => {
   const users = await userService.listAll();
 
   response.status(200).json(users);
 });
 
-usersRouter.get('/:id', async (request, response) => {
+usersRouter.get('/:id', auth, async (request, response) => {
   const userId = Number.parseInt(request.params.id);
 
   if (!Number.isNaN(userId)) {

@@ -21,14 +21,20 @@ class UserService {
     const user = await UserModel.query().findOne({ name });
 
     if (user) {
-      return await bcrypt.compare(plainTextPassword, user.password);
+      return (await bcrypt.compare(plainTextPassword, user.password))
+        ? user
+        : undefined;
     }
 
-    return false;
+    return undefined;
   }
 
   async getUser(id: number) {
     return await UserModel.query().findById(id).throwIfNotFound();
+  }
+
+  async getUserByName(name: string) {
+    return await UserModel.query().findOne({ name });
   }
 
   async listAll() {

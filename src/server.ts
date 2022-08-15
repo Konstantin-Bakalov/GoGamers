@@ -1,4 +1,4 @@
-import express, { json, Router } from 'express';
+import express, { json } from 'express';
 import Knex from 'knex';
 import { Model } from 'objection';
 import { config } from '../config';

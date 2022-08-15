@@ -37,6 +37,11 @@ const config = convict({
       format: 'port',
       default: 3001,
     },
+    jwt_key: {
+      env: 'JWT_KEY',
+      format: 'String',
+      default: '859e97c93ab485fed675cb4aded55c45da62df',
+    },
   },
   hash: {
     rounds: {
