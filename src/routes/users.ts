@@ -1,6 +1,9 @@
 import { Router } from 'express';
+import { ZodError } from 'zod';
+import { requestHandler } from '../lib/request-handler';
 import auth from '../middlewares/auth-middleware';
-import userService from '../services/user-service';
+import userService, { RegisterInputSchema } from '../services/user-service';
+import userTransformer from '../transformers/user-transformer';
 
 const usersRouter = Router();
 
@@ -25,13 +28,15 @@ usersRouter.get('/:id', auth, async (request, response) => {
   }
 });
 
-usersRouter.post('/', async (request, response) => {
-  const { username, password, age } = request.body;
+usersRouter.post(
+  '/',
+  requestHandler(async (request, response) => {
+    const input = RegisterInputSchema.parse(request.body);
 
-  const user = await userService.register(username, password, age);
-  console.log(user);
+    const user = await userService.register(input);
 
-  response.status(201).json(user);
-});
+    response.status(201).json(userTransformer.transform(user));
+  })
+);
 
 export default usersRouter;

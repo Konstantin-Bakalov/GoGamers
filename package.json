@@ -5,10 +5,9 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node index.ts",
+    "start": "nodemon",
     "knex": "knex --knexfile knexfile.ts",
-    "db:up": "knex migrate:latest",
-    "start-server": "nodemon"
+    "db:up": "knex migrate:latest"
   },
   "repository": {
     "type": "git",
@@ -44,6 +43,7 @@
     "jsonwebtoken": "^8.5.1",
     "knex": "^2.2.0",
     "objection": "^3.0.1",
-    "pg": "^8.7.3"
+    "pg": "^8.7.3",
+    "zod": "^3.18.0"
   }
 }

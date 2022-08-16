@@ -1,17 +1,25 @@
 import bcrypt from 'bcrypt';
 import { config } from '../../config';
 import { UserModel } from '../models/user-model';
+import { z } from 'zod';
+
+export const RegisterInputSchema = z.object({
+  username: z.string().min(3),
+  password: z.string().min(8),
+  age: z.number().min(14),
+});
+
+export type RegisterInput = z.infer<typeof RegisterInputSchema>;
 
 class UserService {
-  async register(name: string, plainTextPassowrd: string, age: number) {
+  async register(input: RegisterInput) {
     const rounds = config.get('hash.rounds');
 
-    const password = await bcrypt.hash(plainTextPassowrd, rounds);
-
+    const password = await bcrypt.hash(input.password, rounds);
     const user = await UserModel.query().insertAndFetch({
-      name,
+      name: input.username,
       password,
-      age,
+      age: input.age,
     });
 
     return user;
