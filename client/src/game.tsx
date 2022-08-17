@@ -6,5 +6,9 @@ interface GameProps {
 }
 
 export function Game({ game }: GameProps) {
-    return null;
+    return (
+        <p>
+            Game: {game.name} for min of {game.minPlayers} players
+        </p>
+    );
 }
