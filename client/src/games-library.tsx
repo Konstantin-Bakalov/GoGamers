@@ -1,12 +1,14 @@
+import { useEffect, useState } from 'react';
 import { Game } from './game';
-
-const games = [
-    { name: 'Catan', minPlayers: 2 },
-    { name: 'Catan 2', minPlayers: 3 },
-    { name: 'Dixit', minPlayers: 4 },
-];
+import { GameModel, loadGames } from './load-games';
 
 export function GamesLibrary() {
+    const [games, setGames] = useState<GameModel[]>([]);
+
+    useEffect(() => {
+        loadGames().then((games) => setGames(games));
+    }, []);
+
     return (
         <div>
             {games.map((game, index) => (
