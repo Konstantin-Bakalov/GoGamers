@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Game } from './game';
-import { useAsync } from './hooks/useAsync';
-import { GameModel, loadGames } from './load-games';
+import { useAsync } from '../hooks/useAsync';
+import { GameModel, gameService } from '../services/games-service';
 
 export function GamesLibrary() {
     const [games, setGames] = useState<GameModel[]>([]);
 
-    useAsync(loadGames, setGames);
+    useAsync(gameService.loadGames, setGames);
 
     return (
         <div>
