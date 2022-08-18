@@ -1,13 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Game } from './game';
+import { useAsync } from './hooks/useAsync';
 import { GameModel, loadGames } from './load-games';
 
 export function GamesLibrary() {
     const [games, setGames] = useState<GameModel[]>([]);
 
-    useEffect(() => {
-        loadGames().then((games) => setGames(games));
-    }, []);
+    useAsync(loadGames, setGames);
 
     return (
         <div>
