@@ -1,3 +1,4 @@
+import { Button, Container, TextField } from '@mui/material';
 import { FormEvent, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { authService } from '../services/auth-service';
@@ -19,12 +20,22 @@ export function Login() {
     };
 
     return (
-        <form onSubmit={onSubmit}>
-            <input
+        <Container
+            component="form"
+            maxWidth="sm"
+            onSubmit={onSubmit}
+            sx={{ display: 'grid', gap: '10px' }}
+        >
+            <TextField
+                variant="outlined"
+                size="small"
+                label="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-            ></input>
-            <button type="submit">Submit</button>
-        </form>
+            />
+            <Button variant="contained" color="primary" type="submit">
+                Submit
+            </Button>
+        </Container>
     );
 }

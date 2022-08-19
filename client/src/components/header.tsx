@@ -8,9 +8,9 @@ interface HeaderProps {
 export function Header({ user }: HeaderProps) {
     return (
         <div>
+            <div>Board Games</div>
             {user ? (
                 <>
-                    <div>Board Games</div>
                     <span>{user.username}</span>
                     {user.username ? (
                         <button onClick={() => authService.logout()}>
