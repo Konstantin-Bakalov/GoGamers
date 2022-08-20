@@ -5,16 +5,20 @@ import { config } from '../config';
 import knexConfig from '../knexfile';
 import loginRouter from './routes/login';
 import usersRouter from './routes/users';
+import cors from 'cors';
+import gamesRouter from './routes/games';
 
 const knexClient = Knex(knexConfig.development);
 Model.knex(knexClient);
 
 const app = express();
 
+app.use(cors());
 app.use(json());
 
 app.use('/login', loginRouter);
 app.use('/users', usersRouter);
+app.use('/games', gamesRouter);
 
 const port = config.get('server.port');
 

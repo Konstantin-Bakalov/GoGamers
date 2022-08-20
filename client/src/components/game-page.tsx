@@ -8,13 +8,13 @@ export function GamePage() {
     const [loading, setLoading] = useState(false);
     const { id } = useParams();
 
-    useAsync(async () => {
-        setLoading(true);
+    // useAsync(async () => {
+    //     setLoading(true);
 
-        return gameService
-            .loadGame(Number(id))
-            .finally(() => setLoading(false));
-    }, setGame);
+    //     return gameService
+    //         .loadGame(Number(id))
+    //         .finally(() => setLoading(false));
+    // }, setGame);
 
     if (loading) {
         return <p>Loading...</p>;

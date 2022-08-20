@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { authService, User } from '../services/auth-service';
 
 interface HeaderProps {
-    user: User | null;
+    user: User | undefined;
 }
 
 export function Header({ user }: HeaderProps) {

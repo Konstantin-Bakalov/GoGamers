@@ -2,7 +2,7 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { User } from '../services/auth-service';
 
 interface PrivateOutletProps {
-    user: User | null;
+    user: User | undefined;
 }
 
 function NavigateToLogin() {

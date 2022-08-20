@@ -1,13 +1,7 @@
 import { ThemeProvider } from '@emotion/react';
 import { createTheme, CssBaseline } from '@mui/material';
 import { useEffect, useState } from 'react';
-import {
-    BrowserRouter,
-    Navigate,
-    Outlet,
-    Route,
-    Routes,
-} from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { GamePage } from './components/game-page';
 import { GamesLibrary } from './components/games-library';
 import { Header } from './components/header';
@@ -24,13 +18,13 @@ const theme = createTheme({
 });
 
 export function App() {
-    const [user, setUser] = useState<User | null>(authService.currentUser);
+    const [user, setUser] = useState<User | undefined>(authService.currentUser);
 
     useEffect(() => {
         authService.setHandler(setUser);
 
         return () => {
-            authService.setHandler(null);
+            authService.setHandler(undefined);
         };
     }, []);
 
