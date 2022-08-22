@@ -5,46 +5,48 @@ import {
     Container,
     TextField,
 } from '@mui/material';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useAsyncAction } from '../hooks/useAsyncAction';
 import { authService, InvalidCredentialsError } from '../services/auth-service';
 
 export function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState<string>();
-    const [loading, setLoading] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
 
-    const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        setError(undefined);
-        setLoading(true);
+    const { trigger, loading, error } = useAsyncAction(
+        async (event: FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
 
-        const currentLocation = location.state as { location: string } | null;
-        const pathName = currentLocation?.location;
-
-        try {
             await authService.login(username, password);
-            navigate(pathName ?? '/');
-        } catch (error) {
-            if (error instanceof InvalidCredentialsError) {
-                setError('Invalid username or password');
-                return;
-            }
 
-            setError('Something went wrong');
-        } finally {
-            setLoading(false);
+            const currentLocation = location.state as {
+                location: string;
+            } | null;
+            const pathName = currentLocation?.location;
+            navigate(pathName ?? '/');
         }
-    };
+    );
+
+    const errorMessage = useMemo(() => {
+        if (!error) {
+            return undefined;
+        }
+
+        if (error instanceof InvalidCredentialsError) {
+            return 'Invalid username or password';
+        }
+
+        return 'Something went wrong';
+    }, [error]);
 
     return (
         <Container
             component="form"
             maxWidth="sm"
-            onSubmit={onSubmit}
+            onSubmit={trigger}
             sx={{ display: 'grid', gap: '10px' }}
         >
             <TextField
@@ -63,7 +65,7 @@ export function Login() {
                 onChange={(e) => setPassword(e.target.value)}
             />
 
-            {error && <Alert severity="error">{error}</Alert>}
+            <>{error && <Alert severity="error">{errorMessage}</Alert>}</>
 
             <Button
                 disabled={loading}
