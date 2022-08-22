@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import { FormEvent, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { authService, HttpError } from '../services/auth-service';
+import { authService, InvalidCredentialsError } from '../services/auth-service';
 
 export function Login() {
     const [username, setUsername] = useState('');
@@ -29,7 +29,7 @@ export function Login() {
             await authService.login(username, password);
             navigate(pathName ?? '/');
         } catch (error) {
-            if (error instanceof HttpError) {
+            if (error instanceof InvalidCredentialsError) {
                 setError('Invalid username or password');
                 return;
             }

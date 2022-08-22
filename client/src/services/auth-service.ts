@@ -1,36 +1,39 @@
 import jwtDecode from 'jwt-decode';
+import { HttpError, httpService } from './http-service';
+import { UserStorage } from './user-storage-service';
 
 export interface User {
     username: string;
     userId: number;
 }
 
-type AuthHandler = (user: User | undefined) => void;
-
-export class HttpError extends Error {
-    constructor(public status: number, public message: string) {
-        super(message);
-    }
+interface LoginResponse {
+    token: string;
 }
+
+export class InvalidCredentialsError extends Error {}
+
+type AuthHandler = (user: User | undefined) => void;
 
 class AuthService {
     private handler: AuthHandler | undefined = undefined;
+    private userStorage = new UserStorage();
 
     private setToken(token: string | undefined) {
         if (!token) {
-            localStorage.removeItem('token');
+            this.userStorage.token = undefined;
             this.handler?.(undefined);
             return;
         }
 
-        localStorage.setItem('token', token);
+        this.userStorage.token = token;
 
         const user = jwtDecode<User>(token);
         this.handler?.(user);
     }
 
     get currentUser() {
-        const token = localStorage.getItem('token');
+        const token = this.userStorage.token;
 
         if (!token) {
             return undefined;
@@ -39,32 +42,27 @@ class AuthService {
         return jwtDecode<User>(token);
     }
 
-    get token() {
-        return localStorage.getItem('token') ?? undefined;
-    }
-
     setHandler(handler: AuthHandler | undefined) {
         this.handler = handler;
     }
 
     async login(username: string, password: string) {
-        const response = await fetch('http://localhost:3001/login', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json',
-            },
-            body: JSON.stringify({
-                username,
-                password,
-            }),
-        });
+        try {
+            const loginResponse = await httpService.post<LoginResponse>(
+                'login',
+                {
+                    body: { username, password },
+                }
+            );
 
-        if (response.status >= 300) {
-            throw new HttpError(response.status, 'Something went wrong');
+            this.setToken(loginResponse.token);
+        } catch (error) {
+            if (error instanceof HttpError && error.status === 401) {
+                throw new InvalidCredentialsError();
+            }
+
+            throw error;
         }
-
-        const loginResponse = await response.json();
-        this.setToken(loginResponse.token);
     }
 
     logout() {

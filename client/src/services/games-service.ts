@@ -1,4 +1,4 @@
-import { authService } from './auth-service';
+import { httpService } from './http-service';
 
 export interface GameModel {
     id: number;
@@ -9,23 +9,10 @@ export interface GameModel {
 
 class GameService {
     async loadGames() {
-        const response = await fetch('http://localhost:3001/games', {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${authService.token}`,
-            },
-        });
-
-        const result = await response.json();
+        const result = await httpService.get<GameModel[]>('games');
 
         return result;
     }
-
-    // loadGame(id: number): Promise<GameModel | undefined> {
-    //     return new Promise((res, rej) => {
-    //         setTimeout(() => res(dbGames.find((game) => game.id === id)), 1000);
-    //     });
-    // }
 }
 
 export const gameService = new GameService();
