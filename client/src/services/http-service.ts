@@ -16,6 +16,8 @@ interface RequestOptions {
 class HttpService {
     private userStorage = new UserStorage();
 
+    public authErrorHandler = () => {};
+
     constructor(private baseUrl: string) {}
 
     async get<T>(path: string, options: RequestOptions = {}) {
@@ -63,6 +65,10 @@ class HttpService {
             },
             ...(options.body ? { body: JSON.stringify(options.body) } : {}),
         });
+
+        if (response.status === 401) {
+            this.authErrorHandler();
+        }
 
         if (response.status >= 300) {
             throw new HttpError(response.status, 'Something went wrong');

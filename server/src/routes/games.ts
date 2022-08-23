@@ -3,9 +3,11 @@ import { z } from 'zod';
 import { requestHandler } from '../lib/request-handler';
 import auth from '../middlewares/auth-middleware';
 import gameService from '../services/game-service';
-import gameTransformer from '../transformers/game-transformer';
+import { GameTransformer } from '../transformers/game-transformer';
 
 const gamesRouter = Router();
+
+const transformer = new GameTransformer();
 
 gamesRouter.get(
     '/:id',
@@ -16,7 +18,7 @@ gamesRouter.get(
         const game = await gameService.findGameById(Number(id));
 
         if (game) {
-            res.status(200).json(gameTransformer.transform(game));
+            res.status(200).json(transformer.transform(game));
             return;
         }
 
@@ -38,7 +40,7 @@ gamesRouter.get(
             searchText: search,
         });
 
-        res.status(200).json(gameTransformer.transformArray(results));
+        res.status(200).json(transformer.transformArray(results));
     })
 );
 

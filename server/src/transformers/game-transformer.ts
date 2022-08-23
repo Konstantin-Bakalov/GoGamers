@@ -14,5 +14,3 @@ export class GameTransformer {
         return games.map((game) => this.transform(game));
     }
 }
-
-export default new GameTransformer();

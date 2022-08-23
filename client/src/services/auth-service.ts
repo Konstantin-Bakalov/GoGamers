@@ -19,6 +19,10 @@ class AuthService {
     private handler: AuthHandler | undefined = undefined;
     private userStorage = new UserStorage();
 
+    constructor() {
+        httpService.authErrorHandler = () => this.setToken(undefined);
+    }
+
     private setToken(token: string | undefined) {
         if (!token) {
             this.userStorage.token = undefined;
