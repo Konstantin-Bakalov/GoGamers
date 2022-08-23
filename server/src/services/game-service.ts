@@ -17,10 +17,28 @@ class GameService {
         });
     }
 
-    async listGames(page: number, pageSize: number) {
-        return await GameModel.query()
+    async listGames({
+        page,
+        pageSize,
+        searchText,
+    }: {
+        page: number;
+        pageSize: number;
+        searchText?: string;
+    }) {
+        let result = GameModel.query()
             .orderBy(['name', 'id'])
             .page(page, pageSize);
+
+        if (result && searchText) {
+            result = result.where(
+                'name',
+                'ilike',
+                `%${searchText.replace('%', '')}%`
+            );
+        }
+
+        return await result;
     }
 
     async createGameWithLikes(name: string, userId: number, minAge: number) {
@@ -38,6 +56,10 @@ class GameService {
 
             return game;
         });
+    }
+
+    async findGameById(id: number) {
+        return await GameModel.query().findById(id);
     }
 
     async getGamesWithLikes() {

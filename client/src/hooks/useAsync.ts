@@ -1,20 +1,13 @@
-import { useEffect } from 'react';
+import { DependencyList, useEffect } from 'react';
+import { useAsyncAction } from './useAsyncAction';
 
 export function useAsync<T>(
     action: () => Promise<T>,
-    callback: (newValue: T) => void
+    dependencies: DependencyList
 ) {
-    return useEffect(() => {
-        let isCancelled = false;
+    const { trigger, data, loading, error } = useAsyncAction(action);
 
-        action().then((result) => {
-            if (!isCancelled) {
-                callback(result);
-            }
-        });
+    useEffect(() => trigger(), dependencies);
 
-        return () => {
-            isCancelled = true;
-        };
-    }, []);
+    return { data, loading, error };
 }

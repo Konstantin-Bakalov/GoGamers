@@ -1,6 +1,5 @@
-import { trimEnd, trimStart } from 'lodash';
+import { isUndefined, omitBy, trimEnd, trimStart } from 'lodash';
 import { config } from '../config';
-import { authService } from './auth-service';
 import { UserStorage } from './user-storage-service';
 
 export class HttpError extends Error {
@@ -11,6 +10,7 @@ export class HttpError extends Error {
 
 interface RequestOptions {
     body?: unknown;
+    query?: Record<string, string | undefined>;
 }
 
 class HttpService {
@@ -41,17 +41,28 @@ class HttpService {
     ): Promise<T> {
         const token = this.userStorage.token;
 
-        const response = await fetch(
-            `${trimEnd(this.baseUrl, '/')}/${trimStart(path, '/')}`,
-            {
-                method,
-                headers: {
-                    'Content-type': 'application/json',
-                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
-                },
-                body: JSON.stringify(options.body),
-            }
-        );
+        const queryWithoutUndefined = omitBy(
+            options.query,
+            isUndefined
+        ) as Record<string, string>;
+
+        const queryParams = new URLSearchParams(
+            queryWithoutUndefined
+        ).toString();
+
+        const url = `${trimEnd(this.baseUrl, '/')}/${trimStart(
+            path,
+            '/'
+        )}?${queryParams}`;
+
+        const response = await fetch(url, {
+            method,
+            headers: {
+                ...(options.body ? { 'Content-type': 'application/json' } : {}),
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+            },
+            ...(options.body ? { body: JSON.stringify(options.body) } : {}),
+        });
 
         if (response.status >= 300) {
             throw new HttpError(response.status, 'Something went wrong');

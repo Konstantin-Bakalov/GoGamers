@@ -8,10 +8,16 @@ export interface GameModel {
 }
 
 class GameService {
-    async loadGames() {
-        const result = await httpService.get<GameModel[]>('games');
+    async loadGames(searchText?: string) {
+        const result = await httpService.get<GameModel[]>('games', {
+            query: { searchText },
+        });
 
         return result;
+    }
+
+    async loadGameById(id: number) {
+        return await httpService.get<GameModel>(`games/${id}`);
     }
 }
 

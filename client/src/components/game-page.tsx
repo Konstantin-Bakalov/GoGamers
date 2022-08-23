@@ -1,32 +1,27 @@
-import { useState } from 'react';
+import { Alert, CircularProgress, Typography } from '@mui/material';
+import { Container } from '@mui/system';
 import { useParams } from 'react-router-dom';
 import { useAsync } from '../hooks/useAsync';
-import { GameModel, gameService } from '../services/games-service';
+import { gameService } from '../services/games-service';
 
 export function GamePage() {
-    const [game, setGame] = useState<GameModel>();
-    const [loading, setLoading] = useState(false);
     const { id } = useParams();
 
-    // useAsync(async () => {
-    //     setLoading(true);
-
-    //     return gameService
-    //         .loadGame(Number(id))
-    //         .finally(() => setLoading(false));
-    // }, setGame);
-
-    if (loading) {
-        return <p>Loading...</p>;
-    }
-
-    if (!game) {
-        return <p>No such game</p>;
-    }
+    const {
+        data: game,
+        loading,
+        error,
+    } = useAsync(() => gameService.loadGameById(Number(id)), [id]);
 
     return (
-        <p>
-            Game: {game?.name} id: {game?.id}
-        </p>
+        <Container>
+            {loading && <CircularProgress />}
+
+            {game && (
+                <Typography>
+                    Game: {game.name} id: {game.id}
+                </Typography>
+            )}
+        </Container>
     );
 }
