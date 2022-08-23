@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { z } from 'zod';
 import { requestHandler } from '../lib/request-handler';
-import auth from '../middlewares/auth-middleware';
-import gameService from '../services/game-service';
+import auth, { currentUser } from '../middlewares/auth-middleware';
+import gameService, { CreateGameInputSchema } from '../services/game-service';
 import { GameTransformer } from '../transformers/game-transformer';
 
 const gamesRouter = Router();
@@ -41,6 +41,19 @@ gamesRouter.get(
         });
 
         res.status(200).json(transformer.transformArray(results));
+    })
+);
+
+gamesRouter.post(
+    '/',
+    auth,
+    requestHandler(async (req, res) => {
+        const user = currentUser(res);
+        const input = CreateGameInputSchema.parse(req.body);
+
+        const game = await gameService.create(input, user.id);
+
+        res.status(200).json(transformer.transform(game));
     })
 );
 

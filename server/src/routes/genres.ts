@@ -4,11 +4,11 @@ import auth from '../middlewares/auth-middleware';
 import genreService from '../services/genre-service';
 import { GenreTransformer } from '../transformers/gerne-transformer';
 
-const genreRouter = Router();
+const genresRouter = Router();
 
 const transformer = new GenreTransformer();
 
-genreRouter.get(
+genresRouter.get(
     '/',
     auth,
     requestHandler(async (request, response) => {
@@ -18,4 +18,4 @@ genreRouter.get(
     })
 );
 
-export { genreRouter };
+export { genresRouter };

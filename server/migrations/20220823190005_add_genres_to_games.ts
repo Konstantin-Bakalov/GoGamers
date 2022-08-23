@@ -13,12 +13,14 @@ export async function up(knex: Knex): Promise<void> {
 
         table
             .integer('game_id')
+            .notNullable()
             .references('id')
             .inTable('games')
             .onDelete('CASCADE');
 
         table
             .integer('genre_id')
+            .notNullable()
             .references('id')
             .inTable('genres')
             .onDelete('CASCADE');

@@ -1,12 +1,47 @@
+import { Model } from 'objection';
+import { z } from 'zod';
+import { GameGenreModel } from '../models/game-genre-model';
 import { GameModel } from '../models/game-model';
+import { GenreModel } from '../models/genre-model';
 import { LikeModel } from '../models/like-model';
 
+export const CreateGameInputSchema = z.object({
+    name: z.string(),
+    minAge: z.number(),
+    genres: z.array(z.string()),
+});
+
+export type CreateGameInput = z.infer<typeof CreateGameInputSchema>;
+
 class GameService {
-    async addGame(name: string, userId: number, minAge: number) {
-        return await GameModel.query().insertAndFetch({
-            name,
-            userId,
-            minAge,
+    async create(input: CreateGameInput, userId: number) {
+        return await Model.transaction(async (trx) => {
+            const game = await GameModel.query(trx).insertAndFetch({
+                name: input.name,
+                minAge: input.minAge,
+                userId,
+            });
+
+            const genres = [];
+
+            for (const genreName of input.genres) {
+                const genre = await GenreModel.query(trx)
+                    .insert({ name: genreName })
+                    .onConflict('name')
+                    .merge();
+
+                genres.push(genre);
+            }
+
+            console.log(genres);
+
+            const gameGenres = genres.map((genre) => {
+                return { gameId: game.id, genreId: genre.id };
+            });
+
+            await GameGenreModel.query(trx).insert(gameGenres);
+
+            return game;
         });
     }
 

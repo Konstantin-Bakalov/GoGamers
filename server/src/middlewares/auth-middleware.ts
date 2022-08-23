@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { config } from '../../config';
 import jwt from 'jsonwebtoken';
 import userService from '../services/user-service';
+import { UserModel } from '../models/user-model';
 
 export interface User {
     username: string;
@@ -40,11 +41,10 @@ export default async function auth(
                 return;
             }
 
-            response.locals.user = { user };
+            response.locals.user = user;
 
             next();
         } catch (error) {
-            console.log(error);
             response.status(401).json({ error: 'Invalid token' });
         }
     } else {
@@ -52,6 +52,6 @@ export default async function auth(
     }
 }
 
-export function currentUser(response: Response): User {
+export function currentUser(response: Response): UserModel {
     return response.locals.user;
 }

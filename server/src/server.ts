@@ -7,7 +7,7 @@ import loginRouter from './routes/login';
 import usersRouter from './routes/users';
 import cors from 'cors';
 import gamesRouter from './routes/games';
-import { genreRouter } from './routes/genres';
+import { genresRouter } from './routes/genres';
 
 const knexClient = Knex(knexConfig.development);
 Model.knex(knexClient);
@@ -20,7 +20,7 @@ app.use(json());
 app.use('/login', loginRouter);
 app.use('/users', usersRouter);
 app.use('/games', gamesRouter);
-app.use('/genres', genreRouter);
+app.use('/genres', genresRouter);
 
 const port = config.get('server.port');
 
