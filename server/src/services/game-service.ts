@@ -33,8 +33,6 @@ class GameService {
                 genres.push(genre);
             }
 
-            console.log(genres);
-
             const gameGenres = genres.map((genre) => {
                 return { gameId: game.id, genreId: genre.id };
             });
