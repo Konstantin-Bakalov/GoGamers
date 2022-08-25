@@ -6,9 +6,9 @@ import { GenreModel } from '../models/genre-model';
 import { LikeModel } from '../models/like-model';
 
 export const CreateGameInputSchema = z.object({
-    name: z.string(),
-    minAge: z.number(),
-    genres: z.array(z.string()),
+    name: z.string().min(3),
+    minAge: z.number().positive(),
+    genres: z.array(z.string()).min(1),
 });
 
 export type CreateGameInput = z.infer<typeof CreateGameInputSchema>;

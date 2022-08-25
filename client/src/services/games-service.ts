@@ -7,7 +7,19 @@ export interface GameModel {
     minAge: number;
 }
 
+interface CreateGameInput {
+    name: string;
+    minAge: number;
+    genres: string[];
+}
+
 class GameService {
+    async create(input: CreateGameInput) {
+        return await httpService.post<GameModel>('/games', {
+            body: input,
+        });
+    }
+
     async loadGames(searchText?: string) {
         const result = await httpService.get<GameModel[]>('games', {
             query: { searchText },

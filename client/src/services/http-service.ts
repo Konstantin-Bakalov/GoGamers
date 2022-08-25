@@ -3,7 +3,11 @@ import { config } from '../config';
 import { UserStorage } from './user-storage-service';
 
 export class HttpError extends Error {
-    constructor(public status: number, public message: string) {
+    constructor(
+        public status: number,
+        public message: string,
+        public body: any
+    ) {
         super(message);
     }
 }
@@ -71,7 +75,13 @@ class HttpService {
         }
 
         if (response.status >= 300) {
-            throw new HttpError(response.status, 'Something went wrong');
+            let body = undefined;
+
+            try {
+                body = await response.json();
+            } catch {}
+
+            throw new HttpError(response.status, 'Something went wrong', body);
         }
 
         const responseBody = await response.json();
