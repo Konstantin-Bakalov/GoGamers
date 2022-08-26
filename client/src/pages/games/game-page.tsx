@@ -1,7 +1,7 @@
-import { Alert, CircularProgress, Typography } from '@mui/material';
+import { CircularProgress, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 import { useParams } from 'react-router-dom';
-import { useAsync } from '../../hooks/useAsync';
+import { useAsync } from '../../hooks/use-async';
 import { gameService } from '../../services/games-service';
 
 export function GamePage() {

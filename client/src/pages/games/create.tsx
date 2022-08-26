@@ -7,12 +7,11 @@ import {
     OutlinedInput,
     Select,
     TextField,
-    Typography,
 } from '@mui/material';
 import { FormEvent, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAsync } from '../../hooks/useAsync';
-import { useAsyncAction } from '../../hooks/useAsyncAction';
+import { useAsync } from '../../hooks/use-async';
+import { useAsyncAction } from '../../hooks/use-async-action';
 import { gameService } from '../../services/games-service';
 import { genreService } from '../../services/genre-service';
 import { HttpError } from '../../services/http-service';

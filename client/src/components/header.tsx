@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom';
-import { authService, User } from '../services/auth-service';
+import { useCurrentUser } from '../hooks/use-current-user';
+import { authService } from '../services/auth-service';
 
-interface HeaderProps {
-    user: User | undefined;
-}
+export function Header() {
+    const user = useCurrentUser();
 
-export function Header({ user }: HeaderProps) {
     return (
         <div>
             <div>Board Games</div>

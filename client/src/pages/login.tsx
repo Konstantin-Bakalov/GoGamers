@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import { FormEvent, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useAsyncAction } from '../hooks/useAsyncAction';
+import { useAsyncAction } from '../hooks/use-async-action';
 import { authService, InvalidCredentialsError } from '../services/auth-service';
 
 export function Login() {

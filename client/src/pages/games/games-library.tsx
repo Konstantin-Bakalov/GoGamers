@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import { Game } from '../../components/game';
-import { useAsync } from '../../hooks/useAsync';
+import { useAsync } from '../../hooks/use-async';
 import { gameService } from '../../services/games-service';
 import {
     Box,

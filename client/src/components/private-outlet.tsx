@@ -1,9 +1,6 @@
+import { useContext } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { User } from '../services/auth-service';
-
-interface PrivateOutletProps {
-    user: User | undefined;
-}
+import { useCurrentUser } from '../hooks/use-current-user';
 
 function NavigateToLogin() {
     const location = useLocation();
@@ -11,6 +8,8 @@ function NavigateToLogin() {
     return <Navigate to={'/login'} state={{ location: location.pathname }} />;
 }
 
-export function PrivateOutlet({ user }: PrivateOutletProps) {
+export function PrivateOutlet() {
+    const user = useCurrentUser();
+
     return user ? <Outlet /> : <NavigateToLogin />;
 }

@@ -1,5 +1,5 @@
 import { DependencyList, useEffect } from 'react';
-import { useAsyncAction } from './useAsyncAction';
+import { useAsyncAction } from './use-async-action';
 
 export function useAsync<T>(
     action: () => Promise<T>,
