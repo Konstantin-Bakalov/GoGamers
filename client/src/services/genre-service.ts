@@ -7,7 +7,7 @@ interface GenreModel {
 }
 
 class GenreService {
-    async all(searchText?: string) {
+    async all() {
         return await httpService.get<GenreModel[]>('/genres');
     }
 }

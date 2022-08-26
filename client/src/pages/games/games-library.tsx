@@ -17,7 +17,7 @@ interface GameLibraryState {
 
 function stateToParams(state: GameLibraryState): URLSearchParams {
     return new URLSearchParams(
-        state.searchText ? { searchText: state.searchText } : {}
+        state.searchText ? { searchText: state.searchText } : {},
     );
 }
 
@@ -32,13 +32,9 @@ export function GamesLibrary() {
 
     const state = useMemo(() => paramsToState(searchParams), [searchParams]);
 
-    const {
-        data: games,
-        loading,
-        error,
-    } = useAsync(
+    const { data: games, loading } = useAsync(
         () => gameService.loadGames(state.searchText),
-        [state.searchText]
+        [state.searchText],
     );
 
     const [inputText, setInputText] = useState(state.searchText);
@@ -50,10 +46,10 @@ export function GamesLibrary() {
                     ...state,
                     searchText,
                 }),
-                { replace: true }
+                { replace: true },
             );
         },
-        [state.searchText]
+        [state.searchText],
     );
 
     return (

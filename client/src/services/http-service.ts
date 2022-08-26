@@ -6,7 +6,9 @@ export class HttpError extends Error {
     constructor(
         public status: number,
         public message: string,
-        public body: any
+        // We don't know what type the body could have
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        public body: any,
     ) {
         super(message);
     }
@@ -20,6 +22,7 @@ interface RequestOptions {
 class HttpService {
     private userStorage = new UserStorage();
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     public authErrorHandler = () => {};
 
     constructor(private baseUrl: string) {}
@@ -43,22 +46,22 @@ class HttpService {
     private async request<T>(
         method: string,
         path: string,
-        options: RequestOptions
+        options: RequestOptions,
     ): Promise<T> {
         const token = this.userStorage.token;
 
         const queryWithoutUndefined = omitBy(
             options.query,
-            isUndefined
+            isUndefined,
         ) as Record<string, string>;
 
         const queryParams = new URLSearchParams(
-            queryWithoutUndefined
+            queryWithoutUndefined,
         ).toString();
 
         const url = `${trimEnd(this.baseUrl, '/')}/${trimStart(
             path,
-            '/'
+            '/',
         )}?${queryParams}`;
 
         const response = await fetch(url, {
@@ -79,6 +82,7 @@ class HttpService {
 
             try {
                 body = await response.json();
+                // eslint-disable-next-line no-empty
             } catch {}
 
             throw new HttpError(response.status, 'Something went wrong', body);

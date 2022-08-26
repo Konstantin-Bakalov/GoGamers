@@ -42,11 +42,10 @@ export function CreateGame() {
         navigate(`/games/${game.id}`);
     });
 
-    const {
-        data: allGenres,
-        loading: loadingGenres,
-        error: errorGenres,
-    } = useAsync(() => genreService.all(), []);
+    const { data: allGenres, loading: loadingGenres } = useAsync(
+        () => genreService.all(),
+        [],
+    );
 
     const validationError = useMemo(() => {
         if (!error) {
@@ -118,7 +117,9 @@ export function CreateGame() {
             <>
                 {validationError &&
                     validationError.formErrors.map((message) => (
-                        <Alert severity="error">{message}</Alert>
+                        <Alert key={message} severity="error">
+                            {message}
+                        </Alert>
                     ))}
             </>
 

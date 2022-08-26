@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 
-interface AsyncAction<Args extends any[], Result> {
+interface AsyncAction<Args extends unknown[], Result> {
     trigger: (...args: Args) => void;
     perform: (...args: Args) => Promise<Result>;
     data: Result | undefined;
@@ -8,8 +8,8 @@ interface AsyncAction<Args extends any[], Result> {
     loading: boolean;
 }
 
-export function useAsyncAction<Args extends any[], Result>(
-    action: (...args: Args) => Promise<Result>
+export function useAsyncAction<Args extends unknown[], Result>(
+    action: (...args: Args) => Promise<Result>,
 ): AsyncAction<Args, Result> {
     const [data, setData] = useState<Result>();
     const [error, setError] = useState<unknown>();
@@ -37,6 +37,7 @@ export function useAsyncAction<Args extends any[], Result>(
     }, []);
 
     const trigger = useCallback((...args: Args) => {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
         perform(...args).catch(() => {});
     }, []);
 

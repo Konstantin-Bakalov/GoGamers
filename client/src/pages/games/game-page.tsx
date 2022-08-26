@@ -7,11 +7,10 @@ import { gameService } from '../../services/games-service';
 export function GamePage() {
     const { id } = useParams();
 
-    const {
-        data: game,
-        loading,
-        error,
-    } = useAsync(() => gameService.loadGameById(Number(id)), [id]);
+    const { data: game, loading } = useAsync(
+        () => gameService.loadGameById(Number(id)),
+        [id],
+    );
 
     return (
         <Container>
