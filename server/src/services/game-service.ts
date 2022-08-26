@@ -67,7 +67,7 @@ class GameService {
             result = result.where(
                 'name',
                 'ilike',
-                `%${searchText.replace('%', '')}%`
+                `%${searchText.replace('%', '')}%`,
             );
         }
 
@@ -82,7 +82,7 @@ class GameService {
                 minAge,
             });
 
-            const like = await LikeModel.query(trx).insert({
+            await LikeModel.query(trx).insert({
                 userId,
                 gameId: game.id,
             });

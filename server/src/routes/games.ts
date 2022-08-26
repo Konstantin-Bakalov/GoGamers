@@ -23,7 +23,7 @@ gamesRouter.get(
         }
 
         res.status(404).json({ message: 'Game not found' });
-    })
+    }),
 );
 
 gamesRouter.get(
@@ -41,7 +41,7 @@ gamesRouter.get(
         });
 
         res.status(200).json(transformer.transformArray(results));
-    })
+    }),
 );
 
 gamesRouter.post(
@@ -54,7 +54,7 @@ gamesRouter.post(
         const game = await gameService.create(input, user.id);
 
         res.status(200).json(transformer.transform(game));
-    })
+    }),
 );
 
 export default gamesRouter;

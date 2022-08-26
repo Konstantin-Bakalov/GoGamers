@@ -15,7 +15,7 @@ genresRouter.get(
         const genres = await genreService.all();
 
         response.status(200).json(transformer.transformArray(genres));
-    })
+    }),
 );
 
 export { genresRouter };

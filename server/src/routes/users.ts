@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { ZodError } from 'zod';
 import { requestHandler } from '../lib/request-handler';
 import auth from '../middlewares/auth-middleware';
 import userService, { RegisterInputSchema } from '../services/user-service';
@@ -38,7 +37,7 @@ usersRouter.post(
         const user = await userService.register(input);
 
         response.status(201).json(transformer.transform(user));
-    })
+    }),
 );
 
 export default usersRouter;

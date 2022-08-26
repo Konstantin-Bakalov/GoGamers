@@ -25,7 +25,7 @@ function verify(token: string, key: string) {
 export default async function auth(
     request: Request,
     response: Response,
-    next: () => void
+    next: () => void,
 ) {
     const token = request.headers.authorization?.split(' ')[1];
 
