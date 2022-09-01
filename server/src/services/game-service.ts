@@ -1,17 +1,9 @@
 import { Model } from 'objection';
-import { z } from 'zod';
 import { GameGenreModel } from '../models/game-genre-model';
 import { GameModel } from '../models/game-model';
 import { GenreModel } from '../models/genre-model';
 import { LikeModel } from '../models/like-model';
-
-export const CreateGameInputSchema = z.object({
-    name: z.string().min(3),
-    minAge: z.number().positive(),
-    genres: z.array(z.string()).min(1),
-});
-
-export type CreateGameInput = z.infer<typeof CreateGameInputSchema>;
+import { CreateGameInput } from 'shared';
 
 class GameService {
     async create(input: CreateGameInput, userId: number) {

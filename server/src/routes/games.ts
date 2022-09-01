@@ -2,8 +2,9 @@ import { Router } from 'express';
 import { z } from 'zod';
 import { requestHandler } from '../lib/request-handler';
 import auth, { currentUser } from '../middlewares/auth-middleware';
-import gameService, { CreateGameInputSchema } from '../services/game-service';
+import gameService from '../services/game-service';
 import { GameTransformer } from '../transformers/game-transformer';
+import { CreateGameInputSchema } from 'shared';
 
 const gamesRouter = Router();
 
