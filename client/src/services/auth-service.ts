@@ -56,7 +56,7 @@ class AuthService {
                 'login',
                 {
                     body: { username, password },
-                }
+                },
             );
 
             this.setToken(loginResponse.token);

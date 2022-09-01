@@ -2,7 +2,7 @@ import { Request, RequestHandler, Response } from 'express';
 import { ZodError } from 'zod';
 
 export function requestHandler<T>(
-    executeHandler: (req: Request<T>, res: Response) => Promise<void>
+    executeHandler: (req: Request<T>, res: Response) => Promise<void>,
 ): RequestHandler<T> {
     return async (req, res) => {
         try {

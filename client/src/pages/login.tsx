@@ -27,7 +27,7 @@ export function Login() {
             } | null;
             const pathName = currentLocation?.location;
             navigate(pathName ?? '/');
-        }
+        },
     );
 
     const errorMessage = useMemo(() => {
