@@ -1,19 +1,13 @@
 import { Request, RequestHandler, Response } from 'express';
-import { ZodError } from 'zod';
 
-export function requestHandler<T>(
-    executeHandler: (req: Request<T>, res: Response) => Promise<void>,
-): RequestHandler<T> {
-    return async (req, res) => {
+export function requestHandler(
+    handler: (req: Request, res: Response) => Promise<void>,
+): RequestHandler {
+    return async (req, res, next) => {
         try {
-            await executeHandler(req, res);
+            await handler(req, res);
         } catch (error) {
-            if (error instanceof ZodError) {
-                res.status(400).json(error.flatten());
-                return;
-            }
-
-            res.status(500).json({ message: 'Internal Server Error' });
+            next(error);
         }
     };
 }

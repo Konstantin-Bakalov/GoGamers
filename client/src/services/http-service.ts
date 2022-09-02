@@ -1,4 +1,5 @@
 import { isUndefined, omitBy, trimEnd, trimStart } from 'lodash';
+import { ErrorName, GenericError, UnknownError, ValidationError } from 'shared';
 import { config } from '../config';
 import { UserStorage } from './user-storage-service';
 
@@ -43,6 +44,30 @@ class HttpService {
         return this.request<T>('DELETE', path, options);
     }
 
+    private async parseError(response: Response) {
+        let body;
+
+        try {
+            body = await response.json();
+
+            if (!body.name) {
+                return new UnknownError('', body);
+            }
+
+            switch (body.name) {
+                case ErrorName.ValidationError: {
+                    console.log('Validation Error');
+                    return new ValidationError(body.message, body.fields);
+                }
+
+                default:
+                    return new UnknownError(body.name, body);
+            }
+        } catch {
+            return new GenericError('Something went wrong', body);
+        }
+    }
+
     private async request<T>(
         method: string,
         path: string,
@@ -77,15 +102,8 @@ class HttpService {
             this.authErrorHandler();
         }
 
-        if (response.status >= 300) {
-            let body = undefined;
-
-            try {
-                body = await response.json();
-                // eslint-disable-next-line no-empty
-            } catch {}
-
-            throw new HttpError(response.status, 'Something went wrong', body);
+        if (response.status >= 400) {
+            throw await this.parseError(response);
         }
 
         const responseBody = await response.json();
