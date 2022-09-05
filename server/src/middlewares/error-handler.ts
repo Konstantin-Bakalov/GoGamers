@@ -2,23 +2,22 @@ import { ErrorRequestHandler } from 'express';
 import { mapValues } from 'lodash';
 import { ZodError, ValidationError, HttpError } from 'shared';
 
-export const errorHandler: ErrorRequestHandler = (error, req, res) => {
-    console.log('here');
-    if (error instanceof HttpError) {
-        res.status(error.status).json(error);
+export const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
+    if (err instanceof HttpError) {
+        res.status(err.status).json(err);
         return;
     }
 
-    if (error instanceof ZodError) {
+    if (err instanceof ZodError) {
         const fields = mapValues(
-            error.flatten().fieldErrors,
+            err.flatten().fieldErrors,
             (value) => value?.[0],
         );
 
-        const validationError = new ValidationError(error.message, fields);
+        const validationError = new ValidationError(err.message, fields);
         res.status(validationError.status).json(validationError);
         return;
     }
 
-    res.status(500).json('Internal server error');
+    res.status(500).json({ message: 'Internal server error' });
 };

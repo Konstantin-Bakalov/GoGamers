@@ -56,7 +56,6 @@ class HttpService {
 
             switch (body.name) {
                 case ErrorName.ValidationError: {
-                    console.log('Validation Error');
                     return new ValidationError(body.message, body.fields);
                 }
 

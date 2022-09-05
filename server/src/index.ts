@@ -24,7 +24,6 @@ app.use('/games', gamesRouter);
 app.use('/genres', genresRouter);
 
 const port = config.get('server.port');
+app.listen(port, () => console.log(`Listening on ${port}`));
 
 app.use(errorHandler);
-
-app.listen(port, () => console.log(`Listening on ${port}`));

@@ -15,11 +15,12 @@ import { useAsyncAction } from '../../hooks/use-async-action';
 import { gameService } from '../../services/games-service';
 import { genreService } from '../../services/genre-service';
 import { HttpError } from '../../services/http-service';
+import { ValidationError } from 'shared';
 
-interface ValidationError {
-    fieldErrors: Record<string, string[]>;
-    formErrors: string[];
-}
+// interface ValidationError {
+//     fieldErrors: Record<string, string[]>;
+//     formErrors: string[];
+// }
 
 export function CreateGame() {
     const [input, setInput] = useState({
@@ -47,24 +48,24 @@ export function CreateGame() {
         [],
     );
 
-    const validationError = useMemo(() => {
-        if (!error) {
-            return undefined;
-        }
+    // const validationError = useMemo(() => {
+    //     if (!error) {
+    //         return undefined;
+    //     }
 
-        if (error instanceof HttpError && error.body.fieldErrors) {
-            return error.body as ValidationError;
-        }
+    //     if (error instanceof HttpError && error.body.fieldErrors) {
+    //         return error.body as ValidationError;
+    //     }
 
-        return undefined;
-    }, [error]);
+    //     return undefined;
+    // }, [error]);
 
     return (
         <Container>
             <TextField
                 value={input.name}
-                error={!!validationError?.fieldErrors['name']}
-                helperText={validationError?.fieldErrors['name']?.join(', ')}
+                // error={!!validationError?.fieldErrors['name']}
+                // helperText={validationError?.fieldErrors['name']?.join(', ')}
                 variant="outlined"
                 size="small"
                 label="Name"
@@ -73,8 +74,8 @@ export function CreateGame() {
 
             <TextField
                 value={input.minAge}
-                error={!!validationError?.fieldErrors['minAge']}
-                helperText={validationError?.fieldErrors['minAge']?.join(', ')}
+                // error={!!validationError?.fieldErrors['minAge']}
+                // helperText={validationError?.fieldErrors['minAge']?.join(', ')}
                 variant="outlined"
                 size="small"
                 label="Min Age"
@@ -106,28 +107,32 @@ export function CreateGame() {
                         ))}
                     </Select>
 
-                    {!!validationError?.fieldErrors['genres'] && (
+                    {/* {!!validationError?.fieldErrors['genres'] && (
                         <Alert severity="error">
                             {validationError?.fieldErrors['genres']?.join(', ')}
                         </Alert>
-                    )}
+                    )} */}
                 </>
             )}
 
-            <>
+            {!!error && error instanceof ValidationError && (
+                <Alert severity="error">{error?.message}</Alert>
+            )}
+
+            {/* <>
                 {validationError &&
                     validationError.formErrors.map((message) => (
                         <Alert key={message} severity="error">
                             {message}
                         </Alert>
                     ))}
-            </>
+            </> */}
 
-            <>
+            {/* <>
                 {!validationError && error && (
                     <Alert severity="error">Something went wrong</Alert>
                 )}
-            </>
+            </> */}
 
             <LoadingButton
                 loading={loading}
