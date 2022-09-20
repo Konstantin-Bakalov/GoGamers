@@ -14,7 +14,7 @@ export abstract class HttpError implements Error {
     name: string;
     status: number;
     message: string;
-    data?: unknown;
+    data?: any;
 
     constructor({ name, status, message, data }: HttpErrorOptions) {
         this.name = name;

@@ -56,7 +56,7 @@ class HttpService {
 
             switch (body.name) {
                 case ErrorName.ValidationError: {
-                    return new ValidationError(body.message, body.fields);
+                    return new ValidationError(body.message, body.data);
                 }
 
                 default:
