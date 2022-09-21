@@ -1,14 +1,15 @@
 import { LoadingButton } from '@mui/lab';
 import {
-    Alert,
     CircularProgress,
     Container,
+    FormControl,
+    FormHelperText,
+    InputLabel,
     MenuItem,
-    OutlinedInput,
     Select,
     TextField,
 } from '@mui/material';
-import { FormEvent, useEffect, useMemo, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAsync } from '../../hooks/use-async';
 import { useAsyncAction } from '../../hooks/use-async-action';
@@ -66,7 +67,9 @@ export function CreateGame() {
     }, [error]);
 
     return (
-        <Container>
+        <Container
+            sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
+        >
             {(loading || loadingGenres) && <CircularProgress />}
 
             <TextField
@@ -91,26 +94,32 @@ export function CreateGame() {
 
             {allGenres && (
                 <>
-                    <Select
-                        multiple
-                        input={<OutlinedInput label="Genres" />}
-                        value={input.genres}
-                        onChange={(e) => {
-                            const value = e.target.value;
-                            const genreNames =
-                                typeof value === 'string'
-                                    ? value.split(',')
-                                    : value;
+                    <FormControl error={!!validationError?.genres}>
+                        <InputLabel>Genres</InputLabel>
+                        <Select
+                            label="Genres"
+                            multiple
+                            value={input.genres}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                const genreNames =
+                                    typeof value === 'string'
+                                        ? value.split(',')
+                                        : value;
 
-                            setInput({ ...input, genres: genreNames });
-                        }}
-                    >
-                        {allGenres?.map((genre) => (
-                            <MenuItem key={genre.id} value={genre.name}>
-                                {genre.name}
-                            </MenuItem>
-                        ))}
-                    </Select>
+                                setInput({ ...input, genres: genreNames });
+                            }}
+                        >
+                            {allGenres?.map((genre) => (
+                                <MenuItem key={genre.id} value={genre.name}>
+                                    {genre.name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                        <FormHelperText>
+                            {validationError?.genres}
+                        </FormHelperText>
+                    </FormControl>
                 </>
             )}
 

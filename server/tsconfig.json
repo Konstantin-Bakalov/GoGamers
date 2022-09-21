@@ -7,7 +7,7 @@
         "module": "commonjs" /* Specify what module code is generated. */,
 
         "noImplicitAny": true,
-        
+
         "strictNullChecks": true,
 
         /* JavaScript Support */
