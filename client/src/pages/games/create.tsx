@@ -1,24 +1,26 @@
 import { LoadingButton } from '@mui/lab';
 import {
-    Alert,
     CircularProgress,
     Container,
+    FormControl,
+    FormHelperText,
+    InputLabel,
     MenuItem,
-    OutlinedInput,
     Select,
     TextField,
 } from '@mui/material';
-import { FormEvent, useMemo, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAsync } from '../../hooks/use-async';
 import { useAsyncAction } from '../../hooks/use-async-action';
 import { gameService } from '../../services/games-service';
 import { genreService } from '../../services/genre-service';
-import { HttpError } from '../../services/http-service';
+import { ValidationError } from 'shared';
 
-interface ValidationError {
-    fieldErrors: Record<string, string[]>;
-    formErrors: string[];
+interface ValidationErrorMessage {
+    name?: string;
+    minAge?: string;
+    genres?: string;
 }
 
 export function CreateGame() {
@@ -47,24 +49,33 @@ export function CreateGame() {
         [],
     );
 
-    const validationError = useMemo(() => {
+    const [validationError, setValidationError] = useState<
+        ValidationErrorMessage | undefined
+    >(undefined);
+
+    useEffect(() => {
         if (!error) {
-            return undefined;
+            setValidationError(undefined);
         }
 
-        if (error instanceof HttpError && error.body.fieldErrors) {
-            return error.body as ValidationError;
+        if (error instanceof ValidationError) {
+            setValidationError(error.data);
+            return;
         }
 
-        return undefined;
+        setValidationError(undefined);
     }, [error]);
 
     return (
-        <Container>
+        <Container
+            sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
+        >
+            {(loading || loadingGenres) && <CircularProgress />}
+
             <TextField
                 value={input.name}
-                error={!!validationError?.fieldErrors['name']}
-                helperText={validationError?.fieldErrors['name']?.join(', ')}
+                error={!!validationError?.name}
+                helperText={validationError?.name}
                 variant="outlined"
                 size="small"
                 label="Name"
@@ -73,61 +84,44 @@ export function CreateGame() {
 
             <TextField
                 value={input.minAge}
-                error={!!validationError?.fieldErrors['minAge']}
-                helperText={validationError?.fieldErrors['minAge']?.join(', ')}
+                error={!!validationError?.minAge}
+                helperText={validationError?.minAge}
                 variant="outlined"
                 size="small"
                 label="Min Age"
                 onChange={(e) => setInput({ ...input, minAge: e.target.value })}
             />
 
-            {loadingGenres && <CircularProgress />}
-
             {allGenres && (
                 <>
-                    <Select
-                        multiple
-                        input={<OutlinedInput label="Genres" />}
-                        value={input.genres}
-                        onChange={(e) => {
-                            const value = e.target.value;
-                            const genreNames =
-                                typeof value === 'string'
-                                    ? value.split(',')
-                                    : value;
+                    <FormControl error={!!validationError?.genres}>
+                        <InputLabel>Genres</InputLabel>
+                        <Select
+                            label="Genres"
+                            multiple
+                            value={input.genres}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                const genreNames =
+                                    typeof value === 'string'
+                                        ? value.split(',')
+                                        : value;
 
-                            setInput({ ...input, genres: genreNames });
-                        }}
-                    >
-                        {allGenres?.map((genre) => (
-                            <MenuItem key={genre.id} value={genre.name}>
-                                {genre.name}
-                            </MenuItem>
-                        ))}
-                    </Select>
-
-                    {!!validationError?.fieldErrors['genres'] && (
-                        <Alert severity="error">
-                            {validationError?.fieldErrors['genres']?.join(', ')}
-                        </Alert>
-                    )}
+                                setInput({ ...input, genres: genreNames });
+                            }}
+                        >
+                            {allGenres?.map((genre) => (
+                                <MenuItem key={genre.id} value={genre.name}>
+                                    {genre.name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                        <FormHelperText>
+                            {validationError?.genres}
+                        </FormHelperText>
+                    </FormControl>
                 </>
             )}
-
-            <>
-                {validationError &&
-                    validationError.formErrors.map((message) => (
-                        <Alert key={message} severity="error">
-                            {message}
-                        </Alert>
-                    ))}
-            </>
-
-            <>
-                {!validationError && error && (
-                    <Alert severity="error">Something went wrong</Alert>
-                )}
-            </>
 
             <LoadingButton
                 loading={loading}

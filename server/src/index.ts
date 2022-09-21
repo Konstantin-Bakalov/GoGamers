@@ -8,6 +8,7 @@ import usersRouter from './routes/users';
 import cors from 'cors';
 import gamesRouter from './routes/games';
 import { genresRouter } from './routes/genres';
+import { errorHandler } from './middlewares/error-handler';
 
 const knexClient = Knex(knexConfig.development);
 Model.knex(knexClient);
@@ -23,5 +24,6 @@ app.use('/games', gamesRouter);
 app.use('/genres', genresRouter);
 
 const port = config.get('server.port');
-
 app.listen(port, () => console.log(`Listening on ${port}`));
+
+app.use(errorHandler);

@@ -42,7 +42,6 @@ export default async function auth(
             }
 
             response.locals.user = user;
-
             next();
         } catch (error) {
             response.status(401).json({ error: 'Invalid token' });
