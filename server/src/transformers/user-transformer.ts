@@ -4,7 +4,6 @@ export class UserTransformer {
     transform(user: UserModel) {
         return {
             username: user.name,
-            age: user.age,
         };
     }
 

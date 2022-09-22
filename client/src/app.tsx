@@ -8,6 +8,7 @@ import { Login } from './pages/login';
 import { PrivateOutlet } from './components/private-outlet';
 import { CreateGame } from './pages/games/create';
 import { CurrentUserProvider } from './hooks/use-current-user';
+import { Register } from './pages/register';
 
 const theme = createTheme({
     palette: {
@@ -26,6 +27,7 @@ export function App() {
                         <Header />
                         <Routes>
                             <Route path="/login" element={<Login />} />
+                            <Route path="/register" element={<Register />} />
                             <Route path="/" element={<PrivateOutlet />}>
                                 <Route path="/" element={<GamesLibrary />} />
 

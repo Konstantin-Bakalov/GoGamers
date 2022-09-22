@@ -1,8 +1,9 @@
 import { Router } from 'express';
 import { requestHandler } from '../lib/request-handler';
 import auth from '../middlewares/auth-middleware';
-import userService, { RegisterInputSchema } from '../services/user-service';
+import userService from '../services/user-service';
 import { UserTransformer } from '../transformers/user-transformer';
+import { RegisterInputSchema } from 'shared';
 
 const usersRouter = Router();
 

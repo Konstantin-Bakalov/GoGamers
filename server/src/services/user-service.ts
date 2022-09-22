@@ -1,15 +1,7 @@
 import bcrypt from 'bcrypt';
 import { config } from '../../config';
 import { UserModel } from '../models/user-model';
-import { z } from 'zod';
-
-export const RegisterInputSchema = z.object({
-    username: z.string().min(3),
-    password: z.string().min(8),
-    age: z.number().min(14),
-});
-
-export type RegisterInput = z.infer<typeof RegisterInputSchema>;
+import { RegisterInput } from 'shared';
 
 class UserService {
     async register(input: RegisterInput) {
@@ -19,7 +11,6 @@ class UserService {
         const user = await UserModel.query().insertAndFetch({
             name: input.username,
             password,
-            age: input.age,
         });
 
         return user;
@@ -48,7 +39,7 @@ class UserService {
     async listAll() {
         const users = await UserModel.query()
             .modifiers({
-                usersWithoutPasswords: (query) => query.select('name', 'age'),
+                usersWithoutPasswords: (query) => query.select('name'),
             })
             .modify('usersWithoutPasswords');
 

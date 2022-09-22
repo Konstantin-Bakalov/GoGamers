@@ -75,6 +75,14 @@ export function Login() {
             >
                 {loading ? <CircularProgress /> : <>Submit</>}
             </Button>
+
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={() => navigate('/register')}
+            >
+                Register
+            </Button>
         </Container>
     );
 }
