@@ -9,6 +9,7 @@ import { FormEvent, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAsyncAction } from '../hooks/use-async-action';
 import { authService, InvalidCredentialsError } from '../services/auth-service';
+import { GoogleLogin } from '@react-oauth/google';
 
 export function Login() {
     const [username, setUsername] = useState('');
@@ -64,9 +65,7 @@ export function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-
             <>{error && <Alert severity="error">{errorMessage}</Alert>}</>
-
             <Button
                 disabled={loading}
                 variant="contained"
@@ -75,7 +74,6 @@ export function Login() {
             >
                 {loading ? <CircularProgress /> : <>Submit</>}
             </Button>
-
             <Button
                 variant="contained"
                 color="primary"
@@ -83,6 +81,14 @@ export function Login() {
             >
                 Register
             </Button>
+            <GoogleLogin
+                onSuccess={(credentialResponse) => {
+                    console.log(credentialResponse);
+                }}
+                onError={() => {
+                    console.log('Login Failed');
+                }}
+            />
         </Container>
     );
 }
