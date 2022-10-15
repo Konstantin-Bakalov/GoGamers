@@ -1,9 +1,10 @@
 import { Router } from 'express';
-import jwt from 'jsonwebtoken';
 import userService from '../services/user-service';
-import { config } from '../../config';
-import { User } from '../middlewares/auth-middleware';
 import { requestHandler } from '../lib/request-handler';
+import { z } from 'zod';
+import jwtDecode from 'jwt-decode';
+import { User } from 'shared';
+import { authService } from '../services/auth-service';
 
 const loginRouter = Router();
 
@@ -11,20 +12,16 @@ loginRouter.post(
     '/',
     requestHandler(async (req, res) => {
         try {
-            const { username, password } = req.body;
+            const credential = z.string().parse(req.body.credential);
+            const userDecoded = jwtDecode<User>(credential);
 
-            const user = await userService.login(username, password);
+            let user = await userService.getUserByEmail(userDecoded.email);
 
             if (!user) {
-                res.status(401).json({ error: 'Unauthorized' });
-                return;
+                user = await userService.create(userDecoded);
             }
 
-            const jwtKey = config.get('server.jwt_key');
-            const userToEncode: User = { username: user.name, userId: user.id };
-            const token = jwt.sign(userToEncode, jwtKey, {
-                expiresIn: '24h',
-            });
+            const token = authService.generateUserToken(user);
 
             res.status(200).json({ token });
         } catch (error) {

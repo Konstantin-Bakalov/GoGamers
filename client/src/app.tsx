@@ -4,12 +4,12 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { GamePage } from './pages/games/game-page';
 import { GamesLibrary } from './pages/games/games-library';
 import { Header } from './components/header';
-import { Login } from './pages/login';
 import { PrivateOutlet } from './components/private-outlet';
 import { CreateGame } from './pages/games/create';
 import { CurrentUserProvider } from './hooks/use-current-user';
-import { Register } from './pages/register';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { Login } from './pages/login';
+import { config } from './config';
 
 const theme = createTheme({
     palette: {
@@ -21,7 +21,7 @@ const theme = createTheme({
 
 export function App() {
     return (
-        <GoogleOAuthProvider clientId="313838263953-mb3kom51i0ll5cqrmuqovqj1aatnpm19.apps.googleusercontent.com">
+        <GoogleOAuthProvider clientId={config.buttonAPIKey}>
             <ThemeProvider theme={theme}>
                 <CurrentUserProvider>
                     <BrowserRouter>
@@ -29,10 +29,6 @@ export function App() {
                             <Header />
                             <Routes>
                                 <Route path="/login" element={<Login />} />
-                                <Route
-                                    path="/register"
-                                    element={<Register />}
-                                />
                                 <Route path="/" element={<PrivateOutlet />}>
                                     <Route
                                         path="/"

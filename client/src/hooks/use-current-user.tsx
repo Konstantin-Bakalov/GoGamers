@@ -5,7 +5,8 @@ import {
     useEffect,
     useState,
 } from 'react';
-import { authService, User } from '../services/auth-service';
+import { authService } from '../services/auth-service';
+import { User } from 'shared';
 
 const UserContext = createContext<User | undefined>(undefined);
 

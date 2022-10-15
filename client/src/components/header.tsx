@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { AppBar, Avatar, Container, IconButton } from '@mui/material';
 import { useCurrentUser } from '../hooks/use-current-user';
 import { authService } from '../services/auth-service';
 
@@ -6,20 +6,21 @@ export function Header() {
     const user = useCurrentUser();
 
     return (
-        <div>
+        <AppBar position="static">
             <div>Board Games</div>
-            {user ? (
-                <>
-                    <span>{user.username}</span>
-                    {user.username ? (
+            {user && (
+                <Container>
+                    <span>{user.name}</span>
+                    {user.name ? (
                         <button onClick={() => authService.logout()}>
                             Logout
                         </button>
                     ) : null}
-                </>
-            ) : (
-                <Link to="/login">Go to login</Link>
+                    <IconButton>
+                        <Avatar alt="user avatar" src={user.profilePicture} />
+                    </IconButton>
+                </Container>
             )}
-        </div>
+        </AppBar>
     );
 }

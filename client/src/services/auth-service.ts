@@ -1,11 +1,7 @@
 import jwtDecode from 'jwt-decode';
 import { HttpError, httpService } from './http-service';
 import { UserStorage } from './user-storage-service';
-
-export interface User {
-    username: string;
-    userId: number;
-}
+import { User } from 'shared';
 
 interface LoginResponse {
     token: string;
@@ -50,12 +46,12 @@ class AuthService {
         this.handler = handler;
     }
 
-    async login(username: string, password: string) {
+    async login(credential: string) {
         try {
             const loginResponse = await httpService.post<LoginResponse>(
                 'login',
                 {
-                    body: { username, password },
+                    body: { credential },
                 },
             );
 

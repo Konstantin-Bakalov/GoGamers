@@ -4,8 +4,8 @@ import jwt from 'jsonwebtoken';
 import userService from '../services/user-service';
 import { UserModel } from '../models/user-model';
 
-export interface User {
-    username: string;
+interface User {
+    email: string;
     userId: number;
 }
 
@@ -34,7 +34,7 @@ export default async function auth(
     if (token) {
         try {
             const decoded = (await verify(token, jwt_key)) as User;
-            const user = await userService.getUserByName(decoded.username);
+            const user = await userService.getUserByEmail(decoded.email);
 
             if (!user) {
                 response.status(401).json({ error: 'Unauthorized' });
@@ -47,7 +47,7 @@ export default async function auth(
             response.status(401).json({ error: 'Invalid token' });
         }
     } else {
-        response.status(401).json({ error: 'Invalid token' });
+        response.status(401).json({ error: 'Something went wrong' });
     }
 }
 

@@ -1,13 +1,9 @@
 import { z } from 'zod';
 
-const usernameMinLength = 5;
-const passwordMinLength = 8;
-const usernameMaxLength = 15;
-const passwordMaxLength = 15;
-
-export const RegisterInputSchema = z.object({
-    username: z.string().min(usernameMinLength).max(usernameMaxLength),
-    password: z.string().min(passwordMinLength).max(passwordMaxLength),
+export const User = z.object({
+    name: z.string(),
+    email: z.string(),
+    profilePicture: z.string(),
 });
 
-export type RegisterInput = z.infer<typeof RegisterInputSchema>;
+export type User = z.infer<typeof User>;
