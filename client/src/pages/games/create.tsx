@@ -1,5 +1,6 @@
 import { LoadingButton } from '@mui/lab';
 import {
+    CardMedia,
     CircularProgress,
     Container,
     FormControl,
@@ -16,6 +17,7 @@ import { useAsyncAction } from '../../hooks/use-async-action';
 import { gameService } from '../../services/games-service';
 import { genreService } from '../../services/genre-service';
 import { ValidationError } from 'shared';
+import { Image, MediaUpload } from '../../components/media-upload';
 
 interface ValidationErrorMessage {
     name?: string;
@@ -30,18 +32,25 @@ export function CreateGame() {
         genres: [] as string[],
     });
 
+    const [image, setImage] = useState<Image>();
     const navigate = useNavigate();
 
     const { trigger, loading, error } = useAsyncAction(async (e: FormEvent) => {
         e.preventDefault();
 
-        const game = await gameService.create({
-            name: input.name,
-            minAge: Number(input.minAge),
-            genres: input.genres,
-        });
+        if (image) {
+            // const fd = new FormData();
+            // fd.append('image', image.imageFile);
 
-        navigate(`/games/${game.id}`);
+            const game = await gameService.create({
+                name: input.name,
+                minAge: Number(input.minAge),
+                genres: input.genres,
+                image: image.imageFile,
+            });
+
+            // navigate(`/games/${game.id}`);
+        }
     });
 
     const { data: allGenres, loading: loadingGenres } = useAsync(
@@ -123,8 +132,23 @@ export function CreateGame() {
                 </>
             )}
 
+            <MediaUpload
+                onImageSelected={(imageFile: File, source: string) =>
+                    setImage({ imageFile, source })
+                }
+            />
+
+            {image && (
+                <CardMedia
+                    component="img"
+                    image={image?.source}
+                    alt="green iguana"
+                />
+            )}
+
             <LoadingButton
                 loading={loading}
+                disabled={!image}
                 onClick={trigger}
                 variant="contained"
             >
