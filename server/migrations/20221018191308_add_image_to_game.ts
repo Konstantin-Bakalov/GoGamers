@@ -11,12 +11,10 @@ export async function up(knex: Knex): Promise<void> {
             .notNullable()
             .onDelete('CASCADE');
 
-        table
-            .enu('type', ['image', 'video'], {
-                useNative: true,
-                enumName: 'media_type',
-            })
-            .alter();
+        table.enu('type', ['image', 'video'], {
+            useNative: true,
+            enumName: 'type_media',
+        });
 
         table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
     });
