@@ -18,12 +18,19 @@ import { gameService } from '../../services/games-service';
 import { genreService } from '../../services/genre-service';
 import { ValidationError } from 'shared';
 import { Image, MediaUpload } from '../../components/media-upload';
+import placeholder from '../../images/empty-image.png';
+import { mediaUploadService } from '../../services/media-upload-service';
 
 interface ValidationErrorMessage {
     name?: string;
     minAge?: string;
     genres?: string;
 }
+
+const emptyImage: Image = {
+    imageFile: new File([''], 'filename'),
+    source: placeholder,
+};
 
 export function CreateGame() {
     const [input, setInput] = useState({
@@ -32,25 +39,21 @@ export function CreateGame() {
         genres: [] as string[],
     });
 
-    const [image, setImage] = useState<Image>();
+    const [image, setImage] = useState<Image>(emptyImage);
     const navigate = useNavigate();
 
     const { trigger, loading, error } = useAsyncAction(async (e: FormEvent) => {
         e.preventDefault();
 
-        if (image) {
-            // const fd = new FormData();
-            // fd.append('image', image.imageFile);
+        const game = await gameService.create({
+            name: input.name,
+            minAge: Number(input.minAge),
+            genres: input.genres,
+        });
 
-            const game = await gameService.create({
-                name: input.name,
-                minAge: Number(input.minAge),
-                genres: input.genres,
-                image: image.imageFile,
-            });
+        await mediaUploadService.upload(image.imageFile);
 
-            // navigate(`/games/${game.id}`);
-        }
+        navigate(`/games/${game.id}`);
     });
 
     const { data: allGenres, loading: loadingGenres } = useAsync(
@@ -140,7 +143,10 @@ export function CreateGame() {
 
             {image && (
                 <CardMedia
+                    sx={{}}
                     component="img"
+                    width="100"
+                    height="250"
                     image={image?.source}
                     alt="green iguana"
                 />

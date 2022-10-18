@@ -46,6 +46,7 @@
         "typescript": "^4.7.4"
     },
     "dependencies": {
+        "aws-sdk": "^2.1234.0",
         "bcrypt": "^5.0.1",
         "convict": "^6.2.3",
         "cors": "^2.8.5",

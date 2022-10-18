@@ -43,11 +43,24 @@ const config = convict({
             default: '859e97c93ab485fed675cb4aded55c45da62df',
         },
     },
-    hash: {
-        rounds: {
-            env: 'SALT_ROUNDS',
-            format: 'int',
-            default: 10,
+    aws: {
+        bucketName: {
+            env: 'AWS_BUCKET_NAME',
+            default: '',
+        },
+        bucketRegion: {
+            env: 'AWS_BUCKET_REGION',
+            default: '',
+        },
+        bucketAccessKey: {
+            env: 'AWS_BUCKET_ACCESS_KEY',
+            format: String,
+            default: '',
+        },
+        bucketSecretKey: {
+            env: 'AWS_BUCKET_SECRET_KEY',
+            format: String,
+            default: '',
         },
     },
 });
