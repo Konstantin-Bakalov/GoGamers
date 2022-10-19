@@ -4,6 +4,7 @@ import { GameModel } from '../models/game-model';
 import { GenreModel } from '../models/genre-model';
 import { LikeModel } from '../models/like-model';
 import { CreateGameInput } from 'shared';
+import { MediaModel } from '../models/media-model';
 
 class GameService {
     async create(input: CreateGameInput, userId: number) {
@@ -30,6 +31,12 @@ class GameService {
             });
 
             await GameGenreModel.query(trx).insert(gameGenres);
+
+            await MediaModel.query(trx).insert({
+                gameId: game.id,
+                type: input.type,
+                url: input.url,
+            });
 
             return game;
         });

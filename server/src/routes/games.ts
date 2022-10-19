@@ -51,7 +51,7 @@ gamesRouter.post(
     requestHandler(async (req, res) => {
         const user = currentUser(res);
         const input = CreateGameInputSchema.parse(req.body);
-
+        console.log(input);
         const game = await gameService.create(input, user.id);
 
         res.status(200).json(transformer.transform(game));

@@ -11,6 +11,8 @@ interface CreateGameInput {
     name: string;
     minAge: number;
     genres: string[];
+    url: string;
+    type: 'image' | 'video';
 }
 
 class GameService {

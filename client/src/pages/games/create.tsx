@@ -45,13 +45,15 @@ export function CreateGame() {
     const { trigger, loading, error } = useAsyncAction(async (e: FormEvent) => {
         e.preventDefault();
 
+        const url = await mediaUploadService.upload(image.imageFile);
+
         const game = await gameService.create({
             name: input.name,
             minAge: Number(input.minAge),
             genres: input.genres,
+            url,
+            type: 'image',
         });
-
-        await mediaUploadService.upload(image.imageFile);
 
         navigate(`/games/${game.id}`);
     });
