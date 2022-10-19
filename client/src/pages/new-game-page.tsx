@@ -1,5 +1,5 @@
 import { LoadingButton } from '@mui/lab';
-import { CardMedia, CircularProgress, Container } from '@mui/material';
+import { Box, CircularProgress, Container } from '@mui/material';
 import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAsyncAction } from '../hooks/use-async-action';
@@ -52,13 +52,15 @@ export function NewGamePage() {
             <GameForm setImage={setImage} error={error} />
 
             {image && (
-                <CardMedia
-                    sx={{}}
+                <Box
+                    sx={{
+                        width: '120px',
+                        height: '120px',
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                    }}
                     component="img"
-                    width="100"
-                    height="250"
-                    image={image?.source}
-                    alt="green iguana"
+                    src={image.source}
                 />
             )}
 

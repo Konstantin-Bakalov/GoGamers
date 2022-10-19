@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+export type MediaType = 'image' | 'video';
+
 export const MediaModelSchema = z.object({
     id: z.number().nonnegative(),
     gameId: z.number().nonnegative(),
