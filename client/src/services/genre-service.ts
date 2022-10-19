@@ -1,10 +1,5 @@
 import { httpService } from './http-service';
-
-interface GenreModel {
-    id: number;
-    name: string;
-    createdAt: string;
-}
+import { GenreModel } from 'shared';
 
 class GenreService {
     async all() {
