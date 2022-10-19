@@ -5,11 +5,11 @@ import { GamePage } from './pages/games/game-page';
 import { GamesLibrary } from './pages/games/games-library';
 import { Header } from './components/header';
 import { PrivateOutlet } from './components/private-outlet';
-import { CreateGame } from './pages/games/create';
 import { CurrentUserProvider } from './hooks/use-current-user';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Login } from './pages/login';
 import { config } from './config';
+import { NewGamePage } from './pages/new-game-page';
 
 const theme = createTheme({
     palette: {
@@ -42,7 +42,7 @@ export function App() {
                                         />
                                         <Route
                                             path="new"
-                                            element={<CreateGame />}
+                                            element={<NewGamePage />}
                                         />
                                     </Route>
                                 </Route>

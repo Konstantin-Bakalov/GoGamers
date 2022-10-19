@@ -2,20 +2,20 @@ import { LoadingButton } from '@mui/lab';
 import { CardMedia, CircularProgress, Container } from '@mui/material';
 import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAsyncAction } from '../../hooks/use-async-action';
-import { gameService } from '../../services/games-service';
-import { Image } from '../../components/media-upload';
-import placeholder from '../../images/empty-image.png';
-import { mediaUploadService } from '../../services/media-upload-service';
-import { GameForm } from './game-form';
+import { useAsyncAction } from '../hooks/use-async-action';
+import { gameService } from '../services/games-service';
+import { Image } from '../components/media-upload';
+import placeholder from '../images/empty-image.png';
+import { mediaUploadService } from '../services/media-upload-service';
+import { GameForm } from './games/game-form';
 
 const emptyImage: Image = {
     imageFile: new File([''], 'filename'),
     source: placeholder,
 };
 
-export function CreateGame() {
-    const [input, setInput] = useState({
+export function NewGamePage() {
+    const [game, setGame] = useState({
         name: '',
         minAge: '',
         genres: [] as string[],
@@ -29,16 +29,20 @@ export function CreateGame() {
 
         const url = await mediaUploadService.upload(image.imageFile);
 
-        const game = await gameService.create({
-            name: input.name,
-            minAge: Number(input.minAge),
-            genres: input.genres,
+        const g = await gameService.create({
+            name: game.name,
+            minAge: Number(game.minAge),
+            genres: game.genres,
             url,
             type: 'image',
         });
 
-        navigate(`/games/${game.id}`);
+        navigate(`/games/${g.id}`);
     });
+
+    const validateImage = () => {
+        return image.source !== emptyImage.source;
+    };
 
     return (
         <Container
@@ -60,7 +64,7 @@ export function CreateGame() {
 
             <LoadingButton
                 loading={loading}
-                disabled={!image}
+                disabled={!validateImage()}
                 onClick={trigger}
                 variant="contained"
             >
