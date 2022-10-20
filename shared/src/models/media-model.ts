@@ -3,7 +3,7 @@ import { z } from 'zod';
 export type MediaType = 'image' | 'video';
 
 export const MediaModelSchema = z.object({
-    id: z.number().nonnegative(),
+    id: z.number(),
     gameId: z.number().nonnegative(),
     type: z.enum(['image', 'video']),
     url: z.string().url(),

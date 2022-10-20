@@ -1,8 +1,7 @@
 import { z } from 'zod';
 
 export const GenreModelSchema = z.object({
-    id: z.number().nonnegative(),
-    createdAt: z.date(),
+    id: z.number(),
     name: z.string(),
 });
 
