@@ -54,7 +54,7 @@ gamesRouter.post(
         console.log(input);
         const game = await gameService.create(input, user.id);
 
-        res.status(200).json(transformer.transform(game));
+        // res.status(200).json(transformer.transform(game));
     }),
 );
 

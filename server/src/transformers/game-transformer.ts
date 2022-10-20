@@ -5,7 +5,6 @@ export class GameTransformer {
         return {
             name: game.name,
             userId: game.userId,
-            minAge: game.minAge,
             id: game.id,
         };
     }

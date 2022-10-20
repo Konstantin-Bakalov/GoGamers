@@ -8,38 +8,31 @@ import { MediaModel } from '../models/media-model';
 
 class GameService {
     async create(input: CreateGameInput, userId: number) {
-        return await Model.transaction(async (trx) => {
-            const game = await GameModel.query(trx).insertAndFetch({
-                name: input.name,
-                minAge: input.minAge,
-                userId,
-            });
-
-            const genres = [];
-
-            for (const genreName of input.genres) {
-                const genre = await GenreModel.query(trx)
-                    .insert({ name: genreName })
-                    .onConflict('name')
-                    .merge();
-
-                genres.push(genre);
-            }
-
-            const gameGenres = genres.map((genre) => {
-                return { gameId: game.id, genreId: genre.id };
-            });
-
-            await GameGenreModel.query(trx).insert(gameGenres);
-
-            await MediaModel.query(trx).insert({
-                gameId: game.id,
-                type: input.type,
-                url: input.url,
-            });
-
-            return game;
-        });
+        // return await Model.transaction(async (trx) => {
+        //     const game = await GameModel.query(trx).insertAndFetch({
+        //         name: input.name,
+        //         minAge: input.minAge,
+        //         userId,
+        //     });
+        //     const genres = [];
+        //     for (const genreName of input.genres) {
+        //         const genre = await GenreModel.query(trx)
+        //             .insert({ name: genreName })
+        //             .onConflict('name')
+        //             .merge();
+        //         genres.push(genre);
+        //     }
+        //     const gameGenres = genres.map((genre) => {
+        //         return { gameId: game.id, genreId: genre.id };
+        //     });
+        //     await GameGenreModel.query(trx).insert(gameGenres);
+        //     await MediaModel.query(trx).insert({
+        //         gameId: game.id,
+        //         type: input.type,
+        //         url: input.url,
+        //     });
+        //     return game;
+        // });
     }
 
     async addLike(userId: number, gameId: number) {
@@ -74,20 +67,18 @@ class GameService {
     }
 
     async createGameWithLikes(name: string, userId: number, minAge: number) {
-        return await GameModel.transaction(async (trx) => {
-            const game = await GameModel.query(trx).insertAndFetch({
-                name,
-                userId,
-                minAge,
-            });
-
-            await LikeModel.query(trx).insert({
-                userId,
-                gameId: game.id,
-            });
-
-            return game;
-        });
+        // return await GameModel.transaction(async (trx) => {
+        //     const game = await GameModel.query(trx).insertAndFetch({
+        //         name,
+        //         userId,
+        //         minAge,
+        //     });
+        //     await LikeModel.query(trx).insert({
+        //         userId,
+        //         gameId: game.id,
+        //     });
+        //     return game;
+        // });
     }
 
     async findGameById(id: number) {
