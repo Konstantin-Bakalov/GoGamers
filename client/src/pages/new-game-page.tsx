@@ -8,6 +8,8 @@ import { Image } from '../components/media-upload';
 import placeholder from '../images/empty-image.png';
 import { mediaUploadService } from '../services/media-upload-service';
 import { GameForm } from './games/game-form';
+import { GameModelRequest, User } from 'shared';
+import { useCurrentUser } from '../hooks/use-current-user';
 
 const emptyImage: Image = {
     imageFile: new File([''], 'filename'),
@@ -15,29 +17,41 @@ const emptyImage: Image = {
 };
 
 export function NewGamePage() {
-    const [game, setGame] = useState({
+    const user = useCurrentUser() as User;
+
+    const [game, setGame] = useState<GameModelRequest>({
         name: '',
-        minAge: '',
-        genres: [] as string[],
+        userId: user.id,
+        releaseDate: new Date(),
+        developer: '',
+        freeToPlay: false,
+        price: undefined,
+        description: '',
+        genres: [],
+        media: [],
     });
 
     const [image, setImage] = useState<Image>(emptyImage);
     const navigate = useNavigate();
 
-    const { trigger, loading, error } = useAsyncAction(async (e: FormEvent) => {
+    const {
+        trigger: submit,
+        loading,
+        error,
+    } = useAsyncAction(async (e: FormEvent) => {
         e.preventDefault();
 
         const url = await mediaUploadService.upload(image.imageFile);
 
-        const g = await gameService.create({
-            name: game.name,
-            minAge: Number(game.minAge),
-            genres: game.genres,
-            url,
-            type: 'image',
-        });
+        // const g = await gameService.create({
+        //     name: game.name,
+        //     minAge: Number(game.minAge),
+        //     genres: game.genres,
+        //     url,
+        //     type: 'image',
+        // });
 
-        navigate(`/games/${g.id}`);
+        // navigate(`/games/${g.id}`);
     });
 
     const validateImage = () => {
@@ -49,7 +63,12 @@ export function NewGamePage() {
             sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
         >
             {loading && <CircularProgress />}
-            <GameForm setImage={setImage} error={error} />
+            <GameForm
+                game={game}
+                setGame={setGame}
+                setImage={setImage}
+                error={error}
+            />
 
             {image && (
                 <Box
@@ -67,7 +86,7 @@ export function NewGamePage() {
             <LoadingButton
                 loading={loading}
                 disabled={!validateImage()}
-                onClick={trigger}
+                onClick={submit}
                 variant="contained"
             >
                 Submit

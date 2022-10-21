@@ -1,6 +1,8 @@
 import {
+    Checkbox,
     Container,
     FormControl,
+    FormControlLabel,
     FormHelperText,
     InputLabel,
     MenuItem,
@@ -8,7 +10,7 @@ import {
     TextField,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { ValidationError } from 'shared';
+import { GameModelRequest, ValidationError } from 'shared';
 import { useAsync } from '../../hooks/use-async';
 import { genreService } from '../../services/genre-service';
 import { Image, MediaUpload } from '../../components/media-upload';
@@ -20,13 +22,15 @@ interface ValidationErrorMessage {
 }
 
 interface GameFormProps {
+    game: GameModelRequest;
+    setGame: (
+        game: GameModelRequest | ((prev: GameModelRequest) => GameModelRequest),
+    ) => void;
     setImage: (image: Image) => void;
     error: unknown;
 }
 
-export function GameForm({ setImage, error }: GameFormProps) {
-    const [name, setName] = useState('');
-    const [minAge, setMinAge] = useState('');
+export function GameForm({ game, setGame, setImage, error }: GameFormProps) {
     const [genres, setGenres] = useState<string[]>([]);
 
     const [validationError, setValidationError] = useState<
@@ -51,28 +55,73 @@ export function GameForm({ setImage, error }: GameFormProps) {
         setValidationError(undefined);
     }, [error]);
 
+    const checkBoxHandler = () =>
+        setGame((prev) => {
+            return {
+                ...prev,
+                freeToPlay: !prev.freeToPlay,
+            };
+        });
+
     return (
         <Container
-            sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
+            disableGutters
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '20px',
+                marginTop: '20px',
+            }}
         >
             <TextField
-                value={name}
+                value={game.name}
                 error={!!validationError?.name}
                 helperText={validationError?.name}
+                required
                 variant="outlined"
                 size="small"
                 label="Name"
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) =>
+                    setGame((prev) => {
+                        return { ...prev, name: e.target.value };
+                    })
+                }
             />
 
             <TextField
-                value={minAge}
-                error={!!validationError?.minAge}
-                helperText={validationError?.minAge}
+                value={game.developer}
+                // error={!!validationError?.develooper}
+                // helperText={validationError?.developer}
+                required
                 variant="outlined"
                 size="small"
-                label="Min Age"
-                onChange={(e) => setMinAge(e.target.value)}
+                label="Developer"
+                onChange={(e) =>
+                    setGame((prev) => {
+                        return { ...prev, developer: e.target.value };
+                    })
+                }
+            />
+
+            <FormControlLabel
+                control={<Checkbox onChange={checkBoxHandler} />}
+                label="Free to play"
+            />
+
+            <TextField
+                value={game.price ?? 0}
+                // error={!!validationError?.price}
+                // helperText={validationError?.price}
+                required
+                type="number"
+                variant="outlined"
+                size="small"
+                label="Price"
+                onChange={(e) =>
+                    setGame((prev) => {
+                        return { ...prev, price: Number(e.target.value) };
+                    })
+                }
             />
 
             {allGenres && (
@@ -105,7 +154,6 @@ export function GameForm({ setImage, error }: GameFormProps) {
                     </FormControl>
                 </>
             )}
-
             <MediaUpload
                 onImageSelected={(imageFile: File, source: string) =>
                     setImage({ imageFile, source })
