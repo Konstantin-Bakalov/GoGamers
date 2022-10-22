@@ -11,11 +11,6 @@ import { GameForm } from './games/game-form';
 import { GameModelRequest, User } from 'shared';
 import { useCurrentUser } from '../hooks/use-current-user';
 
-const emptyImage: Image = {
-    imageFile: new File([''], 'filename'),
-    source: placeholder,
-};
-
 export function NewGamePage() {
     const user = useCurrentUser() as User;
 
@@ -31,7 +26,7 @@ export function NewGamePage() {
         media: [],
     });
 
-    const [image, setImage] = useState<Image>(emptyImage);
+    // const [image, setImage] = useState<Image>(emptyImage);
     const navigate = useNavigate();
 
     const {
@@ -40,8 +35,8 @@ export function NewGamePage() {
         error,
     } = useAsyncAction(async (e: FormEvent) => {
         e.preventDefault();
-
-        const url = await mediaUploadService.upload(image.imageFile);
+        console.log(game);
+        // const url = await mediaUploadService.upload(image.imageFile);
 
         // const g = await gameService.create({
         //     name: game.name,
@@ -54,9 +49,9 @@ export function NewGamePage() {
         // navigate(`/games/${g.id}`);
     });
 
-    const validateImage = () => {
-        return image.source !== emptyImage.source;
-    };
+    // const validateImage = () => {
+    //     return image.source !== emptyImage.source;
+    // };
 
     return (
         <Container
@@ -66,26 +61,13 @@ export function NewGamePage() {
             <GameForm
                 game={game}
                 setGame={setGame}
-                setImage={setImage}
+                // setImage={setImage}
                 error={error}
             />
 
-            {image && (
-                <Box
-                    sx={{
-                        width: '120px',
-                        height: '120px',
-                        objectFit: 'cover',
-                        objectPosition: 'center',
-                    }}
-                    component="img"
-                    src={image.source}
-                />
-            )}
-
             <LoadingButton
                 loading={loading}
-                disabled={!validateImage()}
+                // disabled={!validateImage()}
                 onClick={submit}
                 variant="contained"
             >

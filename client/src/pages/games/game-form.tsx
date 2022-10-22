@@ -13,7 +13,9 @@ import { useEffect, useState } from 'react';
 import { GameModelRequest, ValidationError } from 'shared';
 import { useAsync } from '../../hooks/use-async';
 import { genreService } from '../../services/genre-service';
-import { Image, MediaUpload } from '../../components/media-upload';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { ImageList } from './image-list';
 
 interface ValidationErrorMessage {
     name?: string;
@@ -26,11 +28,11 @@ interface GameFormProps {
     setGame: (
         game: GameModelRequest | ((prev: GameModelRequest) => GameModelRequest),
     ) => void;
-    setImage: (image: Image) => void;
+    // setImage: (image: Image) => void;
     error: unknown;
 }
 
-export function GameForm({ game, setGame, setImage, error }: GameFormProps) {
+export function GameForm({ game, setGame, error }: GameFormProps) {
     const [genres, setGenres] = useState<string[]>([]);
 
     const [validationError, setValidationError] = useState<
@@ -113,6 +115,7 @@ export function GameForm({ game, setGame, setImage, error }: GameFormProps) {
                 // error={!!validationError?.price}
                 // helperText={validationError?.price}
                 required
+                disabled={game.freeToPlay}
                 type="number"
                 variant="outlined"
                 size="small"
@@ -123,6 +126,38 @@ export function GameForm({ game, setGame, setImage, error }: GameFormProps) {
                     })
                 }
             />
+
+            <TextField
+                value={game.description}
+                // error={!!validationError?.description}
+                // helperText={validationError?.description}
+                required
+                multiline
+                minRows={5}
+                variant="outlined"
+                size="small"
+                label="Description"
+                onChange={(e) =>
+                    setGame((prev) => {
+                        return { ...prev, description: e.target.value };
+                    })
+                }
+            />
+
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DatePicker
+                    value={game.releaseDate}
+                    label={'Release Date'}
+                    onChange={(date) => {
+                        if (date) {
+                            setGame((prev) => {
+                                return { ...prev, releaseDate: date };
+                            });
+                        }
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
+                />
+            </LocalizationProvider>
 
             {allGenres && (
                 <>
@@ -154,11 +189,7 @@ export function GameForm({ game, setGame, setImage, error }: GameFormProps) {
                     </FormControl>
                 </>
             )}
-            <MediaUpload
-                onImageSelected={(imageFile: File, source: string) =>
-                    setImage({ imageFile, source })
-                }
-            />
+            <ImageList />
         </Container>
     );
 }
