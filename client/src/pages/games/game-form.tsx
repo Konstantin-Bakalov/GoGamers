@@ -1,4 +1,5 @@
 import {
+    Button,
     Checkbox,
     Container,
     FormControl,
@@ -8,6 +9,7 @@ import {
     MenuItem,
     Select,
     TextField,
+    Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { GameModelRequest, ValidationError } from 'shared';
@@ -15,7 +17,7 @@ import { useAsync } from '../../hooks/use-async';
 import { genreService } from '../../services/genre-service';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { ImageList } from './image-list';
+import { BaseDialog } from '../../dialogs/base-dialog';
 
 interface ValidationErrorMessage {
     name?: string;
@@ -34,6 +36,11 @@ interface GameFormProps {
 
 export function GameForm({ game, setGame, error }: GameFormProps) {
     const [genres, setGenres] = useState<string[]>([]);
+    const [openImageDialog, setOpenImageDialog] = useState(false);
+
+    const onClose = () => {
+        setOpenImageDialog(false);
+    };
 
     const [validationError, setValidationError] = useState<
         ValidationErrorMessage | undefined
@@ -189,7 +196,23 @@ export function GameForm({ game, setGame, error }: GameFormProps) {
                     </FormControl>
                 </>
             )}
-            <ImageList />
+            {openImageDialog && (
+                <BaseDialog
+                    onClose={onClose}
+                    title={'Base Dialog'}
+                    fullWidth={true}
+                >
+                    something
+                </BaseDialog>
+            )}
+            <Button
+                variant="outlined"
+                size="large"
+                color="primary"
+                onClick={() => setOpenImageDialog(true)}
+            >
+                <Typography>Add Images</Typography>
+            </Button>
         </Container>
     );
 }

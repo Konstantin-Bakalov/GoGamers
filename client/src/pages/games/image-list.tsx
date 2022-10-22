@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import { useState } from 'react';
 import { MediaUpload } from '../../components/media-upload';
 import { Image } from '../../components/media-upload';
-import placeholder from '../images/empty-image.png';
+import placeholder from '../../images/empty-image.png';
 
 interface ImageListProps {
     images: Image[];
