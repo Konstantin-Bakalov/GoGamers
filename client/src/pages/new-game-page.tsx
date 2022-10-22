@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { useAsyncAction } from '../hooks/use-async-action';
 import { gameService } from '../services/games-service';
 import { Image } from '../components/media-upload';
-import placeholder from '../images/empty-image.png';
 import { mediaUploadService } from '../services/media-upload-service';
 import { GameForm } from './games/game-form';
 import { GameModelRequest, User } from 'shared';
