@@ -48,9 +48,7 @@ export function NewGamePage() {
         // navigate(`/games/${g.id}`);
     });
 
-    // const validateImage = () => {
-    //     return image.source !== emptyImage.source;
-    // };
+    console.log(game);
 
     return (
         <Container

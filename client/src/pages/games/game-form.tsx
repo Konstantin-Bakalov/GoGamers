@@ -17,7 +17,7 @@ import { useAsync } from '../../hooks/use-async';
 import { genreService } from '../../services/genre-service';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { BaseDialog } from '../../dialogs/base-dialog';
+import { AddMediaDialog } from '../../dialogs/add-media-dialog';
 
 interface ValidationErrorMessage {
     name?: string;
@@ -25,11 +25,13 @@ interface ValidationErrorMessage {
     genres?: string;
 }
 
+export type SetGameType = (
+    game: GameModelRequest | ((prev: GameModelRequest) => GameModelRequest),
+) => void;
+
 interface GameFormProps {
     game: GameModelRequest;
-    setGame: (
-        game: GameModelRequest | ((prev: GameModelRequest) => GameModelRequest),
-    ) => void;
+    setGame: SetGameType;
     // setImage: (image: Image) => void;
     error: unknown;
 }
@@ -197,13 +199,7 @@ export function GameForm({ game, setGame, error }: GameFormProps) {
                 </>
             )}
             {openImageDialog && (
-                <BaseDialog
-                    onClose={onClose}
-                    title={'Base Dialog'}
-                    fullWidth={true}
-                >
-                    something
-                </BaseDialog>
+                <AddMediaDialog onClose={onClose} onSubmit={setGame} />
             )}
             <Button
                 variant="outlined"
