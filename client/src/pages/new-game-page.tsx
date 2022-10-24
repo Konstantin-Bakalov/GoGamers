@@ -1,11 +1,8 @@
 import { LoadingButton } from '@mui/lab';
-import { Box, CircularProgress, Container } from '@mui/material';
+import { CircularProgress, Container } from '@mui/material';
 import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAsyncAction } from '../hooks/use-async-action';
-import { gameService } from '../services/games-service';
-import { Image } from '../components/media-upload';
-import { mediaUploadService } from '../services/media-upload-service';
 import { GameForm } from './games/game-form';
 import { GameModelRequest, User } from 'shared';
 import { useCurrentUser } from '../hooks/use-current-user';
@@ -25,7 +22,6 @@ export function NewGamePage() {
         media: [],
     });
 
-    // const [image, setImage] = useState<Image>(emptyImage);
     const navigate = useNavigate();
 
     const {
@@ -34,7 +30,7 @@ export function NewGamePage() {
         error,
     } = useAsyncAction(async (e: FormEvent) => {
         e.preventDefault();
-        console.log(game);
+
         // const url = await mediaUploadService.upload(image.imageFile);
 
         // const g = await gameService.create({
@@ -55,16 +51,10 @@ export function NewGamePage() {
             sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
         >
             {loading && <CircularProgress />}
-            <GameForm
-                game={game}
-                setGame={setGame}
-                // setImage={setImage}
-                error={error}
-            />
+            <GameForm game={game} setGame={setGame} error={error} />
 
             <LoadingButton
                 loading={loading}
-                // disabled={!validateImage()}
                 onClick={submit}
                 variant="contained"
             >

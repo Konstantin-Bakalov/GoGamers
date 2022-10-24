@@ -2,22 +2,16 @@ import {
     Button,
     Checkbox,
     Container,
-    FormControl,
     FormControlLabel,
-    FormHelperText,
-    InputLabel,
-    MenuItem,
-    Select,
     TextField,
     Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { GameModelRequest, ValidationError } from 'shared';
-import { useAsync } from '../../hooks/use-async';
-import { genreService } from '../../services/genre-service';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { AddMediaDialog } from '../../dialogs/add-media-dialog';
+import { GenreSelect } from './genre-select';
 
 interface ValidationErrorMessage {
     name?: string;
@@ -32,12 +26,10 @@ export type SetGameType = (
 interface GameFormProps {
     game: GameModelRequest;
     setGame: SetGameType;
-    // setImage: (image: Image) => void;
     error: unknown;
 }
 
 export function GameForm({ game, setGame, error }: GameFormProps) {
-    const [genres, setGenres] = useState<string[]>([]);
     const [openImageDialog, setOpenImageDialog] = useState(false);
 
     const onClose = () => {
@@ -47,11 +39,6 @@ export function GameForm({ game, setGame, error }: GameFormProps) {
     const [validationError, setValidationError] = useState<
         ValidationErrorMessage | undefined
     >(undefined);
-
-    const { data: allGenres, loading: loadingGenres } = useAsync(
-        () => genreService.all(),
-        [],
-    );
 
     useEffect(() => {
         if (!error) {
@@ -168,39 +155,12 @@ export function GameForm({ game, setGame, error }: GameFormProps) {
                 />
             </LocalizationProvider>
 
-            {allGenres && (
-                <>
-                    <FormControl error={!!validationError?.genres}>
-                        <InputLabel>Genres</InputLabel>
-                        <Select
-                            label="Genres"
-                            multiple
-                            value={genres}
-                            onChange={(e) => {
-                                const value = e.target.value;
-                                const genreNames =
-                                    typeof value === 'string'
-                                        ? value.split(',')
-                                        : value;
-
-                                setGenres(genreNames);
-                            }}
-                        >
-                            {allGenres?.map((genre) => (
-                                <MenuItem key={genre.id} value={genre.name}>
-                                    {genre.name}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                        <FormHelperText>
-                            {validationError?.genres}
-                        </FormHelperText>
-                    </FormControl>
-                </>
-            )}
             {openImageDialog && (
                 <AddMediaDialog onClose={onClose} onSubmit={setGame} />
             )}
+
+            <GenreSelect />
+
             <Button
                 variant="outlined"
                 size="large"
