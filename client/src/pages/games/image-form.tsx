@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { useState } from 'react';
 import { Image } from '../../components/media-upload';
 import { ImageList } from './image-list';
@@ -11,6 +11,7 @@ import { LoadingButton } from '@mui/lab';
 
 interface ImageFormProps {
     onSubmit: SetGameType;
+    onClose: () => void;
 }
 
 const emptyImage: Image = {
@@ -22,7 +23,7 @@ const maxMediaCount = 5;
 
 const emptyImages: Image[] = new Array(maxMediaCount).fill(emptyImage);
 
-export function ImageForm({ onSubmit }: ImageFormProps) {
+export function ImageForm({ onSubmit, onClose }: ImageFormProps) {
     const [images, setImages] = useState<Image[]>(emptyImages);
 
     const { trigger, loading } = useAsyncAction(async () => {
@@ -49,44 +50,55 @@ export function ImageForm({ onSubmit }: ImageFormProps) {
 
     return (
         <Box>
-            <ImageList
-                images={images}
-                onImageAdded={(image) => {
-                    setImages((prev) => {
-                        const imgs = [...prev, image].filter(
-                            (img) => img.source !== emptyImage.source,
-                        );
+            <Box>
+                <ImageList
+                    images={images}
+                    onImageAdded={(image) => {
+                        setImages((prev) => {
+                            const imgs = [...prev, image].filter(
+                                (img) => img.source !== emptyImage.source,
+                            );
 
-                        if (imgs.length >= maxMediaCount) {
-                            return imgs.slice(0, maxMediaCount);
+                            if (imgs.length >= maxMediaCount) {
+                                return imgs.slice(0, maxMediaCount);
+                            }
+
+                            const emptyImgs = new Array(
+                                emptyImages.length - imgs.length,
+                            ).fill(emptyImage);
+
+                            return [...imgs, ...emptyImgs];
+                        });
+                    }}
+                    onImageDeleted={(index) => {
+                        setImages([
+                            ...images.filter((_, ind) => index !== ind),
+                            {
+                                imageFile: new File([''], 'filename'),
+                                source: placeholderImage,
+                            },
+                        ]);
+                    }}
+                />
+            </Box>
+            <Box>
+                <Button variant="outlined" size="large" onClick={onClose}>
+                    Cancel
+                </Button>
+                <LoadingButton
+                    loading={loading}
+                    variant="contained"
+                    type="submit"
+                    size="large"
+                    onClick={() => {
+                        if (validateImages()) {
+                            trigger();
                         }
-
-                        const emptyImgs = new Array(
-                            emptyImages.length - imgs.length,
-                        ).fill(emptyImage);
-
-                        return [...imgs, ...emptyImgs];
-                    });
-                }}
-                onImageDeleted={(index) => {
-                    setImages([
-                        ...images.filter((_, ind) => index !== ind),
-                        {
-                            imageFile: new File([''], 'filename'),
-                            source: placeholderImage,
-                        },
-                    ]);
-                }}
-            />
-            <LoadingButton
-                onClick={() => {
-                    if (validateImages()) {
-                        trigger();
-                    }
-                }}
-            >
-                Add Images
-            </LoadingButton>
+                    }}
+                >
+                    Add Images
+                </LoadingButton>
+            </Box>
         </Box>
     );
 }

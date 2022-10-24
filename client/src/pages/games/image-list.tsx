@@ -1,7 +1,9 @@
-import { Box } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import { MediaUpload } from '../../components/media-upload';
 import { Image } from '../../components/media-upload';
 import { makeStyles } from '../../lib/make-styles';
+import placeholderImage from '../../images/empty-image.png';
+import ClearIcon from '@mui/icons-material/Clear';
 
 interface ImageListProps {
     images: Image[];
@@ -63,6 +65,15 @@ export function ImageList({
                             src={image.source}
                             sx={styles.image}
                         />
+                        {image.source !== placeholderImage && (
+                            <IconButton
+                                sx={styles.iconButton}
+                                className="deleteButton"
+                                onClick={() => onImageDeleted(index)}
+                            >
+                                <ClearIcon />
+                            </IconButton>
+                        )}
                     </Box>
                 ))}
             </Box>
