@@ -24,6 +24,14 @@ export function GamePage() {
                     {game.genres?.map((genre, index) => (
                         <Box key={index}>{genre.name}</Box>
                     ))}
+                    {game.media?.map((media, index) => (
+                        <Box
+                            key={index}
+                            component="img"
+                            placeholder="image"
+                            src={media.url}
+                        ></Box>
+                    ))}
                 </Box>
             )}
         </Container>

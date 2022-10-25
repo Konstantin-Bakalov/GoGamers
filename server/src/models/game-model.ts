@@ -60,7 +60,7 @@ export class GameModel extends BaseModel {
                 modelClass: MediaModel,
                 join: {
                     from: 'games.id',
-                    to: 'media.game_id',
+                    to: 'media.gameId',
                 },
             },
         };

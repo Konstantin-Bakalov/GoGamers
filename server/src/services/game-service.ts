@@ -98,7 +98,7 @@ class GameService {
         return await GameModel.query()
             .findById(id)
             .throwIfNotFound()
-            .withGraphFetched('genres');
+            .withGraphFetched('[genres, media]');
     }
 
     async getGamesWithLikes() {
