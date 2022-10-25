@@ -27,8 +27,14 @@ export function GamePage() {
                     {game.media?.map((media, index) => (
                         <Box
                             key={index}
+                            sx={{
+                                width: '150px',
+                                height: '100px',
+                                objectFit: 'cover',
+                                objectPosition: 'center',
+                            }}
                             component="img"
-                            placeholder="image"
+                            placeholder={'image'}
                             src={media.url}
                         ></Box>
                     ))}

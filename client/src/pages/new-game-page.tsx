@@ -34,7 +34,7 @@ export function NewGamePage() {
 
         const createdGame = await gameService.create(game);
 
-        // navigate(`/games/${createdGame.id}`);
+        navigate(`/games/${createdGame.id}`);
     });
 
     return (
