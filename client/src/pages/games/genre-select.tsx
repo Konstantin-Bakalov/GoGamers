@@ -1,30 +1,47 @@
-import { useAsync } from '../../hooks/use-async';
 import { genreService } from '../../services/genre-service';
-import Select from 'react-select';
-import { Box, FormHelperText } from '@mui/material';
+import { Box } from '@mui/material';
+import AsyncCreatableSelect from 'react-select/async-creatable';
 
-type OptionsType = {
+type Option = {
     value: string;
     label: string;
 };
 
-export function GenreSelect() {
-    const { data: allGenres, loading } = useAsync(() => genreService.all(), []);
+interface GenreSelectProps {
+    onChange: (genres: { name: string }[]) => void;
+}
 
-    const handleChange = (selectedOption: any) => {
-        console.log(selectedOption);
+export function GenreSelect({ onChange }: GenreSelectProps) {
+    const loadOptions = async (inputValue: string) => {
+        return (await genreService.all())
+            .map<Option>((genre) => {
+                return { value: genre.name, label: genre.name };
+            })
+            .filter((i) =>
+                i.label
+                    .toLocaleLowerCase()
+                    .includes(inputValue.toLocaleLowerCase()),
+            );
+    };
+
+    const handleChange = (selectedOptions: readonly Option[]) => {
+        const genres = selectedOptions.map((option) => {
+            return { name: option.label };
+        });
+
+        onChange(genres);
     };
 
     return (
         <Box>
-            <Select
+            <AsyncCreatableSelect
                 isMulti
-                options={allGenres?.map<OptionsType>((genre) => {
-                    return { value: genre.name, label: genre.name };
-                })}
+                cacheOptions
+                defaultOptions
+                placeholder={'Select genres'}
+                loadOptions={loadOptions}
                 onChange={handleChange}
             />
-            <FormHelperText>Select genres</FormHelperText>
         </Box>
     );
 }

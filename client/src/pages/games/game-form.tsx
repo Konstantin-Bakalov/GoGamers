@@ -159,7 +159,13 @@ export function GameForm({ game, setGame, error }: GameFormProps) {
                 <AddMediaDialog onClose={onClose} onSubmit={setGame} />
             )}
 
-            <GenreSelect />
+            <GenreSelect
+                onChange={(genres: { name: string }[]) =>
+                    setGame((prev) => {
+                        return { ...prev, genres };
+                    })
+                }
+            />
 
             <Button
                 variant="outlined"
