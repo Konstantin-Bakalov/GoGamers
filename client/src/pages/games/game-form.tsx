@@ -1,4 +1,5 @@
 import {
+    Alert,
     Button,
     Checkbox,
     Container,
@@ -15,8 +16,12 @@ import { GenreSelect } from './genre-select';
 
 interface ValidationErrorMessage {
     name?: string;
-    minAge?: string;
+    developer?: string;
+    price?: string;
+    description?: string;
+    releaseDate?: string;
     genres?: string;
+    media?: string;
 }
 
 export type SetGameType = (
@@ -61,6 +66,14 @@ export function GameForm({ game, setGame, error }: GameFormProps) {
             };
         });
 
+    const helperText = (name: string, message: string | undefined) => {
+        if (message) {
+            const split = message.split(' ');
+            split[0] = name;
+            return split.join(' ');
+        }
+    };
+
     return (
         <Container
             disableGutters
@@ -74,7 +87,7 @@ export function GameForm({ game, setGame, error }: GameFormProps) {
             <TextField
                 value={game.name}
                 error={!!validationError?.name}
-                helperText={validationError?.name}
+                helperText={helperText('Name', validationError?.name)}
                 required
                 variant="outlined"
                 size="small"
@@ -88,8 +101,8 @@ export function GameForm({ game, setGame, error }: GameFormProps) {
 
             <TextField
                 value={game.developer}
-                // error={!!validationError?.develooper}
-                // helperText={validationError?.developer}
+                error={!!validationError?.developer}
+                helperText={helperText('Developer', validationError?.developer)}
                 required
                 variant="outlined"
                 size="small"
@@ -108,8 +121,8 @@ export function GameForm({ game, setGame, error }: GameFormProps) {
 
             <TextField
                 value={game.price ?? 0}
-                // error={!!validationError?.price}
-                // helperText={validationError?.price}
+                error={!!validationError?.price}
+                helperText={helperText('Price', validationError?.price)}
                 required
                 disabled={game.freeToPlay}
                 type="number"
@@ -125,8 +138,11 @@ export function GameForm({ game, setGame, error }: GameFormProps) {
 
             <TextField
                 value={game.description}
-                // error={!!validationError?.description}
-                // helperText={validationError?.description}
+                error={!!validationError?.description}
+                helperText={helperText(
+                    'Description',
+                    validationError?.description,
+                )}
                 required
                 multiline
                 minRows={5}
@@ -175,6 +191,12 @@ export function GameForm({ game, setGame, error }: GameFormProps) {
                     })
                 }
             />
+
+            {validationError?.genres && (
+                <Alert severity="error">
+                    You must select at least one genre
+                </Alert>
+            )}
 
             <Button
                 variant="outlined"

@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Alert, Box, Button } from '@mui/material';
 import { useState } from 'react';
 import { Image } from '../../components/media-upload';
 import { ImageList } from './image-list';
@@ -7,6 +7,7 @@ import { useAsyncAction } from '../../hooks/use-async-action';
 import { mediaUploadService } from '../../services/media-upload-service';
 import { MediaRequestModel } from 'shared';
 import { LoadingButton } from '@mui/lab';
+import { maxMediaCount } from 'shared';
 
 interface ImageFormProps {
     onSubmit: (media: MediaRequestModel[]) => void;
@@ -18,12 +19,11 @@ const emptyImage: Image = {
     source: placeholderImage,
 };
 
-const maxMediaCount = 5;
-
 const emptyImages: Image[] = new Array(maxMediaCount).fill(emptyImage);
 
 export function ImageForm({ onSubmit, onClose }: ImageFormProps) {
     const [images, setImages] = useState<Image[]>(emptyImages);
+    const [imagesError, setImagesError] = useState<Error>();
 
     const { trigger, loading } = useAsyncAction(async () => {
         const media = (
@@ -39,10 +39,23 @@ export function ImageForm({ onSubmit, onClose }: ImageFormProps) {
         onSubmit(media);
     });
 
+    let valid = true;
+
     const validateImages = () => {
         return (
             images.filter((img) => img.source !== placeholderImage).length > 0
         );
+    };
+
+    const validate = () => {
+        if (!validateImages()) {
+            valid = false;
+            setImagesError(new Error('You must upload at least one image'));
+        } else {
+            setImagesError(undefined);
+        }
+
+        return valid;
     };
 
     return (
@@ -77,6 +90,9 @@ export function ImageForm({ onSubmit, onClose }: ImageFormProps) {
                         ]);
                     }}
                 />
+                {imagesError && (
+                    <Alert severity="error">{imagesError.message}</Alert>
+                )}
             </Box>
             <Box>
                 <Button variant="outlined" size="large" onClick={onClose}>
@@ -88,7 +104,7 @@ export function ImageForm({ onSubmit, onClose }: ImageFormProps) {
                     type="submit"
                     size="large"
                     onClick={() => {
-                        if (validateImages()) {
+                        if (validate()) {
                             trigger();
                         }
                     }}

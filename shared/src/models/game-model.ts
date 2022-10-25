@@ -5,18 +5,18 @@ import { UserModelSchema } from './user-model';
 
 const minGenreCount = 1;
 const maxGenrecount = 5;
-const minMediaCount = 1;
-const maxMediaCount = 7;
+export const minMediaCount = 1;
+export const maxMediaCount = 7;
 
 export const BaseGameModelSchema = z.object({
     id: z.number(),
-    name: z.string(),
+    name: z.string().min(2),
     userId: z.number(),
     releaseDate: z.date(),
-    developer: z.string(),
+    developer: z.string().min(5),
     freeToPlay: z.boolean(),
-    price: z.number().optional(),
-    description: z.string(),
+    price: z.number().positive().optional(),
+    description: z.string().min(20).max(150),
 });
 
 export const GameModelRequestSchema = BaseGameModelSchema.omit({

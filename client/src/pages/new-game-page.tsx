@@ -39,6 +39,7 @@ export function NewGamePage() {
 
     return (
         <Container
+            disableGutters
             sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
         >
             {loading && <CircularProgress />}
