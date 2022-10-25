@@ -158,11 +158,13 @@ export function GameForm({ game, setGame, error }: GameFormProps) {
             {openImageDialog && (
                 <AddMediaDialog
                     onClose={onClose}
-                    onSubmit={(media: MediaRequestModel[]) =>
+                    onSubmit={(media: MediaRequestModel[]) => {
                         setGame((prev) => {
                             return { ...prev, media };
-                        })
-                    }
+                        });
+
+                        onClose();
+                    }}
                 />
             )}
 

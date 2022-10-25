@@ -42,6 +42,7 @@ export function NewGamePage() {
             sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
         >
             {loading && <CircularProgress />}
+
             <GameForm game={game} setGame={setGame} error={error} />
 
             <LoadingButton
