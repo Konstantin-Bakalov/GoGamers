@@ -3,6 +3,11 @@ import { GenreModelRequestSchema, GenreModelSchema } from './genre-model';
 import { MediaModelSchema, MediaRequestModelSchema } from './media-model';
 import { UserModelSchema } from './user-model';
 
+const minGenreCount = 1;
+const maxGenrecount = 5;
+const minMediaCount = 1;
+const maxMediaCount = 7;
+
 export const BaseGameModelSchema = z.object({
     id: z.number(),
     name: z.string(),
@@ -17,8 +22,14 @@ export const BaseGameModelSchema = z.object({
 export const GameModelRequestSchema = BaseGameModelSchema.omit({
     id: true,
 }).extend({
-    genres: z.array(GenreModelRequestSchema),
-    media: z.array(MediaRequestModelSchema),
+    genres: z
+        .array(GenreModelRequestSchema)
+        .min(minGenreCount)
+        .max(maxGenrecount),
+    media: z
+        .array(MediaRequestModelSchema)
+        .min(minMediaCount)
+        .max(maxMediaCount),
 });
 
 export const DetailedGameModelSchema = BaseGameModelSchema.extend({
