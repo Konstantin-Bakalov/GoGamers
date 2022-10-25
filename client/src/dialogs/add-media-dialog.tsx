@@ -1,12 +1,12 @@
 import { IconButton } from '@mui/material';
-import { SetGameType } from '../pages/games/game-form';
 import { ImageForm } from '../pages/games/image-form';
 import { BaseDialog } from './base-dialog';
 import CloseIcon from '@mui/icons-material/Close';
+import { MediaRequestModel } from 'shared';
 
 interface AddMediaDialogProps {
     onClose: () => void;
-    onSubmit: SetGameType;
+    onSubmit: (media: MediaRequestModel[]) => void;
 }
 
 export function AddMediaDialog({ onClose, onSubmit }: AddMediaDialogProps) {

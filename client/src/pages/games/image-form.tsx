@@ -6,11 +6,10 @@ import placeholderImage from '../../images/empty-image.png';
 import { useAsyncAction } from '../../hooks/use-async-action';
 import { mediaUploadService } from '../../services/media-upload-service';
 import { MediaRequestModel } from 'shared';
-import { SetGameType } from './game-form';
 import { LoadingButton } from '@mui/lab';
 
 interface ImageFormProps {
-    onSubmit: SetGameType;
+    onSubmit: (media: MediaRequestModel[]) => void;
     onClose: () => void;
 }
 
@@ -37,9 +36,7 @@ export function ImageForm({ onSubmit, onClose }: ImageFormProps) {
             return { type: 'image', url };
         });
 
-        onSubmit((prev) => {
-            return { ...prev, media };
-        });
+        onSubmit(media);
     });
 
     const validateImages = () => {

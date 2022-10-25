@@ -7,7 +7,7 @@ import {
     Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { GameModelRequest, ValidationError } from 'shared';
+import { GameModelRequest, MediaRequestModel, ValidationError } from 'shared';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { AddMediaDialog } from '../../dialogs/add-media-dialog';
@@ -156,7 +156,14 @@ export function GameForm({ game, setGame, error }: GameFormProps) {
             </LocalizationProvider>
 
             {openImageDialog && (
-                <AddMediaDialog onClose={onClose} onSubmit={setGame} />
+                <AddMediaDialog
+                    onClose={onClose}
+                    onSubmit={(media: MediaRequestModel[]) =>
+                        setGame((prev) => {
+                            return { ...prev, media };
+                        })
+                    }
+                />
             )}
 
             <GenreSelect
