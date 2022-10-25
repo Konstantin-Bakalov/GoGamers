@@ -18,7 +18,7 @@ export class GameTransformer {
         };
     }
 
-    transformArray(games: GameModel[]) {
+    transformArray(games: GameModel[]): DedailedGameModel[] {
         return games.map((game) => this.transform(game));
     }
 }

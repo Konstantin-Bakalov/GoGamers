@@ -9,14 +9,13 @@ class GameService {
     }
 
     async loadGames(searchText?: string) {
-        // const result = await httpService.get<GameModel[]>('games', {
-        //     query: { searchText },
-        // });
-        // return result;
+        return await httpService.get<DedailedGameModel[]>('/games', {
+            query: { searchText },
+        });
     }
 
     async loadGameById(id: number) {
-        return await httpService.get<DedailedGameModel>(`games/${id}`);
+        return await httpService.get<DedailedGameModel>(`/games/${id}`);
     }
 }
 

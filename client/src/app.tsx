@@ -1,8 +1,8 @@
 import { ThemeProvider } from '@emotion/react';
 import { createTheme, CssBaseline } from '@mui/material';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { GamePage } from './pages/games/game-page';
-import { GamesLibrary } from './pages/games/games-library';
+import { GamePage } from './pages/game-page';
+import { Homepage } from './pages/homepage';
 import { Header } from './components/header';
 import { PrivateOutlet } from './components/private-outlet';
 import { CurrentUserProvider } from './hooks/use-current-user';
@@ -30,10 +30,7 @@ export function App() {
                             <Routes>
                                 <Route path="/login" element={<Login />} />
                                 <Route path="/" element={<PrivateOutlet />}>
-                                    <Route
-                                        path="/"
-                                        element={<GamesLibrary />}
-                                    />
+                                    <Route path="/" element={<Homepage />} />
 
                                     <Route path="/games">
                                         <Route

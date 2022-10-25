@@ -65,6 +65,7 @@ class GameService {
         searchText?: string;
     }) {
         let result = GameModel.query()
+            .withGraphFetched('[genres, media, creator]')
             .orderBy(['name', 'id'])
             .page(page, pageSize);
 
@@ -98,7 +99,7 @@ class GameService {
         return await GameModel.query()
             .findById(id)
             .throwIfNotFound()
-            .withGraphFetched('[genres, media]');
+            .withGraphFetched('[genres, media, creator]');
     }
 
     async getGamesWithLikes() {

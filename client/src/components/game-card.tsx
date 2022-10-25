@@ -9,6 +9,7 @@ export function GameCard({ game }: GameCardProps) {
     return (
         <Box>
             <Typography>{game.name}</Typography>
+            <Typography>{game.creator?.name}</Typography>
             <Typography>Genres:</Typography>
             {game.genres?.map((genre, index) => (
                 <Typography key={index}>{genre.name}</Typography>

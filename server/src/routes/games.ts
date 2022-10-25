@@ -17,7 +17,6 @@ gamesRouter.get(
         const { id } = req.params;
 
         const game = await gameService.findGameById(Number(id));
-        console.log(game);
 
         res.status(200).json(transformer.transform(game));
     }),

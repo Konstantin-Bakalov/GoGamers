@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
-import { useAsync } from '../../hooks/use-async';
-import { gameService } from '../../services/games-service';
+import { useAsync } from '../hooks/use-async';
+import { gameService } from '../services/games-service';
 import {
     Box,
     Button,
@@ -9,6 +9,7 @@ import {
     TextField,
 } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
+import { GameCard } from '../components/game-card';
 
 interface GameLibraryState {
     searchText: string;
@@ -26,7 +27,7 @@ function paramsToState(params: URLSearchParams): GameLibraryState {
     };
 }
 
-export function GamesLibrary() {
+export function Homepage() {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const state = useMemo(() => paramsToState(searchParams), [searchParams]);
@@ -55,7 +56,7 @@ export function GamesLibrary() {
         <Container>
             <Box>
                 <TextField
-                    label="search"
+                    label="Search"
                     type="search"
                     variant="standard"
                     value={inputText}
@@ -72,9 +73,9 @@ export function GamesLibrary() {
 
             {loading && <CircularProgress />}
 
-            {/* {(games ?? []).map((game, index) => (
-                <Game key={index} game={game} />
-            ))} */}
+            {(games ?? []).map((game, index) => (
+                <GameCard key={index} game={game} />
+            ))}
         </Container>
     );
 }
