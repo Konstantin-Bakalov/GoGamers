@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { GenreModelRequestSchema } from './genre-model';
-import { MediaRequestModelSchema } from './media-model';
+import { GenreModelRequestSchema, GenreModelSchema } from './genre-model';
+import { MediaModelSchema, MediaRequestModelSchema } from './media-model';
+import { UserModelSchema } from './user-model';
 
 export const BaseGameModelSchema = z.object({
     id: z.number(),
@@ -20,14 +21,14 @@ export const GameModelRequestSchema = BaseGameModelSchema.omit({
     media: z.array(MediaRequestModelSchema),
 });
 
+export const DetailedGameModelSchema = BaseGameModelSchema.extend({
+    creator: UserModelSchema.optional(),
+    genres: z.array(GenreModelSchema).optional(),
+    media: z.array(MediaModelSchema).optional(),
+});
+
 export type BaseGameModel = z.infer<typeof BaseGameModelSchema>;
 
 export type GameModelRequest = z.infer<typeof GameModelRequestSchema>;
 
-// export type DedailedGameModel = z.infer<typeof DetailedGameModelSchema>;
-
-// export const DetailedGameModelSchema = BaseGameModelSchema.extend({
-//     creator: UserModelSchema.optional(),
-//     genres: z.array(GenreModelSchema).optional(),
-//     media: z.array(MediaModelSchema).optional(),
-// });
+export type DedailedGameModel = z.infer<typeof DetailedGameModelSchema>;

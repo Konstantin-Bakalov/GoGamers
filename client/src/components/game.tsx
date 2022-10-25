@@ -1,13 +1,5 @@
-import { GameModel } from '../services/games-service';
+import { DedailedGameModel } from 'shared';
 
-interface GameProps {
-    game: GameModel;
-}
-
-export function Game({ game }: GameProps) {
-    return (
-        <p>
-            Game: {game.name} for min of {game.minAge} players
-        </p>
-    );
+export function Game(game: DedailedGameModel) {
+    return <p>Game: {game.name}</p>;
 }

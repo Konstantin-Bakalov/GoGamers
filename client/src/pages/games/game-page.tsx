@@ -1,4 +1,4 @@
-import { CircularProgress, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 import { useParams } from 'react-router-dom';
 import { useAsync } from '../../hooks/use-async';
@@ -13,13 +13,18 @@ export function GamePage() {
     );
 
     return (
-        <Container>
+        <Container disableGutters>
             {loading && <CircularProgress />}
 
             {game && (
-                <Typography>
-                    Game: {game.name} id: {game.id}
-                </Typography>
+                <Box>
+                    <Typography>
+                        Game: {game.name} id: {game.id}
+                    </Typography>
+                    {game.genres?.map((genre, index) => (
+                        <Box key={index}>{genre.name}</Box>
+                    ))}
+                </Box>
             )}
         </Container>
     );

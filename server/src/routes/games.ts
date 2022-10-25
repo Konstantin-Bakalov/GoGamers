@@ -4,7 +4,7 @@ import { requestHandler } from '../lib/request-handler';
 import auth, { currentUser } from '../middlewares/auth-middleware';
 import gameService from '../services/game-service';
 import { GameTransformer } from '../transformers/game-transformer';
-import { CreateGameInputSchema } from 'shared';
+import { GameModelRequestSchema } from 'shared';
 
 const gamesRouter = Router();
 
@@ -17,13 +17,9 @@ gamesRouter.get(
         const { id } = req.params;
 
         const game = await gameService.findGameById(Number(id));
+        console.log(game);
 
-        if (game) {
-            res.status(200).json(transformer.transform(game));
-            return;
-        }
-
-        res.status(404).json({ message: 'Game not found' });
+        res.status(200).json(transformer.transform(game));
     }),
 );
 
@@ -50,11 +46,15 @@ gamesRouter.post(
     auth,
     requestHandler(async (req, res) => {
         const user = currentUser(res);
-        // const input = CreateGameInputSchema.parse(req.body);
-        console.log(req.body);
-        // const game = await gameService.create(input, user.id);
-        res.json({});
-        // res.status(200).json(transformer.transform(game));
+        const parsedGame = GameModelRequestSchema.parse({
+            ...req.body,
+            userId: user.id,
+            releaseDate: new Date(req.body.releaseDate),
+        });
+
+        const game = await gameService.create(parsedGame);
+
+        res.status(200).json(transformer.transform(game));
     }),
 );
 

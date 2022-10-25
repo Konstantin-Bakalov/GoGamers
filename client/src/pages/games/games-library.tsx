@@ -1,5 +1,4 @@
 import { useCallback, useMemo, useState } from 'react';
-import { Game } from '../../components/game';
 import { useAsync } from '../../hooks/use-async';
 import { gameService } from '../../services/games-service';
 import {
@@ -73,9 +72,9 @@ export function GamesLibrary() {
 
             {loading && <CircularProgress />}
 
-            {(games ?? []).map((game, index) => (
+            {/* {(games ?? []).map((game, index) => (
                 <Game key={index} game={game} />
-            ))}
+            ))} */}
         </Container>
     );
 }

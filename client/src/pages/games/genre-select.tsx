@@ -38,7 +38,7 @@ export function GenreSelect({ onChange }: GenreSelectProps) {
                 isMulti
                 cacheOptions
                 defaultOptions
-                placeholder={'Select genres'}
+                placeholder={'Select genres *'}
                 loadOptions={loadOptions}
                 onChange={handleChange}
             />
