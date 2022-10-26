@@ -1,18 +1,17 @@
 import {
     Alert,
-    Button,
     Checkbox,
     Container,
     FormControlLabel,
     TextField,
-    Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { GameModelRequest, MediaRequestModel, ValidationError } from 'shared';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { AddMediaDialog } from '../../dialogs/add-media-dialog';
 import { GenreSelect } from './genre-select';
+import { useImageForm } from './use-image-form';
+import { LoadingButton } from '@mui/lab';
 
 interface ValidationErrorMessage {
     name?: string;
@@ -31,15 +30,19 @@ export type SetGameType = (
 interface GameFormProps {
     game: GameModelRequest;
     setGame: SetGameType;
+    onSubmit: (media: MediaRequestModel[]) => void;
+    loading: boolean;
     error: unknown;
 }
 
-export function GameForm({ game, setGame, error }: GameFormProps) {
-    const [openImageDialog, setOpenImageDialog] = useState(false);
-
-    const onClose = () => {
-        setOpenImageDialog(false);
-    };
+export function GameForm({
+    game,
+    setGame,
+    onSubmit,
+    loading,
+    error,
+}: GameFormProps) {
+    const { render, perform, validate } = useImageForm();
 
     const [validationError, setValidationError] = useState<
         ValidationErrorMessage | undefined
@@ -171,7 +174,7 @@ export function GameForm({ game, setGame, error }: GameFormProps) {
                 />
             </LocalizationProvider>
 
-            {openImageDialog && (
+            {/* {openImageDialog && (
                 <AddMediaDialog
                     onClose={onClose}
                     onSubmit={(media: MediaRequestModel[]) => {
@@ -182,7 +185,7 @@ export function GameForm({ game, setGame, error }: GameFormProps) {
                         onClose();
                     }}
                 />
-            )}
+            )} */}
 
             <GenreSelect
                 onChange={(genres: { name: string }[]) =>
@@ -198,14 +201,20 @@ export function GameForm({ game, setGame, error }: GameFormProps) {
                 </Alert>
             )}
 
-            <Button
-                variant="outlined"
-                size="large"
-                color="primary"
-                onClick={() => setOpenImageDialog(true)}
+            {render}
+
+            <LoadingButton
+                loading={loading}
+                onClick={async () => {
+                    if (validate()) {
+                        const media = await perform();
+                        onSubmit(media);
+                    }
+                }}
+                variant="contained"
             >
-                <Typography>Add Images</Typography>
-            </Button>
+                Submit
+            </LoadingButton>
         </Container>
     );
 }

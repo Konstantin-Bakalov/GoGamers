@@ -1,4 +1,4 @@
-import { Alert, Box, Button } from '@mui/material';
+import { Alert, Box } from '@mui/material';
 import { useState } from 'react';
 import { Image } from '../../components/media-upload';
 import { ImageList } from './image-list';
@@ -6,13 +6,7 @@ import placeholderImage from '../../images/empty-image.png';
 import { useAsyncAction } from '../../hooks/use-async-action';
 import { mediaUploadService } from '../../services/media-upload-service';
 import { MediaRequestModel } from 'shared';
-import { LoadingButton } from '@mui/lab';
 import { maxMediaCount } from 'shared';
-
-interface ImageFormProps {
-    onSubmit: (media: MediaRequestModel[]) => void;
-    onClose: () => void;
-}
 
 const emptyImage: Image = {
     imageFile: new File([''], 'filename'),
@@ -21,11 +15,11 @@ const emptyImage: Image = {
 
 const emptyImages: Image[] = new Array(maxMediaCount).fill(emptyImage);
 
-export function ImageForm({ onSubmit, onClose }: ImageFormProps) {
+export function useImageForm() {
     const [images, setImages] = useState<Image[]>(emptyImages);
     const [imagesError, setImagesError] = useState<Error>();
 
-    const { trigger, loading } = useAsyncAction(async () => {
+    const { perform } = useAsyncAction(async () => {
         const media = (
             await Promise.all(
                 images
@@ -36,7 +30,7 @@ export function ImageForm({ onSubmit, onClose }: ImageFormProps) {
             return { type: 'image', url };
         });
 
-        onSubmit(media);
+        return media;
     });
 
     let valid = true;
@@ -58,8 +52,10 @@ export function ImageForm({ onSubmit, onClose }: ImageFormProps) {
         return valid;
     };
 
-    return (
-        <Box>
+    return {
+        perform,
+        validate,
+        render: (
             <Box>
                 <ImageList
                     images={images}
@@ -94,24 +90,6 @@ export function ImageForm({ onSubmit, onClose }: ImageFormProps) {
                     <Alert severity="error">{imagesError.message}</Alert>
                 )}
             </Box>
-            <Box>
-                <Button variant="outlined" size="large" onClick={onClose}>
-                    Cancel
-                </Button>
-                <LoadingButton
-                    loading={loading}
-                    variant="contained"
-                    type="submit"
-                    size="large"
-                    onClick={() => {
-                        if (validate()) {
-                            trigger();
-                        }
-                    }}
-                >
-                    Add Images
-                </LoadingButton>
-            </Box>
-        </Box>
-    );
+        ),
+    };
 }

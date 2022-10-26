@@ -1,10 +1,9 @@
-import { LoadingButton } from '@mui/lab';
 import { CircularProgress, Container } from '@mui/material';
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAsyncAction } from '../hooks/use-async-action';
 import { GameForm } from './games/game-form';
-import { GameModelRequest, User } from 'shared';
+import { GameModelRequest, MediaRequestModel, User } from 'shared';
 import { useCurrentUser } from '../hooks/use-current-user';
 import { gameService } from '../services/games-service';
 
@@ -29,10 +28,10 @@ export function NewGamePage() {
         trigger: submit,
         loading,
         error,
-    } = useAsyncAction(async (e: FormEvent) => {
-        e.preventDefault();
+    } = useAsyncAction(async (media: MediaRequestModel[]) => {
+        // e.preventDefault();
 
-        const createdGame = await gameService.create(game);
+        const createdGame = await gameService.create({ ...game, media });
 
         navigate(`/games/${createdGame.id}`);
     });
@@ -44,15 +43,13 @@ export function NewGamePage() {
         >
             {loading && <CircularProgress />}
 
-            <GameForm game={game} setGame={setGame} error={error} />
-
-            <LoadingButton
+            <GameForm
+                game={game}
+                setGame={setGame}
+                onSubmit={submit}
                 loading={loading}
-                onClick={submit}
-                variant="contained"
-            >
-                Submit
-            </LoadingButton>
+                error={error}
+            />
         </Container>
     );
 }

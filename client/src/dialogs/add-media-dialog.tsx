@@ -1,5 +1,5 @@
 import { IconButton } from '@mui/material';
-import { ImageForm } from '../pages/games/image-form';
+import { ImageForm } from '../pages/games/use-image-form';
 import { BaseDialog } from './base-dialog';
 import CloseIcon from '@mui/icons-material/Close';
 import { MediaRequestModel } from 'shared';
@@ -16,7 +16,7 @@ export function AddMediaDialog({ onClose, onSubmit }: AddMediaDialogProps) {
             onClose={onClose}
             fullWidth={true}
         >
-            <ImageForm onSubmit={onSubmit} onClose={onClose} />
+            {/* <ImageForm onSubmit={onSubmit} onClose={onClose} /> */}
             <IconButton
                 sx={{ position: 'absolute', top: 8, right: 8 }}
                 onClick={onClose}
