@@ -1,10 +1,10 @@
 import { Alert, Box } from '@mui/material';
 import { useState } from 'react';
-import { Image } from '../../components/media-upload';
-import { ImageList } from './image-list';
-import placeholderImage from '../../images/empty-image.png';
-import { useAsyncAction } from '../../hooks/use-async-action';
-import { mediaUploadService } from '../../services/media-upload-service';
+import { Image } from '../components/media-upload';
+import { ImageList } from '../pages/games/image-list';
+import placeholderImage from '../images/empty-image.png';
+import { useAsyncAction } from './use-async-action';
+import { mediaUploadService } from '../services/media-upload-service';
 import { MediaRequestModel } from 'shared';
 import { maxMediaCount } from 'shared';
 
