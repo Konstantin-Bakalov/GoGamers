@@ -174,19 +174,6 @@ export function GameForm({
                 />
             </LocalizationProvider>
 
-            {/* {openImageDialog && (
-                <AddMediaDialog
-                    onClose={onClose}
-                    onSubmit={(media: MediaRequestModel[]) => {
-                        setGame((prev) => {
-                            return { ...prev, media };
-                        });
-
-                        onClose();
-                    }}
-                />
-            )} */}
-
             <GenreSelect
                 onChange={(genres: { name: string }[]) =>
                     setGame((prev) => {

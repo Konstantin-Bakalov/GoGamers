@@ -29,8 +29,6 @@ export function NewGamePage() {
         loading,
         error,
     } = useAsyncAction(async (media: MediaRequestModel[]) => {
-        // e.preventDefault();
-
         const createdGame = await gameService.create({ ...game, media });
 
         navigate(`/games/${createdGame.id}`);
