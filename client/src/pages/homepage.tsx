@@ -73,9 +73,17 @@ export function Homepage() {
 
             {loading && <CircularProgress />}
 
-            {(games ?? []).map((game, index) => (
-                <GameCard key={index} game={game} />
-            ))}
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    flexWrap: 'wrap',
+                }}
+            >
+                {(games ?? []).map((game, index) => (
+                    <GameCard key={index} game={game} />
+                ))}
+            </Box>
         </Container>
     );
 }
