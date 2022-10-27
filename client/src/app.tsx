@@ -2,7 +2,7 @@ import { ThemeProvider } from '@emotion/react';
 import { createTheme, CssBaseline } from '@mui/material';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { GamePage } from './pages/game-page';
-import { Homepage } from './pages/homepage';
+import { Homepage } from './pages/home-page';
 import { Header } from './components/header';
 import { PrivateOutlet } from './components/private-outlet';
 import { CurrentUserProvider } from './hooks/use-current-user';
