@@ -26,15 +26,18 @@ gamesRouter.get(
     '/',
     auth,
     requestHandler(async (req, res) => {
-        const { page, searchText } = req.query;
+        const { searchText, page } = req.query;
+        console.log(page, searchText);
         const pageNumber = Number(page);
         const search = z.string().optional().parse(searchText);
 
         const { results, total } = await gameService.listGames({
             page: pageNumber,
-            pageSize: 5,
+            pageSize: 3,
             searchText: search,
         });
+
+        console.log(results.length, total);
 
         res.status(200).json(transformer.transformArray(results));
     }),

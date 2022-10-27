@@ -8,9 +8,9 @@ class GameService {
         });
     }
 
-    async loadGames(searchText?: string) {
+    async loadGames(page: string, searchText?: string) {
         return await httpService.get<DedailedGameModel[]>('/games', {
-            query: { searchText },
+            query: { searchText, page },
         });
     }
 
