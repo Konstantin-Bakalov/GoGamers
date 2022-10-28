@@ -6,32 +6,43 @@ import {
     Button,
     CircularProgress,
     Container,
+    FormControl,
     InputLabel,
     MenuItem,
+    Pagination,
     Select,
     SelectChangeEvent,
     TextField,
 } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import { GameCard } from '../components/game-card';
+import { genreService } from '../services/genre-service';
 
-interface GameLibraryState {
+interface FilterState {
     searchText: string;
     page: string;
+    maxItems: string;
 }
 
-function stateToParams(state: GameLibraryState): URLSearchParams {
-    return new URLSearchParams(
-        state.searchText
-            ? { searchText: state.searchText, page: state.page }
-            : {},
-    );
+const options = [
+    { value: '20', label: 'Twenty' },
+    { value: '40', label: 'Forty' },
+    { value: '60', label: 'Sixty' },
+];
+
+function stateToParams(state: FilterState): URLSearchParams {
+    return new URLSearchParams({
+        searchText: state.searchText,
+        page: state.page,
+        maxItems: state.maxItems,
+    });
 }
 
-function paramsToState(params: URLSearchParams): GameLibraryState {
+function paramsToState(params: URLSearchParams): FilterState {
     return {
-        searchText: params.get('searchText') ?? '',
-        page: params.get('page') ?? '0',
+        searchText: params.get('searchText') || '',
+        page: params.get('page') || '1',
+        maxItems: params.get('maxItems') || '20',
     };
 }
 
@@ -40,13 +51,14 @@ export function Homepage() {
 
     const state = useMemo(() => paramsToState(searchParams), [searchParams]);
 
-    const { data: games, loading } = useAsync(
-        () => gameService.loadGames(state.page, state.searchText),
-        [state.searchText],
+    const { data, loading } = useAsync(
+        () => gameService.list(state.page, state.maxItems, state.searchText),
+        [state],
     );
 
+    const { data: genres } = useAsync(() => genreService.all(), []);
+
     const [inputText, setInputText] = useState(state.searchText);
-    const [itemsPerPage, setItemsPerPage] = useState('20');
 
     const setSearch = useCallback(
         (searchText: string) => {
@@ -62,7 +74,12 @@ export function Homepage() {
     );
 
     const handleChange = (e: SelectChangeEvent) => {
-        setItemsPerPage(e.target.value);
+        setSearchParams(
+            stateToParams({
+                ...state,
+                maxItems: e.target.value,
+            }),
+        );
     };
 
     return (
@@ -89,15 +106,31 @@ export function Homepage() {
                     Search
                 </Button>
 
-                <Select
-                    label="Items per page"
-                    value={itemsPerPage}
-                    onChange={handleChange}
-                >
-                    <MenuItem value={'10'}>Ten</MenuItem>
-                    <MenuItem value={'20'}>Twenty</MenuItem>
-                    <MenuItem value={'30'}>Thirty</MenuItem>
-                </Select>
+                <FormControl>
+                    <InputLabel>Items</InputLabel>
+                    <Select
+                        label="Items"
+                        value={state.maxItems}
+                        onChange={handleChange}
+                    >
+                        {options.map((option, index) => (
+                            <MenuItem key={index} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+
+                <FormControl fullWidth>
+                    <InputLabel>Genres</InputLabel>
+                    <Select label="Genres" value={'Genres'}>
+                        {genres?.map((genre, index) => (
+                            <MenuItem key={index} value={genre.name}>
+                                {genre.name}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
             </Box>
 
             {loading && <CircularProgress />}
@@ -109,10 +142,22 @@ export function Homepage() {
                     flexWrap: 'wrap',
                 }}
             >
-                {(games ?? []).map((game, index) => (
-                    <GameCard key={index} game={game} />
-                ))}
+                {data?.results &&
+                    data.results.map((game, index) => (
+                        <GameCard key={index} game={game} />
+                    ))}
             </Box>
+
+            <Pagination
+                count={Math.ceil((data?.total || 0) / Number(state.maxItems))}
+                page={Number(state.page)}
+                onChange={(e, value) => {
+                    setSearchParams({
+                        ...state,
+                        page: value.toString(),
+                    });
+                }}
+            ></Pagination>
         </Container>
     );
 }

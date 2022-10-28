@@ -1,6 +1,11 @@
 import { DedailedGameModel, GameModelRequest } from 'shared';
 import { httpService } from './http-service';
 
+interface LoadGames {
+    results: DedailedGameModel[];
+    total: number;
+}
+
 class GameService {
     async create(game: GameModelRequest) {
         return await httpService.post<DedailedGameModel>('/games', {
@@ -8,9 +13,9 @@ class GameService {
         });
     }
 
-    async loadGames(page: string, searchText?: string) {
-        return await httpService.get<DedailedGameModel[]>('/games', {
-            query: { searchText, page },
+    async list(page: string, maxItems: string, searchText?: string) {
+        return await httpService.get<LoadGames>('/games', {
+            query: { page, maxItems, searchText },
         });
     }
 

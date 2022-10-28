@@ -4,7 +4,7 @@ import { requestHandler } from '../lib/request-handler';
 import auth, { currentUser } from '../middlewares/auth-middleware';
 import gameService from '../services/game-service';
 import { GameTransformer } from '../transformers/game-transformer';
-import { GameModelRequestSchema } from 'shared';
+import { GameModelRequestSchema, zodStringAsNumber } from 'shared';
 
 const gamesRouter = Router();
 
@@ -26,20 +26,20 @@ gamesRouter.get(
     '/',
     auth,
     requestHandler(async (req, res) => {
-        const { searchText, page } = req.query;
-        console.log(page, searchText);
-        const pageNumber = Number(page);
-        const search = z.string().optional().parse(searchText);
+        const page = zodStringAsNumber().parse(req.query.page);
+        const maxItems = zodStringAsNumber().parse(req.query.maxItems);
+        const searchText = z.string().optional().parse(req.query.searchText);
 
         const { results, total } = await gameService.listGames({
-            page: pageNumber,
-            pageSize: 3,
-            searchText: search,
+            page: page - 1,
+            pageSize: maxItems,
+            searchText,
         });
 
-        console.log(results.length, total);
-
-        res.status(200).json(transformer.transformArray(results));
+        res.status(200).json({
+            results: transformer.transformArray(results),
+            total,
+        });
     }),
 );
 

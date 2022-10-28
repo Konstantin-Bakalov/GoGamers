@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { string, z } from 'zod';
 import { GenreModelRequestSchema, GenreModelSchema } from './genre-model';
 import { MediaModelSchema, MediaRequestModelSchema } from './media-model';
 import { UserModelSchema } from './user-model';
