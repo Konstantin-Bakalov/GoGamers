@@ -12,10 +12,10 @@ export class GameModel extends BaseModel {
     freeToPlay!: boolean;
     price!: number | undefined;
     description!: string;
-    creator?: UserModel;
+    creator!: UserModel;
     // likedBy?: UserModel[];
-    genres?: GenreModel[];
-    media?: MediaModel[];
+    genres!: GenreModel[];
+    media!: MediaModel[];
 
     static get tableName() {
         return 'games';

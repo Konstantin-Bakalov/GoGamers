@@ -34,9 +34,9 @@ export const GameModelRequestSchema = BaseGameModelSchema.omit({
 });
 
 export const DetailedGameModelSchema = BaseGameModelSchema.extend({
-    creator: UserModelSchema.optional(),
-    genres: z.array(GenreModelSchema).optional(),
-    media: z.array(MediaModelSchema).optional(),
+    creator: UserModelSchema,
+    genres: z.array(GenreModelSchema),
+    media: z.array(MediaModelSchema),
 });
 
 export type BaseGameModel = z.infer<typeof BaseGameModelSchema>;

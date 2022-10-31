@@ -1,4 +1,5 @@
-import { Box, Typography } from '@mui/material';
+import { Card, CardActionArea, CardMedia, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 import { DedailedGameModel } from 'shared';
 
 interface GameCardProps {
@@ -6,29 +7,29 @@ interface GameCardProps {
 }
 
 export function GameCard({ game }: GameCardProps) {
+    const image = game.media.find((image) => image.type === 'image')?.url;
+
     return (
-        <Box>
-            <Typography>{game.name}</Typography>
-            <Typography>{game.creator?.name}</Typography>
-            <Typography>Genres:</Typography>
-            {game.genres?.map((genre, index) => (
-                <Typography key={index}>{genre.name}</Typography>
-            ))}
-            <Typography>Images:</Typography>
-            {game.media?.map((media, index) => (
-                <Box
-                    key={index}
-                    sx={{
-                        width: '150px',
-                        height: '100px',
-                        objectFit: 'cover',
-                        objectPosition: 'center',
-                    }}
+        <Card
+            sx={{ maxWidth: '200px' }}
+            component={Link}
+            to={`/games/${game.id}`}
+            elevation={3}
+        >
+            <CardActionArea>
+                <CardMedia
+                    height="200"
                     component="img"
-                    placeholder={'image'}
-                    src={media.url}
-                ></Box>
-            ))}
-        </Box>
+                    alt="game image"
+                    image={image}
+                />
+                <Typography>{game.name}</Typography>
+                <Typography>{game.creator?.name}</Typography>
+                <Typography>Genres:</Typography>
+                {game.genres?.map((genre, index) => (
+                    <Typography key={index}>{genre.name}</Typography>
+                ))}
+            </CardActionArea>
+        </Card>
     );
 }
