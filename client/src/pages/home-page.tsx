@@ -51,7 +51,7 @@ function paramsToState(params: URLSearchParams): FilterState {
         searchText: params.get('searchText') || '',
         page: params.get('page') || '1',
         maxItems: params.get('maxItems') || '20',
-        orderBy: params.get('orderBy') || 'name',
+        orderBy: params.get('orderBy') || 'Name',
     };
 }
 
@@ -81,6 +81,7 @@ export function Homepage() {
         setSearchParams(
             stateToParams({
                 ...state,
+                page: '1',
                 maxItems: e.target.value,
             }),
         );
@@ -90,6 +91,7 @@ export function Homepage() {
         setSearchParams(
             stateToParams({
                 ...state,
+                page: '1',
                 orderBy: e.target.value,
             }),
         );
