@@ -29,11 +29,13 @@ gamesRouter.get(
         const page = zodStringAsNumber().parse(req.query.page);
         const maxItems = zodStringAsNumber().parse(req.query.maxItems);
         const searchText = z.string().optional().parse(req.query.searchText);
+        const orderBy = z.string().parse(req.query.orderBy);
 
         const { results, total } = await gameService.listGames({
             page: page - 1,
             pageSize: maxItems,
             searchText,
+            orderBy,
         });
 
         res.status(200).json({

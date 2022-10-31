@@ -59,14 +59,18 @@ class GameService {
         page,
         pageSize,
         searchText,
+        orderBy,
     }: {
         page: number;
         pageSize: number;
         searchText?: string;
+        orderBy: string;
     }) {
+        const order = orderBy.split(' ');
+
         let result = GameModel.query()
             .withGraphFetched('[genres, media, creator]')
-            .orderBy(['name', 'id'])
+            .orderBy(`${order[0]}`, order[1] === 'DESC' ? 'DESC' : 'ASC')
             .page(page, pageSize);
 
         if (result && searchText) {

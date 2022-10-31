@@ -16,18 +16,25 @@ import {
 } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import { GameCard } from '../components/game-card';
-import { genreService } from '../services/genre-service';
 
-interface FilterState {
+export interface FilterState {
     searchText: string;
     page: string;
     maxItems: string;
+    orderBy: string;
 }
 
-const options = [
+const itemsOptions = [
     { value: '20', label: 'Twenty' },
     { value: '40', label: 'Forty' },
     { value: '60', label: 'Sixty' },
+];
+
+const sortOptions = [
+    { value: 'Name', label: 'Name' },
+    { value: 'Price asc', label: 'Lowest Price' },
+    { value: 'Price desc', label: 'Highest Price' },
+    { value: 'releaseDate', label: 'Release Date' },
 ];
 
 function stateToParams(state: FilterState): URLSearchParams {
@@ -35,6 +42,7 @@ function stateToParams(state: FilterState): URLSearchParams {
         searchText: state.searchText,
         page: state.page,
         maxItems: state.maxItems,
+        orderBy: state.orderBy,
     });
 }
 
@@ -43,6 +51,7 @@ function paramsToState(params: URLSearchParams): FilterState {
         searchText: params.get('searchText') || '',
         page: params.get('page') || '1',
         maxItems: params.get('maxItems') || '20',
+        orderBy: params.get('orderBy') || 'name',
     };
 }
 
@@ -51,12 +60,7 @@ export function Homepage() {
 
     const state = useMemo(() => paramsToState(searchParams), [searchParams]);
 
-    const { data, loading } = useAsync(
-        () => gameService.list(state.page, state.maxItems, state.searchText),
-        [state],
-    );
-
-    const { data: genres } = useAsync(() => genreService.all(), []);
+    const { data, loading } = useAsync(() => gameService.list(state), [state]);
 
     const [inputText, setInputText] = useState(state.searchText);
 
@@ -73,11 +77,20 @@ export function Homepage() {
         [state.searchText],
     );
 
-    const handleChange = (e: SelectChangeEvent) => {
+    const handleItemsChange = (e: SelectChangeEvent) => {
         setSearchParams(
             stateToParams({
                 ...state,
                 maxItems: e.target.value,
+            }),
+        );
+    };
+
+    const handleSortChange = (e: SelectChangeEvent) => {
+        setSearchParams(
+            stateToParams({
+                ...state,
+                orderBy: e.target.value,
             }),
         );
     };
@@ -107,13 +120,13 @@ export function Homepage() {
                 </Button>
 
                 <FormControl>
-                    <InputLabel>Items</InputLabel>
+                    <InputLabel>Sort by</InputLabel>
                     <Select
-                        label="Items"
-                        value={state.maxItems}
-                        onChange={handleChange}
+                        label="Sort by"
+                        value={state.orderBy}
+                        onChange={handleSortChange}
                     >
-                        {options.map((option, index) => (
+                        {sortOptions.map((option, index) => (
                             <MenuItem key={index} value={option.value}>
                                 {option.label}
                             </MenuItem>
@@ -121,12 +134,16 @@ export function Homepage() {
                     </Select>
                 </FormControl>
 
-                <FormControl fullWidth>
-                    <InputLabel>Genres</InputLabel>
-                    <Select label="Genres" value={'Genres'}>
-                        {genres?.map((genre, index) => (
-                            <MenuItem key={index} value={genre.name}>
-                                {genre.name}
+                <FormControl>
+                    <InputLabel>Show by</InputLabel>
+                    <Select
+                        label="Show by"
+                        value={state.maxItems}
+                        onChange={handleItemsChange}
+                    >
+                        {itemsOptions.map((option, index) => (
+                            <MenuItem key={index} value={option.value}>
+                                {option.label}
                             </MenuItem>
                         ))}
                     </Select>

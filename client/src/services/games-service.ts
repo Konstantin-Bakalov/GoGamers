@@ -1,4 +1,5 @@
 import { DedailedGameModel, GameModelRequest } from 'shared';
+import { FilterState } from '../pages/home-page';
 import { httpService } from './http-service';
 
 interface LoadGames {
@@ -13,9 +14,9 @@ class GameService {
         });
     }
 
-    async list(page: string, maxItems: string, searchText?: string) {
+    async list(state: FilterState) {
         return await httpService.get<LoadGames>('/games', {
-            query: { page, maxItems, searchText },
+            query: { ...state },
         });
     }
 
