@@ -23,6 +23,10 @@ class GameService {
     async loadGameById(id: number) {
         return await httpService.get<DedailedGameModel>(`/games/${id}`);
     }
+
+    async deleteById(id: number) {
+        return await httpService.delete(`/games/${id}`);
+    }
 }
 
 export const gameService = new GameService();

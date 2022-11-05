@@ -40,7 +40,7 @@ class HttpService {
         return this.request<T>('PUT', path, options);
     }
 
-    async delete<T>(path: string, options: RequestOptions) {
+    async delete<T>(path: string, options: RequestOptions = {}) {
         return this.request<T>('DELETE', path, options);
     }
 

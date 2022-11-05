@@ -7,6 +7,7 @@ interface HttpErrorOptions {
 
 export enum ErrorName {
     ValidationError = 'Validation Error',
+    ForbiddenError = 'Forbidden Error',
     GenericError = 'Generic Error',
 }
 
@@ -29,6 +30,17 @@ export class ValidationError extends HttpError {
         super({
             name: ErrorName.ValidationError,
             status: 400,
+            message,
+            data: fields,
+        });
+    }
+}
+
+export class ForbiddenError extends HttpError {
+    constructor(message: string, fields?: Record<string, string | undefined>) {
+        super({
+            name: ErrorName.ForbiddenError,
+            status: 403,
             message,
             data: fields,
         });

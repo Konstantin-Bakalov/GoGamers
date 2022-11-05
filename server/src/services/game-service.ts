@@ -3,7 +3,7 @@ import { GameGenreModel } from '../models/game-genre-model';
 import { GameModel } from '../models/game-model';
 import { GenreModel } from '../models/genre-model';
 import { LikeModel } from '../models/like-model';
-import { GameModelRequest } from 'shared';
+import { ForbiddenError, GameModelRequest } from 'shared';
 import { MediaModel } from '../models/media-model';
 
 class GameService {
@@ -104,6 +104,16 @@ class GameService {
             .findById(id)
             .throwIfNotFound()
             .withGraphFetched('[genres, media, creator]');
+    }
+
+    async deleteById(id: number, userId: number) {
+        const game = await GameModel.query().findById(id).throwIfNotFound();
+
+        // if (game?.userId === userId) {
+        //     return await GameModel.query().deleteById(id);
+        // } else {
+        throw new ForbiddenError('You have no access to this content');
+        // }
     }
 
     async getGamesWithLikes() {

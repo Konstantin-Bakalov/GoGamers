@@ -62,4 +62,17 @@ gamesRouter.post(
     }),
 );
 
+gamesRouter.delete(
+    '/:id',
+    auth,
+    requestHandler(async (req, res) => {
+        const id = zodStringAsNumber().parse(req.params.id);
+        const user = currentUser(res);
+
+        await gameService.deleteById(id, user.id);
+
+        res.status(200).json({ message: 'Game deleted' });
+    }),
+);
+
 export default gamesRouter;
