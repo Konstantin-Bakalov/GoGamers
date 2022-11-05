@@ -1,5 +1,11 @@
 import { isUndefined, omitBy, trimEnd, trimStart } from 'lodash';
-import { ErrorName, GenericError, UnknownError, ValidationError } from 'shared';
+import {
+    ErrorName,
+    ForbiddenError,
+    GenericError,
+    UnknownError,
+    ValidationError,
+} from 'shared';
 import { config } from '../config';
 import { UserStorage } from './user-storage-service';
 
@@ -57,6 +63,10 @@ class HttpService {
             switch (body.name) {
                 case ErrorName.ValidationError: {
                     return new ValidationError(body.message, body.data);
+                }
+
+                case ErrorName.ForbiddenError: {
+                    return new ForbiddenError(body.message, body.data);
                 }
 
                 default:

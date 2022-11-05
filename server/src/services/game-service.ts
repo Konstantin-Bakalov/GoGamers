@@ -112,7 +112,9 @@ class GameService {
         // if (game?.userId === userId) {
         //     return await GameModel.query().deleteById(id);
         // } else {
-        throw new ForbiddenError('You have no access to this content');
+        throw new ForbiddenError(
+            'You have no permission to delete this content',
+        );
         // }
     }
 
