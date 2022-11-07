@@ -109,13 +109,13 @@ class GameService {
     async deleteById(id: number, userId: number) {
         const game = await GameModel.query().findById(id).throwIfNotFound();
 
-        // if (game?.userId === userId) {
-        //     return await GameModel.query().deleteById(id);
-        // } else {
-        throw new ForbiddenError(
-            'You have no permission to delete this content',
-        );
-        // }
+        if (game?.userId === userId) {
+            return await GameModel.query().deleteById(id);
+        } else {
+            throw new ForbiddenError(
+                'You have no permission to delete this content',
+            );
+        }
     }
 
     async getGamesWithLikes() {

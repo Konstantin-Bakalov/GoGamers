@@ -28,7 +28,6 @@ export function GamePage() {
 
     const { trigger, error } = useAsyncAction(async () => {
         await gameService.deleteById(Number(game?.id));
-
         navigate('/');
     });
 
@@ -39,6 +38,7 @@ export function GamePage() {
 
         if (error instanceof ForbiddenError) {
             setForbiddenError(error.message);
+            handleClose();
         }
     }, [error]);
 
@@ -56,9 +56,11 @@ export function GamePage() {
                 </IconButton>
             )}
 
-            <Container>
-                <Alert severity="error">{forbiddenError}</Alert>
-            </Container>
+            {forbiddenError && (
+                <Container>
+                    <Alert severity="error">{forbiddenError}</Alert>
+                </Container>
+            )}
 
             {openDialog && (
                 <DeleteGameDialog onClose={handleClose} onSubmit={trigger} />
