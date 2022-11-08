@@ -1,5 +1,9 @@
 import { DetailedGameModel } from 'shared';
 
-export function Game(game: DetailedGameModel) {
-    return <div></div>;
+interface GameProps {
+    game: DetailedGameModel;
+}
+
+export function Game({ game }: GameProps) {
+    return <div>{game.name}</div>;
 }

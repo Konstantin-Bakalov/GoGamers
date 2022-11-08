@@ -1,8 +1,8 @@
 import { GameModel } from '../models/game-model';
-import { DedailedGameModel } from 'shared';
+import { DetailedGameModel } from 'shared';
 
 export class GameTransformer {
-    transform(game: GameModel): DedailedGameModel {
+    transform(game: GameModel): DetailedGameModel {
         return {
             id: game.id,
             userId: game.userId,
@@ -18,7 +18,7 @@ export class GameTransformer {
         };
     }
 
-    transformArray(games: GameModel[]): DedailedGameModel[] {
+    transformArray(games: GameModel[]): DetailedGameModel[] {
         return games.map((game) => this.transform(game));
     }
 }

@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { DeleteGameDialog } from '../dialogs/delete-game-dialog';
 import { useAsyncAction } from '../hooks/use-async-action';
 import { ForbiddenError } from 'shared';
+import { Reviews } from '../components/reviews';
 
 export function GamePage() {
     const { id } = useParams();
@@ -69,6 +70,7 @@ export function GamePage() {
             {game && (
                 <Box>
                     <GameCard game={game} />
+                    <Reviews gameId={game.id} />
                 </Box>
             )}
         </Container>

@@ -1,9 +1,9 @@
 import { Card, CardActionArea, CardMedia, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { DedailedGameModel } from 'shared';
+import { DetailedGameModel } from 'shared';
 
 interface GameCardProps {
-    game: DedailedGameModel;
+    game: DetailedGameModel;
 }
 
 export function GameCard({ game }: GameCardProps) {

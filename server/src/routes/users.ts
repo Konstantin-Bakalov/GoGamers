@@ -14,19 +14,19 @@ usersRouter.get('/', auth, async (request, response) => {
     response.status(200).json(transformer.transformArray(users));
 });
 
-usersRouter.get('/:id', auth, async (request, response) => {
-    const userId = Number.parseInt(request.params.id);
+// usersRouter.get('/:id', auth, async (request, response) => {
+//     const userId = Number.parseInt(request.params.id);
 
-    if (!Number.isNaN(userId)) {
-        try {
-            const user = await userService.getUser(Number(userId));
-            response.status(200).json(transformer.transform(user));
-        } catch (error) {
-            response.status(404).json({ error: 'User not found' });
-        }
-    } else {
-        response.status(404).json({ error: 'User id must be a number' });
-    }
-});
+//     if (!Number.isNaN(userId)) {
+//         try {
+//             const user = await userService.getUser(Number(userId));
+//             response.status(200).json(transformer.transform(user));
+//         } catch (error) {
+//             response.status(404).json({ error: 'User not found' });
+//         }
+//     } else {
+//         response.status(404).json({ error: 'User id must be a number' });
+//     }
+// });
 
 export default usersRouter;

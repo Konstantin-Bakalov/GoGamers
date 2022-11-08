@@ -1,15 +1,15 @@
-import { DedailedGameModel, GameModelRequest } from 'shared';
+import { DetailedGameModel, GameModelRequest } from 'shared';
 import { FilterState } from '../pages/home-page';
 import { httpService } from './http-service';
 
 interface LoadGames {
-    results: DedailedGameModel[];
+    results: DetailedGameModel[];
     total: number;
 }
 
 class GameService {
     async create(game: GameModelRequest) {
-        return await httpService.post<DedailedGameModel>('/games', {
+        return await httpService.post<DetailedGameModel>('/games', {
             body: game,
         });
     }
@@ -21,7 +21,7 @@ class GameService {
     }
 
     async loadGameById(id: number) {
-        return await httpService.get<DedailedGameModel>(`/games/${id}`);
+        return await httpService.get<DetailedGameModel>(`/games/${id}`);
     }
 
     async deleteById(id: number) {
