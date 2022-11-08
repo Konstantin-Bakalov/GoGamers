@@ -1,5 +1,5 @@
-import { DedailedGameModel } from 'shared';
+import { DetailedGameModel } from 'shared';
 
-export function Game(game: DedailedGameModel) {
-    return <p>Game: {game.name}</p>;
+export function Game(game: DetailedGameModel) {
+    return <div></div>;
 }

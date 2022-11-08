@@ -43,4 +43,4 @@ export type BaseGameModel = z.infer<typeof BaseGameModelSchema>;
 
 export type GameModelRequest = z.infer<typeof GameModelRequestSchema>;
 
-export type DedailedGameModel = z.infer<typeof DetailedGameModelSchema>;
+export type DetailedGameModel = z.infer<typeof DetailedGameModelSchema>;
