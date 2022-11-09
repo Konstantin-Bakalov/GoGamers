@@ -9,8 +9,10 @@ import { useCurrentUser } from '../hooks/use-current-user';
 import { useEffect, useState } from 'react';
 import { DeleteGameDialog } from '../dialogs/delete-game-dialog';
 import { useAsyncAction } from '../hooks/use-async-action';
-import { ForbiddenError } from 'shared';
-import { Reviews } from '../components/reviews';
+import { ForbiddenError, ReviewModelDetailed } from 'shared';
+import { ReviewForm } from '../components/review-form';
+import { reviewService } from '../services/reviews-service';
+import { ReviewList } from '../components/review-list';
 
 export function GamePage() {
     const { id } = useParams();
@@ -31,6 +33,20 @@ export function GamePage() {
         await gameService.deleteById(Number(game?.id));
         navigate('/');
     });
+
+    const [reviews, setReviews] = useState<ReviewModelDetailed[]>([]);
+
+    useEffect(() => {
+        reviewService
+            .listAll(Number(id))
+            .then((reviews) => setReviews(reviews));
+    }, []);
+
+    const { trigger: submit } = useAsyncAction(
+        async (body: string, gameId: number) => {
+            await reviewService.create({ body, gameId });
+        },
+    );
 
     useEffect(() => {
         if (!error) {
@@ -70,7 +86,8 @@ export function GamePage() {
             {game && (
                 <Box>
                     <GameCard game={game} />
-                    <Reviews gameId={game.id} />
+                    <ReviewForm gameId={game.id} onSubmit={submit} />
+                    <ReviewList reviews={reviews} />
                 </Box>
             )}
         </Container>

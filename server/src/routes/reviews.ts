@@ -18,6 +18,7 @@ reviewRouter.post(
 
         const createdReview = await reviewService.create({
             userId: user.id,
+            username: user.name,
             gameId: review.gameId,
             body: review.body,
         });
@@ -27,11 +28,11 @@ reviewRouter.post(
 );
 
 reviewRouter.get(
-    '/',
+    '/:gameId',
     auth,
     requestHandler(async (req, res) => {
-        console.log('backend');
-        const gameId = zodStringAsNumber().parse(req.body);
+        const gameId = zodStringAsNumber().parse(req.params.gameId);
+
         const reviews = await reviewService.list(gameId);
 
         res.status(200).json(reviewTransformer.transformArray(reviews));

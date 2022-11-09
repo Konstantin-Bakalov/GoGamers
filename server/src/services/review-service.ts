@@ -7,7 +7,9 @@ class ReviewService {
     }
 
     async list(gameId: number) {
-        return await ReviewModel.query().where({ gameId });
+        return await ReviewModel.query()
+            .where({ gameId })
+            .orderBy('createdAt', 'DESC');
     }
 }
 

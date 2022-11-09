@@ -1,18 +1,16 @@
-import { Card, Container } from '@mui/material';
-import { useAsync } from '../hooks/use-async';
-import { reviewService } from '../services/reviews-service';
+import { Container } from '@mui/material';
+import { ReviewModelDetailed } from 'shared';
+import { Review } from './review';
 
 interface ReviewListProps {
-    gameId: number;
+    reviews: ReviewModelDetailed[] | undefined;
 }
 
-export function ReviewList({ gameId }: ReviewListProps) {
-    const { data } = useAsync(() => reviewService.listAll(gameId), []);
-
+export function ReviewList({ reviews }: ReviewListProps) {
     return (
         <Container>
-            {data?.map((review, index) => (
-                <Card key={index}>{review.body}</Card>
+            {reviews?.map((review, index) => (
+                <Review key={index} review={review} />
             ))}
         </Container>
     );
