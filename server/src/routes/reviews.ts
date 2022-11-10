@@ -13,7 +13,6 @@ reviewRouter.post(
     auth,
     requestHandler(async (req, res) => {
         const review = ReviewModelRequestSchema.parse(req.body);
-
         const user = currentUser(res);
 
         const createdReview = await reviewService.create({
