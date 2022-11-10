@@ -9,8 +9,8 @@ interface ReviewListProps {
 export function ReviewList({ reviews }: ReviewListProps) {
     return (
         <Container>
-            {reviews?.map((review, index) => (
-                <Review key={index} review={review} />
+            {reviews?.map((review) => (
+                <Review key={review.body} review={review} />
             ))}
         </Container>
     );

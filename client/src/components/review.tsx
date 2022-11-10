@@ -8,7 +8,9 @@ interface ReviewProps {
 export function Review({ review }: ReviewProps) {
     return (
         <Box>
-            {review.body}, {review.username}
+            <Box>
+                {review.body}, {review.username}
+            </Box>
         </Box>
     );
 }

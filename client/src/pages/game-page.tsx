@@ -29,22 +29,22 @@ export function GamePage() {
         [id],
     );
 
-    const { trigger, error } = useAsyncAction(async () => {
+    const { trigger, error: error } = useAsyncAction(async () => {
         await gameService.deleteById(Number(game?.id));
         navigate('/');
     });
 
     const [reviews, setReviews] = useState<ReviewModelDetailed[]>([]);
 
-    useEffect(() => {
-        reviewService
-            .listAll(Number(id))
-            .then((reviews) => setReviews(reviews));
+    useAsync(async () => {
+        const reviews = await reviewService.listAll(Number(id));
+        setReviews(reviews);
     }, []);
 
     const { trigger: submit } = useAsyncAction(
         async (body: string, gameId: number) => {
-            await reviewService.create({ body, gameId });
+            const newReview = await reviewService.create({ body, gameId });
+            setReviews((prev) => [newReview, ...prev]);
         },
     );
 

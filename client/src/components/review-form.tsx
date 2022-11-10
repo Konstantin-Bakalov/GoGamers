@@ -1,5 +1,5 @@
 import { Button, Container, TextField } from '@mui/material';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { LoadingButton } from '@mui/lab';
 
 interface ReviewsProps {
@@ -9,6 +9,12 @@ interface ReviewsProps {
 
 export function ReviewForm({ gameId, onSubmit }: ReviewsProps) {
     const [body, setBody] = useState('');
+
+    const handleSubmit = (e: FormEvent<Element>) => {
+        e.preventDefault();
+        onSubmit(body, gameId);
+        setBody('');
+    };
 
     return (
         <Container disableGutters>
@@ -26,7 +32,7 @@ export function ReviewForm({ gameId, onSubmit }: ReviewsProps) {
                 disabled={body === ''}
                 disableElevation
                 // loading={loading}
-                onClick={() => onSubmit(body, gameId)}
+                onClick={(e) => handleSubmit(e)}
             >
                 Submit review
             </LoadingButton>
