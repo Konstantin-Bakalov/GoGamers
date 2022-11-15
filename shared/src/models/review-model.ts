@@ -13,6 +13,7 @@ export const ReviewModelRequestSchema = ReviewModelSchema.omit({
 });
 
 export const ReviewModelDetailedSchema = ReviewModelSchema.extend({
+    id: z.number(),
     createdAt: z.date(),
     profilePicture: z.string().or(z.undefined()),
 });

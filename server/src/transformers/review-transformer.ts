@@ -3,6 +3,7 @@ import { ReviewModel } from '../models/review-model';
 export class ReviewTransformer {
     transform(review: ReviewModel) {
         return {
+            id: review.id,
             userId: review.userId,
             username: review.username,
             gameId: review.gameId,

@@ -33,7 +33,6 @@ reviewRouter.get(
         const gameId = zodStringAsNumber().parse(req.params.gameId);
 
         const reviews = await reviewService.list(gameId);
-        console.log(reviews);
 
         res.status(200).json(reviewTransformer.transformArray(reviews));
     }),

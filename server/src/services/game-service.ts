@@ -48,12 +48,12 @@ class GameService {
         });
     }
 
-    async addLike(userId: number, gameId: number) {
-        return await LikeModel.query().insertAndFetch({
-            userId,
-            gameId,
-        });
-    }
+    // async addLike(userId: number, gameId: number) {
+    //     return await LikeModel.query().insertAndFetch({
+    //         userId,
+    //         gameId,
+    //     });
+    // }
 
     async listGames({
         page,
