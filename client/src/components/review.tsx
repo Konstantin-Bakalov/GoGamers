@@ -1,21 +1,18 @@
-import { Box } from '@mui/material';
+import { Avatar, Box } from '@mui/material';
 import { ReviewModelDetailed } from 'shared';
-import { format, parseJSON } from 'date-fns';
+import dayjs from 'dayjs';
 
 interface ReviewProps {
     review: ReviewModelDetailed;
 }
 
 export function Review({ review }: ReviewProps) {
-    console.log(typeof review.createdAt);
     return (
         <Box>
-            <Box>
-                {review.body}, {review.username}
-            </Box>
-            <Box>{format(new Date(2014, 1, 11), 'MM/dd/yyyy')}</Box>
-            {/* <Box>{review.createdAt.getFullYear()}</Box> */}
-            {/* <Box>{}</Box> */}
+            <Avatar alt="Remy Sharp" src={review.profilePicture} />
+            <Box>{review.username}</Box>
+            <Box>{review.body}</Box>
+            <Box>{dayjs(review.createdAt).format('D-MMM-YYYY HH:mma')}</Box>
         </Box>
     );
 }

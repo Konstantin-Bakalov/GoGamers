@@ -14,6 +14,7 @@ export const ReviewModelRequestSchema = ReviewModelSchema.omit({
 
 export const ReviewModelDetailedSchema = ReviewModelSchema.extend({
     createdAt: z.date(),
+    profilePicture: z.string().or(z.undefined()),
 });
 
 export type ReviewModel = z.infer<typeof ReviewModelSchema>;

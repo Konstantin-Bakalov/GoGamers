@@ -8,6 +8,7 @@ export class ReviewTransformer {
             gameId: review.gameId,
             body: review.body,
             createdAt: review.createdAt,
+            profilePicture: review.user?.profilePicture,
         };
     }
 
