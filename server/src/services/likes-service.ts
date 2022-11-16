@@ -8,8 +8,12 @@ class LikesService {
         });
     }
 
-    async delete(reviewId: number) {
-        return await LikeModel.query().deleteById(reviewId);
+    async list(reviewId: number) {
+        return await LikeModel.query().where({ reviewId });
+    }
+
+    async delete(userId: number, reviewId: number) {
+        return await LikeModel.query().where({ userId, reviewId }).delete();
     }
 }
 

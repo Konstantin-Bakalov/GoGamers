@@ -1,5 +1,6 @@
 import { Model } from 'objection';
 import { BaseModel } from './base-model';
+import { LikeModel } from './like-model';
 import { UserModel } from './user-model';
 
 export class ReviewModel extends BaseModel {
@@ -8,6 +9,7 @@ export class ReviewModel extends BaseModel {
     gameId!: number;
     body!: string;
     user?: UserModel;
+    like?: LikeModel;
 
     static get tableName() {
         return 'reviews';
@@ -21,6 +23,14 @@ export class ReviewModel extends BaseModel {
                 join: {
                     from: 'reviews.userId',
                     to: 'users.id',
+                },
+            },
+            like: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: LikeModel,
+                join: {
+                    from: 'reviews.id',
+                    to: 'likes.reviewId',
                 },
             },
         };

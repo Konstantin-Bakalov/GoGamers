@@ -1,4 +1,7 @@
 import { ReviewModel } from '../models/review-model';
+import { LikeTransformer } from './like-tansformer';
+
+const likeTransformer = new LikeTransformer();
 
 export class ReviewTransformer {
     transform(review: ReviewModel) {
@@ -10,6 +13,9 @@ export class ReviewTransformer {
             body: review.body,
             createdAt: review.createdAt,
             profilePicture: review.user?.profilePicture,
+            like: review.like
+                ? likeTransformer.transform(review.like)
+                : undefined,
         };
     }
 

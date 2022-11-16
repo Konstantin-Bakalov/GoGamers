@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { LikeSchema } from './like-model';
 
 export const ReviewModelSchema = z.object({
     userId: z.number(),
@@ -14,6 +15,7 @@ export const ReviewModelRequestSchema = ReviewModelSchema.omit({
 
 export const ReviewModelDetailedSchema = ReviewModelSchema.extend({
     id: z.number(),
+    like: LikeSchema.or(z.undefined()),
     createdAt: z.date(),
     profilePicture: z.string().or(z.undefined()),
 });

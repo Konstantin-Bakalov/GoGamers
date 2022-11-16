@@ -9,7 +9,7 @@ class ReviewService {
     async list(gameId: number) {
         return await ReviewModel.query()
             .where({ gameId })
-            .withGraphFetched('user')
+            .withGraphFetched('[user, like]')
             .orderBy('createdAt', 'DESC');
     }
 }

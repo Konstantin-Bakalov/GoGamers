@@ -14,16 +14,21 @@ interface ReviewProps {
 }
 
 export function Review({ review }: ReviewProps) {
-    const [liked, setLiked] = useState(false);
+    const [liked, setLiked] = useState(review.like ? true : false);
 
     const { trigger } = useAsyncAction(async () => {
-        await likeService.create(review.id);
-        setLiked(true);
+        if (!liked) {
+            await likeService.create(review.id);
+            setLiked(true);
+        } else {
+            await likeService.delete(review.id);
+            setLiked(false);
+        }
     });
 
     return (
         <Box>
-            <Avatar alt="Remy Sharp" src={review.profilePicture} />
+            <Avatar alt="User" src={review.profilePicture} />
             <Box>{review.username}</Box>
             <Box>{review.body}</Box>
             <Box>{dayjs(review.createdAt).format('D-MMM-YYYY HH:mma')}</Box>

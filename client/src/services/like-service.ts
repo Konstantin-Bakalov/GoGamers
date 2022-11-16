@@ -6,6 +6,14 @@ class LikeService {
             body: { reviewId },
         });
     }
+
+    async delete(reviewId: number) {
+        return await httpService.delete(`/likes/${reviewId}`);
+    }
+
+    // async list(reviewId: number) {
+    //     return await httpService.get(`/likes/${reviewId}`);
+    // }
 }
 
 export const likeService = new LikeService();
