@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { zodStringAsNumber } from 'shared';
+import { z } from 'zod';
 import { requestHandler } from '../lib/request-handler';
 import auth, { currentUser } from '../middlewares/auth-middleware';
 import { likesService } from '../services/likes-service';
@@ -12,26 +13,14 @@ likesRouter.post(
     '/',
     auth,
     requestHandler(async (req, res) => {
-        const reviewId = zodStringAsNumber().parse(req.params.reviewId);
+        const reviewId = z.number().parse(req.body.reviewId);
         const user = currentUser(res);
 
-        const like = await likesService.create(user.id, Number(reviewId));
+        const like = await likesService.create(user.id, reviewId);
 
         res.status(200).json(likeTransformer.transform(like));
     }),
 );
-
-// likesRouter.get(
-//     '/:reviewId',
-//     auth,
-//     requestHandler(async (req, res) => {
-//         const reviewId = zodStringAsNumber().parse(req.params.reviewId);
-
-//         const likes = await likesService.list(Number(reviewId));
-
-//         res.status(200).json(likeTransformer.transformArray(likes));
-//     }),
-// );
 
 likesRouter.delete(
     '/:reviewId',
@@ -40,7 +29,7 @@ likesRouter.delete(
         const reviewId = zodStringAsNumber().parse(req.params.reviewId);
         const user = currentUser(res);
 
-        await likesService.delete(user.id, Number(reviewId));
+        await likesService.delete(user.id, reviewId);
 
         res.status(200).json({});
     }),
