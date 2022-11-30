@@ -176,7 +176,7 @@ export function Homepage() {
                         page: value.toString(),
                     });
                 }}
-            ></Pagination>
+            />
         </Container>
     );
 }

@@ -1,5 +1,11 @@
 import { ReviewModelDetailed, ReviewModelRequest } from 'shared';
+import { PageState } from '../pages/game-page';
 import { httpService } from './http-service';
+
+interface LoadReviews {
+    results: ReviewModelDetailed[];
+    total: number;
+}
 
 class ReviewService {
     async create(review: ReviewModelRequest) {
@@ -8,10 +14,10 @@ class ReviewService {
         });
     }
 
-    async listAll(gameId: number) {
-        return await httpService.get<ReviewModelDetailed[]>(
-            `/reviews/${gameId}`,
-        );
+    async list(gameId: number, state: PageState) {
+        return await httpService.get<LoadReviews>(`/reviews/${gameId}`, {
+            query: { ...state },
+        });
     }
 }
 

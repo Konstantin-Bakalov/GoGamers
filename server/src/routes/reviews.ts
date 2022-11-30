@@ -8,6 +8,8 @@ import { ReviewTransformer } from '../transformers/review-transformer';
 const reviewRouter = Router();
 const reviewTransformer = new ReviewTransformer();
 
+const pageSize = 3;
+
 reviewRouter.post(
     '/',
     auth,
@@ -30,12 +32,22 @@ reviewRouter.get(
     '/:gameId',
     auth,
     requestHandler(async (req, res) => {
+        const page = zodStringAsNumber().parse(req.query.page);
+
         const gameId = zodStringAsNumber().parse(req.params.gameId);
         const user = currentUser(res);
 
-        const reviews = await reviewService.list(user.id, gameId);
+        const { results, total } = await reviewService.list(
+            user.id,
+            gameId,
+            page - 1,
+            pageSize,
+        );
 
-        res.status(200).json(reviewTransformer.transformArray(reviews));
+        res.status(200).json({
+            results: reviewTransformer.transformArray(results),
+            total,
+        });
     }),
 );
 

@@ -13,7 +13,8 @@ class ReviewService {
             .withGraphFetched(
                 '[user, likes, dislikes, liked(mod), disliked(mod)]',
             )
-            .orderBy('createdAt', 'DESC');
+            .orderBy('createdAt', 'DESC')
+            .page(page, pageSize);
     }
 }
 
