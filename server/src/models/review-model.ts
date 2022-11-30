@@ -1,5 +1,6 @@
 import { Model } from 'objection';
 import { BaseModel } from './base-model';
+import { DislikeModel } from './dislike-model';
 import { LikeModel } from './like-model';
 import { UserModel } from './user-model';
 
@@ -10,6 +11,7 @@ export class ReviewModel extends BaseModel {
     body!: string;
     user?: UserModel;
     like?: LikeModel;
+    dislike?: DislikeModel;
 
     static get tableName() {
         return 'reviews';
@@ -31,6 +33,14 @@ export class ReviewModel extends BaseModel {
                 join: {
                     from: 'reviews.id',
                     to: 'likes.reviewId',
+                },
+            },
+            dislike: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: DislikeModel,
+                join: {
+                    from: 'reviews.id',
+                    to: 'dislikes.reviewId',
                 },
             },
         };

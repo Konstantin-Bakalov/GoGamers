@@ -8,6 +8,7 @@ import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import { useAsyncAction } from '../hooks/use-async-action';
 import { likeService } from '../services/like-service';
 import { useState } from 'react';
+import { dislikeService } from '../services/dislike-service';
 
 interface ReviewProps {
     review: ReviewModelDetailed;
@@ -15,14 +16,33 @@ interface ReviewProps {
 
 export function Review({ review }: ReviewProps) {
     const [liked, setLiked] = useState(review.like ? true : false);
+    const [disliked, setDisliked] = useState(review.dislike ? true : false);
 
-    const { trigger } = useAsyncAction(async () => {
+    const { trigger: like } = useAsyncAction(async () => {
         if (!liked) {
+            if (disliked) {
+                await dislikeService.delete(review.id);
+                setDisliked(false);
+            }
             await likeService.create(review.id);
             setLiked(true);
         } else {
             await likeService.delete(review.id);
             setLiked(false);
+        }
+    });
+
+    const { trigger: dislike } = useAsyncAction(async () => {
+        if (!disliked) {
+            if (liked) {
+                await likeService.delete(review.id);
+                setLiked(false);
+            }
+            await dislikeService.create(review.id);
+            setDisliked(true);
+        } else {
+            await dislikeService.delete(review.id);
+            setDisliked(false);
         }
     });
 
@@ -32,11 +52,11 @@ export function Review({ review }: ReviewProps) {
             <Box>{review.username}</Box>
             <Box>{review.body}</Box>
             <Box>{dayjs(review.createdAt).format('D-MMM-YYYY HH:mma')}</Box>
-            <IconButton onClick={trigger}>
+            <IconButton onClick={like}>
                 {liked ? <ThumbUpIcon /> : <ThumbUpOffAltIcon />}
             </IconButton>
-            <IconButton>
-                <ThumbDownOffAltIcon />
+            <IconButton onClick={dislike}>
+                {disliked ? <ThumbDownAltIcon /> : <ThumbDownOffAltIcon />}
             </IconButton>
         </Box>
     );

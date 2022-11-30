@@ -2,7 +2,6 @@ import { Model } from 'objection';
 import { GameGenreModel } from '../models/game-genre-model';
 import { GameModel } from '../models/game-model';
 import { GenreModel } from '../models/genre-model';
-import { LikeModel } from '../models/like-model';
 import { ForbiddenError, GameModelRequest } from 'shared';
 import { MediaModel } from '../models/media-model';
 
@@ -48,13 +47,6 @@ class GameService {
         });
     }
 
-    // async addLike(userId: number, gameId: number) {
-    //     return await LikeModel.query().insertAndFetch({
-    //         userId,
-    //         gameId,
-    //     });
-    // }
-
     async listGames({
         page,
         pageSize,
@@ -84,21 +76,6 @@ class GameService {
         return await result;
     }
 
-    async createGameWithLikes(name: string, userId: number, minAge: number) {
-        // return await GameModel.transaction(async (trx) => {
-        //     const game = await GameModel.query(trx).insertAndFetch({
-        //         name,
-        //         userId,
-        //         minAge,
-        //     });
-        //     await LikeModel.query(trx).insert({
-        //         userId,
-        //         gameId: game.id,
-        //     });
-        //     return game;
-        // });
-    }
-
     async findGameById(id: number) {
         return await GameModel.query()
             .findById(id)
@@ -116,19 +93,6 @@ class GameService {
                 'You have no permission to delete this content',
             );
         }
-    }
-
-    async getGamesWithLikes() {
-        return await GameModel.query().withGraphFetched('likedBy');
-    }
-
-    async getGamesWithCreatorAndLikes() {
-        return await GameModel.query()
-            .modifiers({
-                usersWithoutPasswords: (query) =>
-                    query.select('id', 'name', 'age'),
-            })
-            .withGraphFetched('[creator(usersWithoutPasswords), likedBy]');
     }
 }
 

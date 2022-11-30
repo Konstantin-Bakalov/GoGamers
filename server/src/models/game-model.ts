@@ -31,18 +31,6 @@ export class GameModel extends BaseModel {
                     to: 'users.id',
                 },
             },
-            // likedBy: {
-            //     relation: Model.ManyToManyRelation,
-            //     modelClass: UserModel,
-            //     join: {
-            //         from: 'games.id',
-            //         through: {
-            //             from: 'likes.gameId',
-            //             to: 'likes.userId',
-            //         },
-            //         to: 'users.id',
-            //     },
-            // },
             genres: {
                 relation: Model.ManyToManyRelation,
                 modelClass: GenreModel,
