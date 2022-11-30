@@ -10,8 +10,10 @@ export class ReviewModel extends BaseModel {
     gameId!: number;
     body!: string;
     user?: UserModel;
-    like?: LikeModel;
-    dislike?: DislikeModel;
+    liked?: LikeModel;
+    disliked?: DislikeModel;
+    likes?: LikeModel[];
+    dislikes?: DislikeModel[];
 
     static get tableName() {
         return 'reviews';
@@ -27,7 +29,7 @@ export class ReviewModel extends BaseModel {
                     to: 'users.id',
                 },
             },
-            like: {
+            liked: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: LikeModel,
                 join: {
@@ -35,8 +37,24 @@ export class ReviewModel extends BaseModel {
                     to: 'likes.reviewId',
                 },
             },
-            dislike: {
+            disliked: {
                 relation: Model.BelongsToOneRelation,
+                modelClass: DislikeModel,
+                join: {
+                    from: 'reviews.id',
+                    to: 'dislikes.reviewId',
+                },
+            },
+            likes: {
+                relation: Model.HasManyRelation,
+                modelClass: LikeModel,
+                join: {
+                    from: 'reviews.id',
+                    to: 'likes.reviewId',
+                },
+            },
+            dislikes: {
+                relation: Model.HasManyRelation,
                 modelClass: DislikeModel,
                 join: {
                     from: 'reviews.id',

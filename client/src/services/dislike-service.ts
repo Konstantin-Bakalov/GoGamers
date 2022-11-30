@@ -12,7 +12,7 @@ class DislikeService {
     }
 
     // async list(reviewId: number) {
-    //     return await httpService.get(`/likes/${reviewId}`);
+    //     return await httpService.get(`/dislikes/${reviewId}`);
     // }
 }
 

@@ -1,4 +1,4 @@
-import { Avatar, Box, IconButton } from '@mui/material';
+import { Avatar, Box, IconButton, Typography } from '@mui/material';
 import { ReviewModelDetailed } from 'shared';
 import dayjs from 'dayjs';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
@@ -15,20 +15,26 @@ interface ReviewProps {
 }
 
 export function Review({ review }: ReviewProps) {
-    const [liked, setLiked] = useState(review.like ? true : false);
-    const [disliked, setDisliked] = useState(review.dislike ? true : false);
+    const [liked, setLiked] = useState(review.liked);
+    const [disliked, setDisliked] = useState(review.disliked);
+
+    const [likeCount, setLikeCount] = useState(review.likes);
+    const [dislikeCount, setDislikeCount] = useState(review.dislikes);
 
     const { trigger: like } = useAsyncAction(async () => {
         if (!liked) {
             if (disliked) {
                 await dislikeService.delete(review.id);
                 setDisliked(false);
+                setDislikeCount((prev) => prev - 1);
             }
             await likeService.create(review.id);
             setLiked(true);
+            setLikeCount((prev) => prev + 1);
         } else {
             await likeService.delete(review.id);
             setLiked(false);
+            setLikeCount((prev) => prev - 1);
         }
     });
 
@@ -37,12 +43,15 @@ export function Review({ review }: ReviewProps) {
             if (liked) {
                 await likeService.delete(review.id);
                 setLiked(false);
+                setLikeCount((prev) => prev - 1);
             }
             await dislikeService.create(review.id);
             setDisliked(true);
+            setDislikeCount((prev) => prev + 1);
         } else {
             await dislikeService.delete(review.id);
             setDisliked(false);
+            setDislikeCount((prev) => prev - 1);
         }
     });
 
@@ -54,9 +63,11 @@ export function Review({ review }: ReviewProps) {
             <Box>{dayjs(review.createdAt).format('D-MMM-YYYY HH:mma')}</Box>
             <IconButton onClick={like}>
                 {liked ? <ThumbUpIcon /> : <ThumbUpOffAltIcon />}
+                <Typography>{likeCount}</Typography>
             </IconButton>
             <IconButton onClick={dislike}>
                 {disliked ? <ThumbDownAltIcon /> : <ThumbDownOffAltIcon />}
+                <Typography>{dislikeCount}</Typography>
             </IconButton>
         </Box>
     );

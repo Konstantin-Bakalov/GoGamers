@@ -31,8 +31,9 @@ reviewRouter.get(
     auth,
     requestHandler(async (req, res) => {
         const gameId = zodStringAsNumber().parse(req.params.gameId);
+        const user = currentUser(res);
 
-        const reviews = await reviewService.list(gameId);
+        const reviews = await reviewService.list(user.id, gameId);
 
         res.status(200).json(reviewTransformer.transformArray(reviews));
     }),
