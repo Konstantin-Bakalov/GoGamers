@@ -3,7 +3,9 @@ import { ReviewModel as RWM } from 'shared';
 
 class ReviewService {
     async create(review: RWM) {
-        return await ReviewModel.query().insertAndFetch(review);
+        return await ReviewModel.query()
+            .insertAndFetch(review)
+            .withGraphFetched('user');
     }
 
     async list(userId: number, gameId: number, page: number, pageSize: number) {
