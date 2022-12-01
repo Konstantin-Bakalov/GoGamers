@@ -12,7 +12,14 @@ import { useAsync } from '../hooks/use-async';
 import { gameService } from '../services/games-service';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useCurrentUser } from '../hooks/use-current-user';
-import { useEffect, useMemo, useState } from 'react';
+import {
+    ReactNode,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from 'react';
 import { DeleteGameDialog } from '../dialogs/delete-game-dialog';
 import { useAsyncAction } from '../hooks/use-async-action';
 import { ForbiddenError, ReviewModelDetailed } from 'shared';
@@ -59,12 +66,32 @@ export function GamePage() {
 
     const [reviews, setReviews] = useState<ReviewModelDetailed[]>([]);
     const [total, setTotal] = useState(0);
+    const [hasMore, setHasMore] = useState(false);
+    const ref = useRef();
+
+    // useAsync(async () => {
+    //     const reviews = await reviewService.list(Number(id), state);
+    //     setReviews(reviews.results);
+    //     setTotal(reviews.total);
+    // }, [state]);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            const entry = entries[0];
+            console.log(entry);
+        });
+
+        if (ref.current) observer.observe(ref.current);
+    }, []);
 
     useAsync(async () => {
-        const reviews = await reviewService.list(Number(id), state);
-        setReviews(reviews.results);
-        setTotal(reviews.total);
+        const res = await reviewService.list(Number(id), state);
+        setReviews((prev) => [...prev, ...res.results]);
     }, [state]);
+
+    const lastReview = useCallback((node: ReactNode) => {
+        console.log(node);
+    }, []);
 
     const { trigger: submit } = useAsyncAction(
         async (body: string, gameId: number) => {
@@ -112,8 +139,19 @@ export function GamePage() {
                 <Box>
                     <GameCard game={game} />
                     <ReviewForm gameId={game.id} onSubmit={submit} />
-                    <ReviewList reviews={reviews} />
-                    <Pagination
+                    {reviews.map((review, index) => {
+                        if (index === reviews.length - 1) {
+                            return (
+                                <Box ref={ref} key={index}>
+                                    {review.body}
+                                </Box>
+                            );
+                        }
+
+                        return <Box key={index}>{review.body}</Box>;
+                    })}
+                    {/* <ReviewList reviews={reviews} /> */}
+                    {/* <Pagination
                         shape="rounded"
                         variant="outlined"
                         count={Math.ceil(total / 3)}
@@ -121,7 +159,7 @@ export function GamePage() {
                         onChange={(e, value) => {
                             setSearchParams({ page: value.toString() });
                         }}
-                    />
+                    /> */}
                 </Box>
             )}
         </Container>

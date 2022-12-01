@@ -10,7 +10,7 @@ export function ReviewList({ reviews }: ReviewListProps) {
     return (
         <Container>
             {reviews?.map((review) => (
-                <Review key={review.body} review={review} />
+                <Review key={review.createdAt.toString()} review={review} />
             ))}
         </Container>
     );
