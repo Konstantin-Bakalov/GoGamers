@@ -66,32 +66,68 @@ export function GamePage() {
 
     const [reviews, setReviews] = useState<ReviewModelDetailed[]>([]);
     const [total, setTotal] = useState(0);
-    const [hasMore, setHasMore] = useState(false);
-    const ref = useRef();
-
-    // useAsync(async () => {
-    //     const reviews = await reviewService.list(Number(id), state);
-    //     setReviews(reviews.results);
-    //     setTotal(reviews.total);
-    // }, [state]);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver((entries) => {
-            const entry = entries[0];
-            console.log(entry);
-        });
-
-        if (ref.current) observer.observe(ref.current);
-    }, []);
 
     useAsync(async () => {
-        const res = await reviewService.list(Number(id), state);
-        setReviews((prev) => [...prev, ...res.results]);
+        const reviews = await reviewService.list(Number(id), { page: '1' });
+        setReviews(reviews.results);
+        setTotal(reviews.total);
     }, [state]);
 
-    const lastReview = useCallback((node: ReactNode) => {
-        console.log(node);
+    // useAsync(async () => {
+    //     const res = await reviewService.list(Number(id), state);
+    //     setReviews((prev) => [...prev, ...res.results]);
+    // }, [state]);
+
+    const [isVisible, setIsVisible] = useState(false);
+    const [node, setNode] = useState<HTMLDivElement | undefined>(undefined);
+    // const ref = useRef<HTMLDivElement>();
+    const [page, setPage] = useState(1);
+
+    const onRefChange = useCallback((node: HTMLDivElement) => {
+        setNode(node);
     }, []);
+
+    const callback = useCallback(
+        (
+            entries: IntersectionObserverEntry[],
+            observer: IntersectionObserver,
+        ) => {
+            if (page < 4) {
+                reviewService
+                    .list(Number(id), { page: String(page + 1) })
+                    .then((res) =>
+                        setReviews((prev) => [...prev, ...res.results]),
+                    );
+                setPage((prev) => prev + 1);
+                observer.unobserve(entries[0].target);
+                console.log(entries);
+                setIsVisible(entries[0].isIntersecting);
+            }
+        },
+        [node],
+    );
+
+    const options = useMemo(() => {
+        return {
+            root: null,
+            rootMargin: '100px',
+            threshhold: 0.3, // 1.0
+        };
+    }, []);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(callback, options);
+        const currentTarget = node;
+        if (currentTarget) {
+            observer.observe(currentTarget);
+        }
+
+        return () => {
+            if (currentTarget) {
+                observer.unobserve(currentTarget);
+            }
+        };
+    }, [node]);
 
     const { trigger: submit } = useAsyncAction(
         async (body: string, gameId: number) => {
@@ -142,13 +178,21 @@ export function GamePage() {
                     {reviews.map((review, index) => {
                         if (index === reviews.length - 1) {
                             return (
-                                <Box ref={ref} key={index}>
+                                <Box
+                                    sx={{ margin: '50px' }}
+                                    ref={onRefChange}
+                                    key={index}
+                                >
                                     {review.body}
                                 </Box>
                             );
                         }
 
-                        return <Box key={index}>{review.body}</Box>;
+                        return (
+                            <Box sx={{ margin: '50px' }} key={index}>
+                                {review.body}
+                            </Box>
+                        );
                     })}
                     {/* <ReviewList reviews={reviews} /> */}
                     {/* <Pagination
