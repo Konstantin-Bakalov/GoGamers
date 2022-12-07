@@ -7,14 +7,34 @@ import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import { useAsyncAction } from '../hooks/use-async-action';
 import { likeService } from '../services/like-service';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { dislikeService } from '../services/dislike-service';
+import { useObserver } from '../hooks/use-observer';
 
 interface ReviewProps {
     review: ReviewModelDetailed;
+    isLast: boolean;
+    nextPage: () => void;
 }
 
-export function Review({ review }: ReviewProps) {
+const options = {
+    root: null,
+    rootMargin: '100px',
+    threshhold: 0.3, // 1.0
+};
+
+export function Review({ review, isLast, nextPage }: ReviewProps) {
+    const ref = useRef();
+    const entry = useObserver(ref, options);
+
+    useEffect(() => {
+        if (!entry) return;
+
+        if (isLast && entry.isIntersecting) {
+            nextPage();
+        }
+    }, [entry]);
+
     const [liked, setLiked] = useState(review.liked);
     const [disliked, setDisliked] = useState(review.disliked);
 
@@ -56,7 +76,7 @@ export function Review({ review }: ReviewProps) {
     });
 
     return (
-        <Box>
+        <Box ref={ref}>
             <Avatar alt="User" src={review.profilePicture} />
             <Box>{review.username}</Box>
             <Box>{review.body}</Box>
