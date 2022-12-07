@@ -1,9 +1,8 @@
 import { MutableRefObject, useEffect, useState } from 'react';
-import { IntersectionOptions } from 'react-intersection-observer';
 
 export function useObserver(
     ref: MutableRefObject<HTMLDivElement | undefined>,
-    options: IntersectionOptions,
+    options: IntersectionObserverInit,
 ) {
     const [entry, setEntry] = useState<IntersectionObserverEntry>();
     useEffect(() => {
