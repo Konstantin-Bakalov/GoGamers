@@ -26,6 +26,8 @@ import { ForbiddenError, ReviewModelDetailed } from 'shared';
 import { ReviewForm } from '../components/review-form';
 import { reviewService } from '../services/reviews-service';
 import { ReviewList } from '../components/review-list';
+import { useInView } from 'react-intersection-observer';
+import { ReviewTest } from '../components/review-test';
 
 export interface PageState {
     page: string;
@@ -64,48 +66,16 @@ export function GamePage() {
         navigate('/');
     });
 
-    const [reviews, setReviews] = useState<ReviewModelDetailed[]>([]);
-    const [total, setTotal] = useState(0);
-
-    useAsync(async () => {
-        const reviews = await reviewService.list(Number(id), { page: '1' });
-        setReviews(reviews.results);
-        setTotal(reviews.total);
-    }, [state]);
+    // useAsync(async () => {
+    //     const reviews = await reviewService.list(Number(id), { page: '1' });
+    //     setReviews(reviews.results);
+    //     setTotal(reviews.total);
+    // }, [state]);
 
     // useAsync(async () => {
     //     const res = await reviewService.list(Number(id), state);
     //     setReviews((prev) => [...prev, ...res.results]);
     // }, [state]);
-
-    const [isVisible, setIsVisible] = useState(false);
-    const [node, setNode] = useState<HTMLDivElement | undefined>(undefined);
-    // const ref = useRef<HTMLDivElement>();
-    const [page, setPage] = useState(1);
-
-    const onRefChange = useCallback((node: HTMLDivElement) => {
-        setNode(node);
-    }, []);
-
-    const callback = useCallback(
-        (
-            entries: IntersectionObserverEntry[],
-            observer: IntersectionObserver,
-        ) => {
-            if (page < 4) {
-                reviewService
-                    .list(Number(id), { page: String(page + 1) })
-                    .then((res) =>
-                        setReviews((prev) => [...prev, ...res.results]),
-                    );
-                setPage((prev) => prev + 1);
-                observer.unobserve(entries[0].target);
-                console.log(entries);
-                setIsVisible(entries[0].isIntersecting);
-            }
-        },
-        [node],
-    );
 
     const options = useMemo(() => {
         return {
@@ -115,19 +85,63 @@ export function GamePage() {
         };
     }, []);
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(callback, options);
-        const currentTarget = node;
-        if (currentTarget) {
-            observer.observe(currentTarget);
-        }
+    const [reviews, setReviews] = useState<ReviewModelDetailed[]>([]);
+    const [total, setTotal] = useState(0);
+    const [page, setPage] = useState(1);
+    // const { ref, inView } = useInView(options);
 
-        return () => {
-            if (currentTarget) {
-                observer.unobserve(currentTarget);
-            }
-        };
-    }, [node]);
+    useAsync(async () => {
+        const res = await reviewService.list(Number(id), {
+            page: String(page),
+        });
+        setReviews((prev) => [...prev, ...res.results]);
+    }, [page]);
+
+    const nextPage = () => setPage((prev) => prev + 1);
+
+    // useAsync(async () => {
+    //     const res = await reviewService.list(Number(id), {
+    //         page: String(page),
+    //     });
+    //     setReviews((prev) => [...prev, ...res.results]);
+    //     setPage((prev) => prev + 1);
+    // }, [inView]);
+
+    const [node, setNode] = useState<HTMLDivElement | undefined>(undefined);
+    // const ref = useRef<HTMLDivElement>();
+
+    // const onRefChange = useCallback((node: HTMLDivElement) => {
+    //     console.log('node change');
+    //     setPage((prev) => prev + 1);
+    //     setNode(node);
+    // }, []);
+
+    // const callback = useCallback(
+    //     (
+    //         entries: IntersectionObserverEntry[],
+    //         // observer: IntersectionObserver,
+    //     ) => {
+    //         // if (page < 4) {
+    //         //     reviewService
+    //         //         .list(Number(id), { page: String(page + 1) })
+    //         //         .then((res) => setReviews((prev) => [...prev, ...res.results]));
+    //         // }
+    //         // setReviews((prev) => [...prev, prev[0]]);
+    //         // observer.unobserve(entries[0].target);
+    //         // }
+    //     },
+    //     [],
+    // );
+
+    // useEffect(() => {
+    //     const observer = new IntersectionObserver(callback, options);
+    //     const currentTarget = node;
+    //     if (currentTarget) {
+    //         observer.observe(currentTarget);
+    //     }
+
+    //     return () => observer.disconnect();
+    // }, [node, callback]);
 
     const { trigger: submit } = useAsyncAction(
         async (body: string, gameId: number) => {
@@ -175,25 +189,14 @@ export function GamePage() {
                 <Box>
                     <GameCard game={game} />
                     <ReviewForm gameId={game.id} onSubmit={submit} />
-                    {reviews.map((review, index) => {
-                        if (index === reviews.length - 1) {
-                            return (
-                                <Box
-                                    sx={{ margin: '50px' }}
-                                    ref={onRefChange}
-                                    key={index}
-                                >
-                                    {review.body}
-                                </Box>
-                            );
-                        }
-
-                        return (
-                            <Box sx={{ margin: '50px' }} key={index}>
-                                {review.body}
-                            </Box>
-                        );
-                    })}
+                    {reviews.map((review, index) => (
+                        <ReviewTest
+                            key={review.id}
+                            review={review}
+                            isLast={index === reviews.length - 1}
+                            nextPage={nextPage}
+                        />
+                    ))}
                     {/* <ReviewList reviews={reviews} /> */}
                     {/* <Pagination
                         shape="rounded"
