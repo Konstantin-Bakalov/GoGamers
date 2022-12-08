@@ -54,8 +54,8 @@ export function MediaList({
         <Box>
             <Box sx={styles.box}>
                 <MediaUpload
-                    onMediaSelected={(media, source) =>
-                        onMediaAdded({ mediaFile: media, source })
+                    onMediaSelected={(mediaFile, source) =>
+                        onMediaAdded({ mediaFile, source })
                     }
                 />
             </Box>

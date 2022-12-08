@@ -54,6 +54,33 @@ export function useMediaForm() {
         return valid;
     };
 
+    const onMediaAdded = (med: Media) => {
+        setMedia((prev) => {
+            const mediaFiltered = [...prev, med].filter(
+                (m) => m.source !== emptyMedia.source,
+            );
+
+            if (mediaFiltered.length >= maxMediaCount) {
+                return mediaFiltered.slice(0, maxMediaCount);
+            }
+
+            const emptyMed = new Array(
+                emptyMediaArray.length - mediaFiltered.length,
+            ).fill(emptyMedia);
+
+            return [...mediaFiltered, ...emptyMed];
+        });
+    };
+
+    const onMediaDeleted = (index: number) => {
+        setMedia([
+            ...media.filter((_, ind) => index !== ind),
+            {
+                ...emptyMedia,
+            },
+        ]);
+    };
+
     return {
         perform,
         validate,
@@ -61,32 +88,8 @@ export function useMediaForm() {
             <Box>
                 <MediaList
                     media={media}
-                    onMediaAdded={(med) => {
-                        setMedia((prev) => {
-                            const mediaFiltered = [...prev, med].filter(
-                                (m) => m.source !== emptyMedia.source,
-                            );
-
-                            if (mediaFiltered.length >= maxMediaCount) {
-                                return mediaFiltered.slice(0, maxMediaCount);
-                            }
-
-                            const emptyMed = new Array(
-                                emptyMediaArray.length - mediaFiltered.length,
-                            ).fill(emptyMedia);
-
-                            return [...mediaFiltered, ...emptyMed];
-                        });
-                    }}
-                    onMediaDeleted={(index) => {
-                        setMedia([
-                            ...media.filter((_, ind) => index !== ind),
-                            {
-                                mediaFile: new File([''], 'filename'),
-                                source: placeholderImage,
-                            },
-                        ]);
-                    }}
+                    onMediaAdded={onMediaAdded}
+                    onMediaDeleted={onMediaDeleted}
                 />
                 {mediaError && (
                     <Alert severity="error">{mediaError.message}</Alert>
