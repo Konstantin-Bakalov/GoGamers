@@ -1,9 +1,8 @@
 import { CardMedia } from '@mui/material';
 import { makeStyles } from '../lib/make-styles';
-import { Media } from './media-upload';
 
 interface VideoProps {
-    video: Media;
+    videoUrl: string | undefined;
 }
 
 const styles = makeStyles({
@@ -15,12 +14,12 @@ const styles = makeStyles({
     },
 });
 
-export function Video({ video }: VideoProps) {
+export function Video({ videoUrl }: VideoProps) {
     return (
         <>
             <CardMedia
                 component="video"
-                src={video.source}
+                src={videoUrl}
                 sx={styles.video}
                 controls
             ></CardMedia>

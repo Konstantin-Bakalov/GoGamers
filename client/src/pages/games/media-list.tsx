@@ -5,6 +5,7 @@ import { makeStyles } from '../../lib/make-styles';
 import placeholderImage from '../../images/empty-image.png';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Video } from '../../components/video';
+import { Image } from '../../components/image';
 
 interface MediaListProps {
     media: Media[];
@@ -16,12 +17,6 @@ const styles = makeStyles({
     box: {
         display: 'flex',
         justifyContent: 'center',
-    },
-    image: {
-        width: '90px',
-        height: '90px',
-        objectFit: 'cover',
-        objectPosition: 'center',
     },
     list: {
         display: 'flex',
@@ -44,16 +39,10 @@ const styles = makeStyles({
 });
 
 const acceptedImageFormats = ['png', 'jpg', 'jpeg'];
-const acceptedVideoFormats = ['mp4'];
 
-export function isImage(media: Media) {
-    const imageType = media.mediaFile.type.split('/')[1];
+export function isImage(mediaFile: File) {
+    const imageType = mediaFile.type.split('/')[1];
     return acceptedImageFormats.includes(imageType);
-}
-
-function isVideo(media: Media) {
-    const imageType = media.mediaFile.type.split('/')[1];
-    return acceptedVideoFormats.includes(imageType);
 }
 
 export function MediaList({
@@ -73,15 +62,10 @@ export function MediaList({
             <Box sx={styles.list}>
                 {media.map((media, index) => (
                     <Box key={index} sx={styles.listItem}>
-                        {isImage(media) ? (
-                            <Box
-                                component="img"
-                                placeholder="image"
-                                src={media.source}
-                                sx={styles.image}
-                            />
+                        {isImage(media.mediaFile) ? (
+                            <Image imageUrl={media.source} />
                         ) : (
-                            <Video video={media} />
+                            <Video videoUrl={media.source} />
                         )}
 
                         {media.source !== placeholderImage && (

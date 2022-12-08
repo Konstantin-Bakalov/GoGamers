@@ -26,8 +26,8 @@ export function useMediaForm() {
                     .filter((med) => med.source !== placeholderImage)
                     .map((med) => mediaUploadService.upload(med.mediaFile)),
             )
-        ).map<MediaRequestModel>((url) => {
-            return { type: 'image', url };
+        ).map<MediaRequestModel>((med) => {
+            return { url: med.url, type: med.type };
         });
 
         return uploadedMedia;
@@ -44,7 +44,9 @@ export function useMediaForm() {
     const validate = () => {
         if (!validateMedia()) {
             valid = false;
-            setMediaError(new Error('You must upload at least one media'));
+            setMediaError(
+                new Error('You must upload at least one image or video'),
+            );
         } else {
             setMediaError(undefined);
         }

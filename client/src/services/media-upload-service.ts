@@ -1,3 +1,4 @@
+import { isImage } from '../pages/games/media-list';
 import { httpService } from './http-service';
 
 class MediaUploadService {
@@ -12,7 +13,9 @@ class MediaUploadService {
             body: media,
         });
 
-        return url.split('?')[0];
+        const type: 'image' | 'video' = isImage(media) ? 'image' : 'video';
+
+        return { url: url.split('?')[0], type };
     }
 }
 
