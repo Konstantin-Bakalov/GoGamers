@@ -20,7 +20,7 @@ interface ReviewProps {
 const options = {
     root: null,
     rootMargin: '100px',
-    threshhold: 0.3, // 1.0
+    threshhold: 0.5,
 };
 
 export function Review({ review, isLast, nextPage }: ReviewProps) {

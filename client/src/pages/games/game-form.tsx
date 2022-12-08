@@ -10,7 +10,7 @@ import { GameModelRequest, MediaRequestModel, ValidationError } from 'shared';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { GenreSelect } from './genre-select';
-import { useImageForm } from '../../hooks/use-image-form';
+import { useMediaForm } from '../../hooks/use-image-form';
 import { LoadingButton } from '@mui/lab';
 
 interface ValidationErrorMessage {
@@ -42,7 +42,7 @@ export function GameForm({
     loading,
     error,
 }: GameFormProps) {
-    const { render, perform, validate } = useImageForm();
+    const { render, perform, validate } = useMediaForm();
 
     const [validationError, setValidationError] = useState<
         ValidationErrorMessage | undefined

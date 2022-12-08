@@ -1,52 +1,52 @@
 import { Alert, Box } from '@mui/material';
 import { useState } from 'react';
-import { Image } from '../components/media-upload';
-import { ImageList } from '../pages/games/image-list';
+import { Media } from '../components/media-upload';
 import placeholderImage from '../images/empty-image.png';
 import { useAsyncAction } from './use-async-action';
 import { mediaUploadService } from '../services/media-upload-service';
 import { MediaRequestModel } from 'shared';
+import { MediaList } from '../pages/games/media-list';
 import { maxMediaCount } from 'shared';
 
-const emptyImage: Image = {
-    imageFile: new File([''], 'filename'),
+const emptyMedia: Media = {
+    mediaFile: new File([''], 'filename'),
     source: placeholderImage,
 };
 
-const emptyImages: Image[] = new Array(maxMediaCount).fill(emptyImage);
+const emptyMediaArray: Media[] = new Array(maxMediaCount).fill(emptyMedia);
 
-export function useImageForm() {
-    const [images, setImages] = useState<Image[]>(emptyImages);
-    const [imagesError, setImagesError] = useState<Error>();
+export function useMediaForm() {
+    const [media, setMedia] = useState<Media[]>(emptyMediaArray);
+    const [mediaError, setMediaError] = useState<Error>();
 
     const { perform } = useAsyncAction(async () => {
-        const media = (
+        const uploadedMedia = (
             await Promise.all(
-                images
-                    .filter((img) => img.source !== placeholderImage)
-                    .map((img) => mediaUploadService.upload(img.imageFile)),
+                media
+                    .filter((med) => med.source !== placeholderImage)
+                    .map((med) => mediaUploadService.upload(med.mediaFile)),
             )
         ).map<MediaRequestModel>((url) => {
             return { type: 'image', url };
         });
 
-        return media;
+        return uploadedMedia;
     });
 
     let valid = true;
 
-    const validateImages = () => {
+    const validateMedia = () => {
         return (
-            images.filter((img) => img.source !== placeholderImage).length > 0
+            media.filter((med) => med.source !== placeholderImage).length > 0
         );
     };
 
     const validate = () => {
-        if (!validateImages()) {
+        if (!validateMedia()) {
             valid = false;
-            setImagesError(new Error('You must upload at least one image'));
+            setMediaError(new Error('You must upload at least one media'));
         } else {
-            setImagesError(undefined);
+            setMediaError(undefined);
         }
 
         return valid;
@@ -57,37 +57,37 @@ export function useImageForm() {
         validate,
         render: (
             <Box>
-                <ImageList
-                    images={images}
-                    onImageAdded={(image) => {
-                        setImages((prev) => {
-                            const imgs = [...prev, image].filter(
-                                (img) => img.source !== emptyImage.source,
+                <MediaList
+                    media={media}
+                    onMediaAdded={(med) => {
+                        setMedia((prev) => {
+                            const mediaFiltered = [...prev, med].filter(
+                                (m) => m.source !== emptyMedia.source,
                             );
 
-                            if (imgs.length >= maxMediaCount) {
-                                return imgs.slice(0, maxMediaCount);
+                            if (mediaFiltered.length >= maxMediaCount) {
+                                return mediaFiltered.slice(0, maxMediaCount);
                             }
 
-                            const emptyImgs = new Array(
-                                emptyImages.length - imgs.length,
-                            ).fill(emptyImage);
+                            const emptyMed = new Array(
+                                emptyMediaArray.length - mediaFiltered.length,
+                            ).fill(emptyMedia);
 
-                            return [...imgs, ...emptyImgs];
+                            return [...mediaFiltered, ...emptyMed];
                         });
                     }}
-                    onImageDeleted={(index) => {
-                        setImages([
-                            ...images.filter((_, ind) => index !== ind),
+                    onMediaDeleted={(index) => {
+                        setMedia([
+                            ...media.filter((_, ind) => index !== ind),
                             {
-                                imageFile: new File([''], 'filename'),
+                                mediaFile: new File([''], 'filename'),
                                 source: placeholderImage,
                             },
                         ]);
                     }}
                 />
-                {imagesError && (
-                    <Alert severity="error">{imagesError.message}</Alert>
+                {mediaError && (
+                    <Alert severity="error">{mediaError.message}</Alert>
                 )}
             </Box>
         ),

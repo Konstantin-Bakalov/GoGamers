@@ -1,44 +1,44 @@
 import { Button } from '@mui/material';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
-export interface Image {
-    imageFile: File;
+export interface Media {
+    mediaFile: File;
     source: string;
 }
 
 interface MediaUploadProps {
-    onImageSelected: (image: File, source: string) => void;
+    onMediaSelected: (mediaFile: File, source: string) => void;
 }
 
-export function MediaUpload({ onImageSelected }: MediaUploadProps) {
-    const [selectedImage, setSelectedImage] = useState<File>();
-    const onSelectRef = useRef(onImageSelected);
-    onSelectRef.current = onImageSelected;
+export function MediaUpload({ onMediaSelected }: MediaUploadProps) {
+    const [selectedMedia, setSelectedMedia] = useState<File>();
+    const onSelectRef = useRef(onMediaSelected);
+    onSelectRef.current = onMediaSelected;
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
-            setSelectedImage(event.target.files[0]);
+            setSelectedMedia(event.target.files[0]);
         }
     };
 
     useEffect(() => {
-        if (selectedImage) {
+        if (selectedMedia) {
             const reader = new FileReader();
             reader.onload = (e) => {
                 const source = e.target?.result as string;
-                onSelectRef.current(selectedImage, source);
+                onSelectRef.current(selectedMedia, source);
             };
-            reader.readAsDataURL(selectedImage);
+            reader.readAsDataURL(selectedMedia);
         }
-    }, [selectedImage]);
+    }, [selectedMedia]);
 
     return (
         <Button variant="outlined" component="label" size="large">
             Upload Image
             <input
                 type="file"
-                name="img"
-                accept="image/png,image/jpeg/image/jpg"
+                // name="img"
+                accept="image/png,image/jpeg,image/jpg,video/mp4"
                 hidden
                 onChange={handleChange}
             />

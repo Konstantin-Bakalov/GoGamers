@@ -1,14 +1,15 @@
 import { Box, IconButton } from '@mui/material';
 import { MediaUpload } from '../../components/media-upload';
-import { Image } from '../../components/media-upload';
+import { Media } from '../../components/media-upload';
 import { makeStyles } from '../../lib/make-styles';
 import placeholderImage from '../../images/empty-image.png';
 import ClearIcon from '@mui/icons-material/Clear';
+import { Video } from '../../components/video';
 
-interface ImageListProps {
-    images: Image[];
-    onImageAdded: (image: Image) => void;
-    onImageDeleted: (index: number) => void;
+interface MediaListProps {
+    media: Media[];
+    onMediaAdded: (image: Media) => void;
+    onMediaDeleted: (index: number) => void;
 }
 
 const styles = makeStyles({
@@ -42,34 +43,52 @@ const styles = makeStyles({
     },
 });
 
-export function ImageList({
-    images,
-    onImageAdded,
-    onImageDeleted,
-}: ImageListProps) {
+const acceptedImageFormats = ['png', 'jpg', 'jpeg'];
+const acceptedVideoFormats = ['mp4'];
+
+export function isImage(media: Media) {
+    const imageType = media.mediaFile.type.split('/')[1];
+    return acceptedImageFormats.includes(imageType);
+}
+
+function isVideo(media: Media) {
+    const imageType = media.mediaFile.type.split('/')[1];
+    return acceptedVideoFormats.includes(imageType);
+}
+
+export function MediaList({
+    media,
+    onMediaAdded,
+    onMediaDeleted,
+}: MediaListProps) {
     return (
         <Box>
             <Box sx={styles.box}>
                 <MediaUpload
-                    onImageSelected={(image, source) =>
-                        onImageAdded({ imageFile: image, source })
+                    onMediaSelected={(media, source) =>
+                        onMediaAdded({ mediaFile: media, source })
                     }
                 />
             </Box>
             <Box sx={styles.list}>
-                {images.map((image, index) => (
+                {media.map((media, index) => (
                     <Box key={index} sx={styles.listItem}>
-                        <Box
-                            component="img"
-                            placeholder="image"
-                            src={image.source}
-                            sx={styles.image}
-                        />
-                        {image.source !== placeholderImage && (
+                        {isImage(media) ? (
+                            <Box
+                                component="img"
+                                placeholder="image"
+                                src={media.source}
+                                sx={styles.image}
+                            />
+                        ) : (
+                            <Video video={media} />
+                        )}
+
+                        {media.source !== placeholderImage && (
                             <IconButton
                                 sx={styles.iconButton}
                                 className="deleteButton"
-                                onClick={() => onImageDeleted(index)}
+                                onClick={() => onMediaDeleted(index)}
                             >
                                 <ClearIcon />
                             </IconButton>
