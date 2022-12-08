@@ -7,8 +7,8 @@ interface ImageProps {
 
 const styles = makeStyles({
     image: {
-        width: '90px',
-        height: '90px',
+        width: '150px',
+        height: '150px',
         objectFit: 'cover',
         objectPosition: 'center',
     },

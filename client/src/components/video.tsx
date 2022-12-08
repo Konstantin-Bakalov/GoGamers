@@ -1,4 +1,4 @@
-import { CardMedia } from '@mui/material';
+import { Box, CardMedia } from '@mui/material';
 import { makeStyles } from '../lib/make-styles';
 
 interface VideoProps {
@@ -16,13 +16,14 @@ const styles = makeStyles({
 
 export function Video({ videoUrl }: VideoProps) {
     return (
-        <>
+        <Box>
             <CardMedia
                 component="video"
                 src={videoUrl}
                 sx={styles.video}
                 controls
+                muted
             ></CardMedia>
-        </>
+        </Box>
     );
 }

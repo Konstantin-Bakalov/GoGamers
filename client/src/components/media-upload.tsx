@@ -34,10 +34,9 @@ export function MediaUpload({ onMediaSelected }: MediaUploadProps) {
 
     return (
         <Button variant="outlined" component="label" size="large">
-            Upload Image
+            Upload Image or Video
             <input
                 type="file"
-                // name="img"
                 accept="image/png,image/jpeg,image/jpg,video/mp4"
                 hidden
                 onChange={handleChange}

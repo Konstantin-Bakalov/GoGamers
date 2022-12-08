@@ -1,7 +1,6 @@
 import { Alert, Box, CircularProgress, IconButton } from '@mui/material';
 import { Container } from '@mui/system';
 import { useNavigate, useParams } from 'react-router-dom';
-import { GameCard } from '../components/game-card';
 import { useAsync } from '../hooks/use-async';
 import { gameService } from '../services/games-service';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -13,6 +12,7 @@ import { ForbiddenError, ReviewModelDetailed } from 'shared';
 import { ReviewForm } from '../components/review-form';
 import { reviewService } from '../services/reviews-service';
 import { ReviewList } from '../components/review-list';
+import { GameMedia } from '../components/game-media';
 
 export function GamePage() {
     const { id } = useParams();
@@ -77,9 +77,9 @@ export function GamePage() {
             )}
 
             {forbiddenError && (
-                <Container>
+                <Box>
                     <Alert severity="error">{forbiddenError}</Alert>
-                </Container>
+                </Box>
             )}
 
             {openDialog && (
@@ -88,7 +88,7 @@ export function GamePage() {
 
             {game && (
                 <Box>
-                    <GameCard game={game} />
+                    <GameMedia media={game.media} />
                     <ReviewForm gameId={game.id} onSubmit={submit} />
                     <ReviewList reviews={reviews} nextPage={nextPage} />
                     {scrollLoading && <CircularProgress />}

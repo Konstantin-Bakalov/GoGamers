@@ -9,7 +9,7 @@ interface ReviewListProps {
 
 export function ReviewList({ reviews, nextPage }: ReviewListProps) {
     return (
-        <Container>
+        <Container disableGutters>
             {reviews?.map((review, index) => (
                 <Review
                     key={review.id}
