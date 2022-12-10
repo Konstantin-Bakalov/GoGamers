@@ -10,11 +10,11 @@ interface GameMediaProps {
 export function GameMedia({ media }: GameMediaProps) {
     return (
         <Box>
-            {media.map((med) =>
+            {media.map((med, index) =>
                 med.type === 'image' ? (
-                    <Image imageUrl={med.url} />
+                    <Image key={index} imageUrl={med.url} />
                 ) : (
-                    <Video videoUrl={med.url} />
+                    <Video key={index} videoUrl={med.url} />
                 ),
             )}
         </Box>
