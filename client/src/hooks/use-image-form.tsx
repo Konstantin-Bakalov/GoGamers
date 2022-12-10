@@ -9,7 +9,7 @@ import { MediaList } from '../pages/games/media-list';
 import { maxMediaCount } from 'shared';
 
 const emptyMedia: Media = {
-    mediaFile: new File([''], 'filename'),
+    mediaFile: new File([''], 'empty file'),
     source: placeholderImage,
 };
 

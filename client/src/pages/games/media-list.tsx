@@ -39,10 +39,16 @@ const styles = makeStyles({
 });
 
 const acceptedImageFormats = ['png', 'jpg', 'jpeg'];
+const acceptedVideoFormats = ['mp4'];
 
 export function isImage(mediaFile: File) {
     const imageType = mediaFile.type.split('/')[1];
     return acceptedImageFormats.includes(imageType);
+}
+
+export function isVideo(mediaFile: File) {
+    const videoType = mediaFile.type.split('/')[1];
+    return acceptedVideoFormats.includes(videoType);
 }
 
 export function MediaList({
@@ -62,10 +68,10 @@ export function MediaList({
             <Box sx={styles.list}>
                 {media.map((media, index) => (
                     <Box key={index} sx={styles.listItem}>
-                        {isImage(media.mediaFile) ? (
-                            <Image imageUrl={media.source} />
-                        ) : (
+                        {isVideo(media.mediaFile) ? (
                             <Video videoUrl={media.source} />
+                        ) : (
+                            <Image imageUrl={media.source} />
                         )}
 
                         {media.source !== placeholderImage && (

@@ -1,4 +1,4 @@
-import { isImage } from '../pages/games/media-list';
+import { isVideo } from '../pages/games/media-list';
 import { httpService } from './http-service';
 
 class MediaUploadService {
@@ -13,7 +13,7 @@ class MediaUploadService {
             body: media,
         });
 
-        const type: 'image' | 'video' = isImage(media) ? 'image' : 'video';
+        const type: 'image' | 'video' = isVideo(media) ? 'video' : 'image';
 
         return { url: url.split('?')[0], type };
     }
