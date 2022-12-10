@@ -12,6 +12,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { GenreSelect } from './genre-select';
 import { useMediaForm } from '../../hooks/use-image-form';
 import { LoadingButton } from '@mui/lab';
+import { useAsyncAction } from '../../hooks/use-async-action';
 
 interface ValidationErrorMessage {
     name?: string;
@@ -31,18 +32,18 @@ interface GameFormProps {
     game: GameModelRequest;
     setGame: SetGameType;
     onSubmit: (media: MediaRequestModel[]) => void;
-    loading: boolean;
     error: unknown;
 }
 
-export function GameForm({
-    game,
-    setGame,
-    onSubmit,
-    loading,
-    error,
-}: GameFormProps) {
+export function GameForm({ game, setGame, onSubmit, error }: GameFormProps) {
     const { render, perform, validate } = useMediaForm();
+
+    const { trigger, loading: uploadLoading } = useAsyncAction(async () => {
+        if (validate()) {
+            const media = await perform();
+            onSubmit(media);
+        }
+    });
 
     const [validationError, setValidationError] = useState<
         ValidationErrorMessage | undefined
@@ -195,13 +196,8 @@ export function GameForm({
             {render}
 
             <LoadingButton
-                loading={loading}
-                onClick={async () => {
-                    if (validate()) {
-                        const media = await perform();
-                        onSubmit(media);
-                    }
-                }}
+                loading={uploadLoading}
+                onClick={trigger}
                 variant="contained"
             >
                 Submit

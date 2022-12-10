@@ -44,9 +44,7 @@ export function useMediaForm() {
     const validate = () => {
         if (!validateMedia()) {
             valid = false;
-            setMediaError(
-                new Error('You must upload at least one image or video'),
-            );
+            setMediaError(new Error('You must upload at least one image'));
         } else {
             setMediaError(undefined);
         }

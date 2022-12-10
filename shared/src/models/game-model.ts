@@ -1,5 +1,4 @@
-import { string, z } from 'zod';
-import { zodStringAsNumber } from '../lib/zod-validator';
+import { z } from 'zod';
 import { GenreModelRequestSchema, GenreModelSchema } from './genre-model';
 import { MediaModelSchema, MediaRequestModelSchema } from './media-model';
 import { UserModelSchema } from './user-model';
@@ -33,15 +32,13 @@ export const GameModelRequestSchema = BaseGameModelSchema.omit({
         .max(maxMediaCount)
         .refine(
             (val) => {
-                let containsImage = false;
                 for (const element of val) {
                     if (element.type === 'image') {
-                        containsImage = true;
-                        break;
+                        return true;
                     }
                 }
 
-                return containsImage;
+                return false;
             },
             {
                 message: 'You must upload at least one image',

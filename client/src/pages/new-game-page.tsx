@@ -45,7 +45,6 @@ export function NewGamePage() {
                 game={game}
                 setGame={setGame}
                 onSubmit={submit}
-                loading={loading}
                 error={error}
             />
         </Container>
