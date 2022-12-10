@@ -30,7 +30,23 @@ export const GameModelRequestSchema = BaseGameModelSchema.omit({
     media: z
         .array(MediaRequestModelSchema)
         .min(minMediaCount)
-        .max(maxMediaCount),
+        .max(maxMediaCount)
+        .refine(
+            (val) => {
+                let containsImage = false;
+                for (const element of val) {
+                    if (element.type === 'image') {
+                        containsImage = true;
+                        break;
+                    }
+                }
+
+                return containsImage;
+            },
+            {
+                message: 'You must upload at least one image',
+            },
+        ),
 });
 
 export const DetailedGameModelSchema = BaseGameModelSchema.extend({

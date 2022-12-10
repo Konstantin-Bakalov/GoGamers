@@ -188,6 +188,10 @@ export function GameForm({
                 </Alert>
             )}
 
+            {validationError?.media && (
+                <Alert severity="error">{validationError.media}</Alert>
+            )}
+
             {render}
 
             <LoadingButton
