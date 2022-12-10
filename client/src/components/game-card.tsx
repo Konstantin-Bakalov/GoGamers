@@ -1,7 +1,6 @@
 import { Card, CardActionArea, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { DetailedGameModel } from 'shared';
-import { Video } from './video';
 import { Image } from './image';
 
 interface GameCardProps {
@@ -10,7 +9,6 @@ interface GameCardProps {
 
 export function GameCard({ game }: GameCardProps) {
     const image = game.media.find((image) => image.type === 'image')?.url;
-    const video = game.media.find((video) => video.type === 'video')?.url;
 
     return (
         <Card
@@ -20,11 +18,8 @@ export function GameCard({ game }: GameCardProps) {
             elevation={3}
         >
             <CardActionArea>
-                {image ? (
-                    <Image imageUrl={image} />
-                ) : (
-                    <Video videoUrl={video} />
-                )}
+                <Image imageUrl={image} />
+
                 <Typography>{game.name}</Typography>
                 <Typography>{game.creator?.name}</Typography>
                 <Typography>Genres:</Typography>
