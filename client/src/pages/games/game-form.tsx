@@ -14,7 +14,7 @@ import { useMediaForm } from '../../hooks/use-image-form';
 import { LoadingButton } from '@mui/lab';
 import { useAsyncAction } from '../../hooks/use-async-action';
 
-interface ValidationErrorMessage {
+export interface ValidationErrorMessage {
     name?: string;
     developer?: string;
     price?: string;

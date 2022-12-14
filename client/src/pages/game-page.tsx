@@ -14,13 +14,13 @@ import { ReviewForm } from '../components/review-form';
 import { reviewService } from '../services/reviews-service';
 import { ReviewList } from '../components/review-list';
 import { GameMedia } from '../components/game-media';
-import { EditGameDialog } from '../dialogs/edit-game-dialog';
+import { DeleteAndEditButtons } from '../components/delete-and-edit-buttons';
 
 export function GamePage() {
     const { id } = useParams();
     const user = useCurrentUser();
     const [deleteDialog, setDeleteDialog] = useState(false);
-    const [editDialog, setEditDialog] = useState(false);
+
     const [forbiddenError, setForbiddenError] = useState<string | undefined>(
         undefined,
     );
@@ -69,23 +69,15 @@ export function GamePage() {
 
     const deleteDialogClose = () => setDeleteDialog(false);
 
-    const editDialogOpen = () => setEditDialog(true);
-
-    const editDialogClose = () => setEditDialog(false);
-
     return (
         <Container disableGutters>
             {loading && <CircularProgress />}
 
             {user && user.id === game?.userId && (
-                <Box>
-                    <IconButton aria-label="delete" onClick={deleteDialogOpen}>
-                        <DeleteIcon />
-                    </IconButton>
-                    <IconButton aria-label="edit" onClick={editDialogOpen}>
-                        <EditIcon />
-                    </IconButton>
-                </Box>
+                <DeleteAndEditButtons
+                    onClickDeleteButton={deleteDialogOpen}
+                    onClickEditButton={() => navigate(`/edit/${id}`)}
+                />
             )}
 
             {forbiddenError && (
@@ -101,12 +93,34 @@ export function GamePage() {
                 />
             )}
 
-            {editDialog && (
+            {/* {editDialog && game && (
                 <EditGameDialog
+                    game={{
+                        name: game.name,
+                        userId: game.userId,
+                        developer: game.developer,
+                        description: game.description,
+                        freeToPlay: game.freeToPlay,
+                        price: game.price,
+                        releaseDate: game.releaseDate,
+                        genres: game.genres.map((genre) => {
+                            return {
+                                name: genre.name,
+                            };
+                        }),
+                        media: game.media.map((media) => {
+                            return {
+                                type: media.type,
+                                url: media.url,
+                            };
+                        }),
+                    }}
+                    setGame={() => console.log('setting game')}
+                    error={{ error: 'no error' }}
                     onClose={editDialogClose}
                     onSubmit={() => console.log('submit')}
                 />
-            )}
+            )} */}
 
             {game && (
                 <Box>
