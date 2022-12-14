@@ -4,10 +4,11 @@ import { LoadingButton } from '@mui/lab';
 
 interface ReviewsProps {
     gameId: number;
+    loading: boolean;
     onSubmit: (body: string, gameId: number) => void;
 }
 
-export function ReviewForm({ gameId, onSubmit }: ReviewsProps) {
+export function ReviewForm({ gameId, loading, onSubmit }: ReviewsProps) {
     const [body, setBody] = useState('');
 
     const handleSubmit = (e: FormEvent<Element>) => {
@@ -31,7 +32,7 @@ export function ReviewForm({ gameId, onSubmit }: ReviewsProps) {
                 variant="contained"
                 disabled={body === ''}
                 disableElevation
-                // loading={loading}
+                loading={loading}
                 onClick={(e) => handleSubmit(e)}
             >
                 Submit review

@@ -1,10 +1,8 @@
-import { Alert, Box, CircularProgress, IconButton } from '@mui/material';
+import { Alert, Box, CircularProgress } from '@mui/material';
 import { Container } from '@mui/system';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAsync } from '../hooks/use-async';
 import { gameService } from '../services/games-service';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import { useCurrentUser } from '../hooks/use-current-user';
 import { useEffect, useState } from 'react';
 import { DeleteGameDialog } from '../dialogs/delete-game-dialog';
@@ -47,7 +45,7 @@ export function GamePage() {
 
     const nextPage = () => setPage((prev) => prev + 1);
 
-    const { trigger: submit } = useAsyncAction(
+    const { trigger: submit, loading: createLoading } = useAsyncAction(
         async (body: string, gameId: number) => {
             const newReview = await reviewService.create({ body, gameId });
             setReviews((prev) => [newReview, ...prev]);
@@ -93,39 +91,14 @@ export function GamePage() {
                 />
             )}
 
-            {/* {editDialog && game && (
-                <EditGameDialog
-                    game={{
-                        name: game.name,
-                        userId: game.userId,
-                        developer: game.developer,
-                        description: game.description,
-                        freeToPlay: game.freeToPlay,
-                        price: game.price,
-                        releaseDate: game.releaseDate,
-                        genres: game.genres.map((genre) => {
-                            return {
-                                name: genre.name,
-                            };
-                        }),
-                        media: game.media.map((media) => {
-                            return {
-                                type: media.type,
-                                url: media.url,
-                            };
-                        }),
-                    }}
-                    setGame={() => console.log('setting game')}
-                    error={{ error: 'no error' }}
-                    onClose={editDialogClose}
-                    onSubmit={() => console.log('submit')}
-                />
-            )} */}
-
             {game && (
                 <Box>
                     <GameMedia media={game.media} />
-                    <ReviewForm gameId={game.id} onSubmit={submit} />
+                    <ReviewForm
+                        gameId={game.id}
+                        loading={createLoading}
+                        onSubmit={submit}
+                    />
                     <ReviewList reviews={reviews} nextPage={nextPage} />
                     {scrollLoading && <CircularProgress />}
                 </Box>
