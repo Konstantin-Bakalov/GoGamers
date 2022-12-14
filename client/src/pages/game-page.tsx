@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useAsync } from '../hooks/use-async';
 import { gameService } from '../services/games-service';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import { useCurrentUser } from '../hooks/use-current-user';
 import { useEffect, useState } from 'react';
 import { DeleteGameDialog } from '../dialogs/delete-game-dialog';
@@ -13,11 +14,13 @@ import { ReviewForm } from '../components/review-form';
 import { reviewService } from '../services/reviews-service';
 import { ReviewList } from '../components/review-list';
 import { GameMedia } from '../components/game-media';
+import { EditGameDialog } from '../dialogs/edit-game-dialog';
 
 export function GamePage() {
     const { id } = useParams();
     const user = useCurrentUser();
-    const [openDialog, setOpenDialog] = useState(false);
+    const [deleteDialog, setDeleteDialog] = useState(false);
+    const [editDialog, setEditDialog] = useState(false);
     const [forbiddenError, setForbiddenError] = useState<string | undefined>(
         undefined,
     );
@@ -58,22 +61,31 @@ export function GamePage() {
 
         if (error instanceof ForbiddenError) {
             setForbiddenError(error.message);
-            handleClose();
+            deleteDialogClose();
         }
     }, [error]);
 
-    const handleOpen = () => setOpenDialog(true);
+    const deleteDialogOpen = () => setDeleteDialog(true);
 
-    const handleClose = () => setOpenDialog(false);
+    const deleteDialogClose = () => setDeleteDialog(false);
+
+    const editDialogOpen = () => setEditDialog(true);
+
+    const editDialogClose = () => setEditDialog(false);
 
     return (
         <Container disableGutters>
             {loading && <CircularProgress />}
 
             {user && user.id === game?.userId && (
-                <IconButton aria-label="delete" onClick={handleOpen}>
-                    <DeleteIcon />
-                </IconButton>
+                <Box>
+                    <IconButton aria-label="delete" onClick={deleteDialogOpen}>
+                        <DeleteIcon />
+                    </IconButton>
+                    <IconButton aria-label="edit" onClick={editDialogOpen}>
+                        <EditIcon />
+                    </IconButton>
+                </Box>
             )}
 
             {forbiddenError && (
@@ -82,8 +94,18 @@ export function GamePage() {
                 </Box>
             )}
 
-            {openDialog && (
-                <DeleteGameDialog onClose={handleClose} onSubmit={trigger} />
+            {deleteDialog && (
+                <DeleteGameDialog
+                    onClose={deleteDialogClose}
+                    onSubmit={trigger}
+                />
+            )}
+
+            {editDialog && (
+                <EditGameDialog
+                    onClose={editDialogClose}
+                    onSubmit={() => console.log('submit')}
+                />
             )}
 
             {game && (
