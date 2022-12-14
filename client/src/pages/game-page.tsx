@@ -1,4 +1,4 @@
-import { Alert, Box, CircularProgress } from '@mui/material';
+import { Alert, Box, CircularProgress, IconButton } from '@mui/material';
 import { Container } from '@mui/system';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAsync } from '../hooks/use-async';
@@ -12,7 +12,7 @@ import { ReviewForm } from '../components/review-form';
 import { reviewService } from '../services/reviews-service';
 import { ReviewList } from '../components/review-list';
 import { GameMedia } from '../components/game-media';
-import { DeleteAndEditButtons } from '../components/delete-and-edit-buttons';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export function GamePage() {
     const { id } = useParams();
@@ -72,10 +72,11 @@ export function GamePage() {
             {loading && <CircularProgress />}
 
             {user && user.id === game?.userId && (
-                <DeleteAndEditButtons
-                    onClickDeleteButton={deleteDialogOpen}
-                    onClickEditButton={() => navigate(`/edit/${id}`)}
-                />
+                <Box>
+                    <IconButton aria-label="delete" onClick={deleteDialogOpen}>
+                        <DeleteIcon />
+                    </IconButton>
+                </Box>
             )}
 
             {forbiddenError && (

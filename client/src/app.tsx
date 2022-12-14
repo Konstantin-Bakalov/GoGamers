@@ -10,7 +10,6 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Login } from './pages/login';
 import { config } from './config';
 import { NewGamePage } from './pages/new-game-page';
-import { EditGamePage } from './pages/edit-game-page';
 
 const theme = createTheme({
     palette: {
@@ -41,13 +40,6 @@ export function App() {
                                         <Route
                                             path="new"
                                             element={<NewGamePage />}
-                                        />
-                                    </Route>
-
-                                    <Route path="/edit">
-                                        <Route
-                                            path=":id"
-                                            element={<EditGamePage />}
                                         />
                                     </Route>
                                 </Route>
