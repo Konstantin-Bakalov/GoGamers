@@ -3,6 +3,7 @@ import { GameModelRequest, MediaRequestModel } from 'shared';
 import { useMediaForm } from '../../hooks/use-image-form';
 import { useAsyncAction } from '../../hooks/use-async-action';
 import { GameInfoForm, SetGameType } from './game-info-form';
+import { GenreSelect } from './genre-select';
 
 interface GameFormProps {
     game: GameModelRequest;
@@ -30,6 +31,13 @@ export function GameForm({ game, setGame, onSubmit, error }: GameFormProps) {
                 loading={uploadLoading}
                 error={error}
             >
+                <GenreSelect
+                    onChange={(genres: { name: string }[]) =>
+                        setGame((prev) => {
+                            return { ...prev, genres };
+                        })
+                    }
+                />
                 {render}
             </GameInfoForm>
         </Box>

@@ -94,6 +94,10 @@ class GameService {
             );
         }
     }
+
+    async update(game: GameModel) {
+        return await GameModel.query().upsertGraph(game);
+    }
 }
 
 export default new GameService();

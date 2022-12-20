@@ -75,4 +75,16 @@ gamesRouter.delete(
     }),
 );
 
+gamesRouter.put(
+    '/',
+    auth,
+    requestHandler(async (req, res) => {
+        const game = req.body;
+
+        const updatedGame = await gameService.update(game);
+
+        res.status(201).json(transformer.transform(updatedGame));
+    }),
+);
+
 export default gamesRouter;

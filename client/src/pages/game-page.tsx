@@ -1,4 +1,10 @@
-import { Alert, Box, CircularProgress, IconButton } from '@mui/material';
+import {
+    Alert,
+    Box,
+    CircularProgress,
+    IconButton,
+    Typography,
+} from '@mui/material';
 import { Container } from '@mui/system';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAsync } from '../hooks/use-async';
@@ -13,6 +19,7 @@ import { reviewService } from '../services/reviews-service';
 import { ReviewList } from '../components/review-list';
 import { GameMedia } from '../components/game-media';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 export function GamePage() {
     const { id } = useParams();
@@ -76,6 +83,12 @@ export function GamePage() {
                     <IconButton aria-label="delete" onClick={deleteDialogOpen}>
                         <DeleteIcon />
                     </IconButton>
+                    <IconButton
+                        onClick={() => navigate(`/games/${id}/edit`)}
+                        aria-label="edit"
+                    >
+                        <EditIcon />
+                    </IconButton>
                 </Box>
             )}
 
@@ -95,6 +108,13 @@ export function GamePage() {
             {game && (
                 <Box>
                     <GameMedia media={game.media} />
+                    <Typography>{game.name}</Typography>
+                    <Typography>{game.description}</Typography>
+                    <Typography>{game.developer}</Typography>
+                    <Typography>{game.releaseDate.toString()}</Typography>
+                    <Typography>
+                        {game.freeToPlay ? 'free' : game.price}
+                    </Typography>
                     <ReviewForm
                         gameId={game.id}
                         loading={createLoading}

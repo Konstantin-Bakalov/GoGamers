@@ -6,10 +6,9 @@ import {
     TextField,
 } from '@mui/material';
 import { PropsWithChildren, useEffect, useState } from 'react';
-import { GameModelRequest, ValidationError } from 'shared';
+import { DetailedGameModel, GameModelRequest, ValidationError } from 'shared';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { GenreSelect } from './genre-select';
 import { LoadingButton } from '@mui/lab';
 
 interface ValidationErrorMessage {
@@ -21,12 +20,14 @@ interface ValidationErrorMessage {
     genres?: string;
 }
 
+type T = GameModelRequest | DetailedGameModel;
+
 export type SetGameType = (
     game: GameModelRequest | ((prev: GameModelRequest) => GameModelRequest),
 ) => void;
 
 interface FormProps {
-    game: GameModelRequest;
+    game: T;
     setGame: SetGameType;
     onSubmit: () => void;
     loading: boolean;
@@ -114,7 +115,12 @@ export function GameInfoForm({
             />
 
             <FormControlLabel
-                control={<Checkbox onChange={checkBoxHandler} />}
+                control={
+                    <Checkbox
+                        checked={game.freeToPlay}
+                        onChange={checkBoxHandler}
+                    />
+                }
                 label="Free to play"
             />
 
@@ -169,14 +175,6 @@ export function GameInfoForm({
                     renderInput={(params) => <TextField {...params} />}
                 />
             </LocalizationProvider>
-
-            <GenreSelect
-                onChange={(genres: { name: string }[]) =>
-                    setGame((prev) => {
-                        return { ...prev, genres };
-                    })
-                }
-            />
 
             {validationError?.genres && (
                 <Alert severity="error">

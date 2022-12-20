@@ -27,6 +27,12 @@ class GameService {
     async deleteById(id: number) {
         return await httpService.delete(`/games/${id}`);
     }
+
+    async update(game: GameModelRequest) {
+        return await httpService.put<DetailedGameModel>('/games', {
+            body: game,
+        });
+    }
 }
 
 export const gameService = new GameService();
