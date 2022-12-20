@@ -21,7 +21,7 @@ interface ValidationErrorMessage {
     genres?: string;
 }
 
-type SetGameType = (
+export type SetGameType = (
     game: GameModelRequest | ((prev: GameModelRequest) => GameModelRequest),
 ) => void;
 
