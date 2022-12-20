@@ -1,18 +1,16 @@
 import {
     Alert,
+    Box,
     Checkbox,
-    Container,
     FormControlLabel,
     TextField,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { GameModelRequest, MediaRequestModel, ValidationError } from 'shared';
+import { GameModelRequest, ValidationError } from 'shared';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { GenreSelect } from './genre-select';
-import { useMediaForm } from '../../hooks/use-image-form';
 import { LoadingButton } from '@mui/lab';
-import { useAsyncAction } from '../../hooks/use-async-action';
 
 interface ValidationErrorMessage {
     name?: string;
@@ -28,23 +26,15 @@ type SetGameType = (
     game: GameModelRequest | ((prev: GameModelRequest) => GameModelRequest),
 ) => void;
 
-interface GameFormProps {
+interface FormProps {
     game: GameModelRequest;
     setGame: SetGameType;
-    onSubmit: (media: MediaRequestModel[]) => void;
+    onSubmit: () => void;
+    loading: boolean;
     error: unknown;
 }
 
-export function GameForm({ game, setGame, onSubmit, error }: GameFormProps) {
-    const { render, perform, validate } = useMediaForm();
-
-    const { trigger, loading: uploadLoading } = useAsyncAction(async () => {
-        if (validate()) {
-            const media = await perform();
-            onSubmit(media);
-        }
-    });
-
+export function Form({ game, setGame, onSubmit, loading, error }: FormProps) {
     const [validationError, setValidationError] = useState<
         ValidationErrorMessage | undefined
     >(undefined);
@@ -79,15 +69,7 @@ export function GameForm({ game, setGame, onSubmit, error }: GameFormProps) {
     };
 
     return (
-        <Container
-            disableGutters
-            sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '20px',
-                marginTop: '20px',
-            }}
-        >
+        <Box>
             <TextField
                 value={game.name}
                 error={!!validationError?.name}
@@ -193,15 +175,13 @@ export function GameForm({ game, setGame, onSubmit, error }: GameFormProps) {
                 <Alert severity="error">{validationError.media}</Alert>
             )}
 
-            {render}
-
             <LoadingButton
-                loading={uploadLoading}
-                onClick={trigger}
+                loading={loading}
+                onClick={onSubmit}
                 variant="contained"
             >
                 Submit
             </LoadingButton>
-        </Container>
+        </Box>
     );
 }
