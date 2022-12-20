@@ -13,6 +13,7 @@ import { GenreSelect } from './genre-select';
 import { useMediaForm } from '../../hooks/use-image-form';
 import { LoadingButton } from '@mui/lab';
 import { useAsyncAction } from '../../hooks/use-async-action';
+import { GameInfoForm } from './game-info-form';
 
 interface ValidationErrorMessage {
     name?: string;
@@ -45,50 +46,51 @@ export function GameForm({ game, setGame, onSubmit, error }: GameFormProps) {
         }
     });
 
-    const [validationError, setValidationError] = useState<
-        ValidationErrorMessage | undefined
-    >(undefined);
+    // const [validationError, setValidationError] = useState<
+    //     ValidationErrorMessage | undefined
+    // >(undefined);
 
-    useEffect(() => {
-        if (!error) {
-            setValidationError(undefined);
-        }
+    // useEffect(() => {
+    //     if (!error) {
+    //         setValidationError(undefined);
+    //     }
 
-        if (error instanceof ValidationError) {
-            setValidationError(error.data);
-            return;
-        }
+    //     if (error instanceof ValidationError) {
+    //         setValidationError(error.data);
+    //         return;
+    //     }
 
-        setValidationError(undefined);
-    }, [error]);
+    //     setValidationError(undefined);
+    // }, [error]);
 
-    const checkBoxHandler = () =>
-        setGame((prev) => {
-            return {
-                ...prev,
-                freeToPlay: !prev.freeToPlay,
-            };
-        });
+    // const checkBoxHandler = () =>
+    //     setGame((prev) => {
+    //         return {
+    //             ...prev,
+    //             freeToPlay: !prev.freeToPlay,
+    //         };
+    //     });
 
-    const helperText = (name: string, message: string | undefined) => {
-        if (message) {
-            const split = message.split(' ');
-            split[0] = name;
-            return split.join(' ');
-        }
-    };
+    // const helperText = (name: string, message: string | undefined) => {
+    //     if (message) {
+    //         const split = message.split(' ');
+    //         split[0] = name;
+    //         return split.join(' ');
+    //     }
+    // };
 
     return (
-        <Container
-            disableGutters
-            sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '20px',
-                marginTop: '20px',
-            }}
-        >
-            <TextField
+        <Container disableGutters>
+            <GameInfoForm
+                game={game}
+                setGame={setGame}
+                onSubmit={trigger}
+                loading={uploadLoading}
+                error={error}
+            >
+                {render}
+            </GameInfoForm>
+            {/* <TextField
                 value={game.name}
                 error={!!validationError?.name}
                 helperText={helperText('Name', validationError?.name)}
@@ -121,9 +123,9 @@ export function GameForm({ game, setGame, onSubmit, error }: GameFormProps) {
             <FormControlLabel
                 control={<Checkbox onChange={checkBoxHandler} />}
                 label="Free to play"
-            />
+            /> */}
 
-            <TextField
+            {/* <TextField
                 value={game.price ?? 0}
                 error={!!validationError?.price}
                 helperText={helperText('Price', validationError?.price)}
@@ -158,9 +160,9 @@ export function GameForm({ game, setGame, onSubmit, error }: GameFormProps) {
                         return { ...prev, description: e.target.value };
                     })
                 }
-            />
+            /> */}
 
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
+            {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
                     value={game.releaseDate}
                     label={'Release Date'}
@@ -191,17 +193,17 @@ export function GameForm({ game, setGame, onSubmit, error }: GameFormProps) {
 
             {validationError?.media && (
                 <Alert severity="error">{validationError.media}</Alert>
-            )}
+            )} */}
 
-            {render}
+            {/* {render} */}
 
-            <LoadingButton
+            {/* <LoadingButton
                 loading={uploadLoading}
                 onClick={trigger}
                 variant="contained"
             >
                 Submit
-            </LoadingButton>
+            </LoadingButton> */}
         </Container>
     );
 }

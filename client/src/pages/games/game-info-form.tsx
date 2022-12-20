@@ -5,7 +5,7 @@ import {
     FormControlLabel,
     TextField,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import { GameModelRequest, ValidationError } from 'shared';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -19,7 +19,6 @@ interface ValidationErrorMessage {
     description?: string;
     releaseDate?: string;
     genres?: string;
-    media?: string;
 }
 
 type SetGameType = (
@@ -34,7 +33,14 @@ interface FormProps {
     error: unknown;
 }
 
-export function Form({ game, setGame, onSubmit, loading, error }: FormProps) {
+export function GameInfoForm({
+    game,
+    setGame,
+    onSubmit,
+    loading,
+    error,
+    children,
+}: PropsWithChildren<FormProps>) {
     const [validationError, setValidationError] = useState<
         ValidationErrorMessage | undefined
     >(undefined);
@@ -69,7 +75,14 @@ export function Form({ game, setGame, onSubmit, loading, error }: FormProps) {
     };
 
     return (
-        <Box>
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '20px',
+                marginTop: '20px',
+            }}
+        >
             <TextField
                 value={game.name}
                 error={!!validationError?.name}
@@ -171,9 +184,7 @@ export function Form({ game, setGame, onSubmit, loading, error }: FormProps) {
                 </Alert>
             )}
 
-            {validationError?.media && (
-                <Alert severity="error">{validationError.media}</Alert>
-            )}
+            {children}
 
             <LoadingButton
                 loading={loading}
