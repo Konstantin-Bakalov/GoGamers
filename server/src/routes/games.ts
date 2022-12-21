@@ -87,11 +87,10 @@ gamesRouter.put(
 
         const game = UpdateGameModelSchema.parse({
             ...req.body,
-            userId: user.id,
             releaseDate: new Date(req.body.releaseDate),
         });
 
-        const updatedGame = await gameService.update(game);
+        const updatedGame = await gameService.update(game, user.id);
 
         res.status(201).json(transformer.transform(updatedGame));
     }),

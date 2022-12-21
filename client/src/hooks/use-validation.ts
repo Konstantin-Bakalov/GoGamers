@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ValidationError } from 'shared';
+import { ForbiddenError, ValidationError } from 'shared';
 
 export interface ValidationErrorMessage {
     name?: string;
@@ -20,6 +20,10 @@ export function useValidation({ error }: ValidationProps) {
         ValidationErrorMessage | undefined
     >(undefined);
 
+    const [forbiddenError, setForbiddenError] = useState<string | undefined>(
+        undefined,
+    );
+
     useEffect(() => {
         if (!error) {
             setValidationError(undefined);
@@ -30,8 +34,13 @@ export function useValidation({ error }: ValidationProps) {
             return;
         }
 
+        if (error instanceof ForbiddenError) {
+            setForbiddenError(error.message);
+            return;
+        }
+
         setValidationError(undefined);
     }, [error]);
 
-    return { validationError };
+    return { validationError, forbiddenError };
 }

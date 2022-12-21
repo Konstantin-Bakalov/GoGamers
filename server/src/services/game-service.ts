@@ -95,8 +95,11 @@ class GameService {
         }
     }
 
-    async update(game: UpdateGameModel) {
-        return await GameModel.query().upsertGraph(game);
+    async update(game: UpdateGameModel, userId: number) {
+        if (game.userId === userId) {
+            return await GameModel.query().upsertGraph(game);
+        }
+        throw new ForbiddenError('You have no permission to update this game');
     }
 }
 
