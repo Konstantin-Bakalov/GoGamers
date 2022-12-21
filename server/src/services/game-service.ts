@@ -2,7 +2,7 @@ import { Model } from 'objection';
 import { GameGenreModel } from '../models/game-genre-model';
 import { GameModel } from '../models/game-model';
 import { GenreModel } from '../models/genre-model';
-import { ForbiddenError, GameModelRequest } from 'shared';
+import { ForbiddenError, GameModelRequest, UpdateGameModel } from 'shared';
 import { MediaModel } from '../models/media-model';
 
 class GameService {
@@ -95,7 +95,7 @@ class GameService {
         }
     }
 
-    async update(game: GameModel) {
+    async update(game: UpdateGameModel) {
         return await GameModel.query().upsertGraph(game);
     }
 }

@@ -4,7 +4,11 @@ import { requestHandler } from '../lib/request-handler';
 import auth, { currentUser } from '../middlewares/auth-middleware';
 import gameService from '../services/game-service';
 import { GameTransformer } from '../transformers/game-transformer';
-import { GameModelRequestSchema, zodStringAsNumber } from 'shared';
+import {
+    GameModelRequestSchema,
+    UpdateGameModelSchema,
+    zodStringAsNumber,
+} from 'shared';
 
 const gamesRouter = Router();
 
@@ -79,7 +83,13 @@ gamesRouter.put(
     '/',
     auth,
     requestHandler(async (req, res) => {
-        const game = req.body;
+        const user = currentUser(res);
+
+        const game = UpdateGameModelSchema.parse({
+            ...req.body,
+            userId: user.id,
+            releaseDate: new Date(req.body.releaseDate),
+        });
 
         const updatedGame = await gameService.update(game);
 

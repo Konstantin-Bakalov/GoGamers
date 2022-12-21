@@ -1,14 +1,14 @@
 import { Container } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { GameModelRequest } from 'shared';
+import { DetailedGameModel } from 'shared';
 import { useAsync } from '../../hooks/use-async';
 import { useAsyncAction } from '../../hooks/use-async-action';
 import { gameService } from '../../services/games-service';
 import { GameInfoForm } from './game-info-form';
 
 export function EditGamePage() {
-    const [game, setGame] = useState<GameModelRequest | undefined>();
+    const [game, setGame] = useState<DetailedGameModel>();
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -25,17 +25,5 @@ export function EditGamePage() {
         }
     });
 
-    return (
-        <Container disableGutters>
-            {game && (
-                <GameInfoForm
-                    game={game}
-                    onInput={(game: GameModelRequest) => setGame(game)}
-                    onSubmit={trigger}
-                    loading={loading}
-                    error={error}
-                />
-            )}
-        </Container>
-    );
+    return <Container disableGutters>nothing</Container>;
 }

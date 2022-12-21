@@ -5,23 +5,15 @@ import {
     FormControlLabel,
     TextField,
 } from '@mui/material';
-import { PropsWithChildren, useEffect, useState } from 'react';
-import { GameModelRequest, ValidationError } from 'shared';
+import { PropsWithChildren } from 'react';
+import { DetailedGameModel, GameModelRequest } from 'shared';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LoadingButton } from '@mui/lab';
-
-interface ValidationErrorMessage {
-    name?: string;
-    developer?: string;
-    price?: string;
-    description?: string;
-    releaseDate?: string;
-    genres?: string;
-}
+import { useValidation } from '../../hooks/use-validation';
 
 interface FormProps {
-    game: GameModelRequest;
+    game: GameModelRequest | DetailedGameModel;
     onInput: (game: GameModelRequest) => void;
     onSubmit: () => void;
     loading: boolean;
@@ -30,38 +22,16 @@ interface FormProps {
 
 export function GameInfoForm({
     game,
-    // setGame,
     onSubmit,
     onInput,
     loading,
     error,
     children,
 }: PropsWithChildren<FormProps>) {
-    const [validationError, setValidationError] = useState<
-        ValidationErrorMessage | undefined
-    >(undefined);
-
-    useEffect(() => {
-        if (!error) {
-            setValidationError(undefined);
-        }
-
-        if (error instanceof ValidationError) {
-            setValidationError(error.data);
-            return;
-        }
-
-        setValidationError(undefined);
-    }, [error]);
+    const { validationError } = useValidation({ error });
 
     const checkBoxHandler = () =>
         onInput({ ...game, freeToPlay: !game.freeToPlay });
-    // setGame((prev) => {
-    //     return {
-    //         ...prev,
-    //         freeToPlay: !prev.freeToPlay,
-    //     };
-    // });
 
     const helperText = (name: string, message: string | undefined) => {
         if (message) {
@@ -88,12 +58,7 @@ export function GameInfoForm({
                 variant="outlined"
                 size="small"
                 label="Name"
-                onChange={
-                    (e) => onInput({ ...game, name: e.target.value })
-                    // setGame((prev) => {
-                    //     return { ...prev, name: e.target.value };
-                    // })
-                }
+                onChange={(e) => onInput({ ...game, name: e.target.value })}
             />
 
             <TextField
@@ -104,11 +69,8 @@ export function GameInfoForm({
                 variant="outlined"
                 size="small"
                 label="Developer"
-                onChange={
-                    (e) => onInput({ ...game, developer: e.target.value })
-                    // setGame((prev) => {
-                    //     return { ...prev, developer: e.target.value };
-                    // })
+                onChange={(e) =>
+                    onInput({ ...game, developer: e.target.value })
                 }
             />
 
@@ -132,11 +94,8 @@ export function GameInfoForm({
                 variant="outlined"
                 size="small"
                 label="Price"
-                onChange={
-                    (e) => onInput({ ...game, price: Number(e.target.value) })
-                    // setGame((prev) => {
-                    //     return { ...prev, price: Number(e.target.value) };
-                    // })
+                onChange={(e) =>
+                    onInput({ ...game, price: Number(e.target.value) })
                 }
             />
 
@@ -153,11 +112,8 @@ export function GameInfoForm({
                 variant="outlined"
                 size="small"
                 label="Description"
-                onChange={
-                    (e) => onInput({ ...game, description: e.target.value })
-                    // setGame((prev) => {
-                    //     return { ...prev, description: e.target.value };
-                    // })
+                onChange={(e) =>
+                    onInput({ ...game, description: e.target.value })
                 }
             />
 
@@ -168,9 +124,6 @@ export function GameInfoForm({
                     onChange={(date) => {
                         if (date) {
                             onInput({ ...game, releaseDate: date });
-                            // setGame((prev) => {
-                            //     return { ...prev, releaseDate: date };
-                            // });
                         }
                     }}
                     renderInput={(params) => <TextField {...params} />}
