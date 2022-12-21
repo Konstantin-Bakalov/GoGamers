@@ -6,28 +6,36 @@ import {
     TextField,
 } from '@mui/material';
 import { PropsWithChildren } from 'react';
-import { DetailedGameModel, GameModelRequest } from 'shared';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LoadingButton } from '@mui/lab';
 import { useValidation } from '../../hooks/use-validation';
 
-interface FormProps {
-    game: GameModelRequest | DetailedGameModel;
-    onInput: (game: GameModelRequest) => void;
+interface GameInfo {
+    name: string;
+    freeToPlay: boolean;
+    releaseDate: Date;
+    developer: string;
+    price?: number | undefined;
+    description: string;
+}
+
+interface FormProps<T> {
+    game: T;
+    onInput: (game: T) => void;
     onSubmit: () => void;
     loading: boolean;
     error: unknown;
 }
 
-export function GameInfoForm({
+export function GameInfoForm<T extends GameInfo>({
     game,
     onSubmit,
     onInput,
     loading,
     error,
     children,
-}: PropsWithChildren<FormProps>) {
+}: PropsWithChildren<FormProps<T>>) {
     const { validationError } = useValidation({ error });
 
     const checkBoxHandler = () =>

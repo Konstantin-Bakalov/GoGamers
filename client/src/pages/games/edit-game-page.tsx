@@ -25,5 +25,21 @@ export function EditGamePage() {
         }
     });
 
-    return <Container disableGutters>nothing</Container>;
+    return (
+        <Container disableGutters>
+            {game && (
+                <GameInfoForm
+                    game={game}
+                    onInput={(game: DetailedGameModel) =>
+                        setGame((prev) => {
+                            return { ...prev, ...game };
+                        })
+                    }
+                    onSubmit={trigger}
+                    loading={loading}
+                    error={error}
+                />
+            )}
+        </Container>
+    );
 }

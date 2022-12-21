@@ -30,7 +30,11 @@ export function GameForm({ game, setGame, onSubmit, error }: GameFormProps) {
         <Box>
             <GameInfoForm
                 game={game}
-                onInput={(game: GameModelRequest) => setGame(game)}
+                onInput={(game: GameModelRequest) =>
+                    setGame((prev) => {
+                        return { ...prev, ...game };
+                    })
+                }
                 onSubmit={trigger}
                 loading={uploadLoading}
                 error={error}

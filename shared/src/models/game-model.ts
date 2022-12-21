@@ -52,13 +52,11 @@ export const DetailedGameModelSchema = BaseGameModelSchema.extend({
     media: z.array(MediaModelSchema),
 });
 
-// export const UpdateGameModelSchema = BaseGameModelSchema.extend({
-//     creator: UserModelSchema,
-//     genres: z.array(GenreModelSchema.or(GenreModelRequestSchema)),
-//     media: z.array(MediaModelSchema.or(MediaRequestModelSchema)),
-// });
-
-export const UpdateGameModelSchema = BaseGameModelSchema.omit({ id: true });
+export const UpdateGameModelSchema = BaseGameModelSchema.extend({
+    creator: UserModelSchema,
+    genres: z.array(GenreModelSchema.or(GenreModelRequestSchema)),
+    media: z.array(MediaModelSchema.or(MediaRequestModelSchema)),
+});
 
 export type BaseGameModel = z.infer<typeof BaseGameModelSchema>;
 

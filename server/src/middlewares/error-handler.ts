@@ -5,7 +5,6 @@ import { ZodError, ValidationError, HttpError } from 'shared';
 // need to disable this rule so that express recognises this signature
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
-    console.log(err);
     if (err instanceof HttpError) {
         res.status(err.status).json(err);
         return;
