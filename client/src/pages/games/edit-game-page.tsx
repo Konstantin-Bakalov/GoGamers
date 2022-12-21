@@ -1,4 +1,4 @@
-import { Container } from '@mui/material';
+import { Button, Container } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { DetailedGameModel } from 'shared';
@@ -40,6 +40,9 @@ export function EditGamePage() {
                     error={error}
                 />
             )}
+            <Button variant="outlined" onClick={() => navigate(-1)}>
+                Cancel
+            </Button>
         </Container>
     );
 }
