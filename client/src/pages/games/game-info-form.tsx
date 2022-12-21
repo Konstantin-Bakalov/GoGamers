@@ -6,7 +6,7 @@ import {
     TextField,
 } from '@mui/material';
 import { PropsWithChildren, useEffect, useState } from 'react';
-import { DetailedGameModel, GameModelRequest, ValidationError } from 'shared';
+import { GameModelRequest, ValidationError } from 'shared';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LoadingButton } from '@mui/lab';
@@ -20,15 +20,9 @@ interface ValidationErrorMessage {
     genres?: string;
 }
 
-type T = GameModelRequest | DetailedGameModel;
-
-export type SetGameType = (
-    game: GameModelRequest | ((prev: GameModelRequest) => GameModelRequest),
-) => void;
-
 interface FormProps {
-    game: T;
-    setGame: SetGameType;
+    game: GameModelRequest;
+    onInput: (game: GameModelRequest) => void;
     onSubmit: () => void;
     loading: boolean;
     error: unknown;
@@ -36,8 +30,9 @@ interface FormProps {
 
 export function GameInfoForm({
     game,
-    setGame,
+    // setGame,
     onSubmit,
+    onInput,
     loading,
     error,
     children,
@@ -60,12 +55,13 @@ export function GameInfoForm({
     }, [error]);
 
     const checkBoxHandler = () =>
-        setGame((prev) => {
-            return {
-                ...prev,
-                freeToPlay: !prev.freeToPlay,
-            };
-        });
+        onInput({ ...game, freeToPlay: !game.freeToPlay });
+    // setGame((prev) => {
+    //     return {
+    //         ...prev,
+    //         freeToPlay: !prev.freeToPlay,
+    //     };
+    // });
 
     const helperText = (name: string, message: string | undefined) => {
         if (message) {
@@ -92,10 +88,11 @@ export function GameInfoForm({
                 variant="outlined"
                 size="small"
                 label="Name"
-                onChange={(e) =>
-                    setGame((prev) => {
-                        return { ...prev, name: e.target.value };
-                    })
+                onChange={
+                    (e) => onInput({ ...game, name: e.target.value })
+                    // setGame((prev) => {
+                    //     return { ...prev, name: e.target.value };
+                    // })
                 }
             />
 
@@ -107,10 +104,11 @@ export function GameInfoForm({
                 variant="outlined"
                 size="small"
                 label="Developer"
-                onChange={(e) =>
-                    setGame((prev) => {
-                        return { ...prev, developer: e.target.value };
-                    })
+                onChange={
+                    (e) => onInput({ ...game, developer: e.target.value })
+                    // setGame((prev) => {
+                    //     return { ...prev, developer: e.target.value };
+                    // })
                 }
             />
 
@@ -134,10 +132,11 @@ export function GameInfoForm({
                 variant="outlined"
                 size="small"
                 label="Price"
-                onChange={(e) =>
-                    setGame((prev) => {
-                        return { ...prev, price: Number(e.target.value) };
-                    })
+                onChange={
+                    (e) => onInput({ ...game, price: Number(e.target.value) })
+                    // setGame((prev) => {
+                    //     return { ...prev, price: Number(e.target.value) };
+                    // })
                 }
             />
 
@@ -154,10 +153,11 @@ export function GameInfoForm({
                 variant="outlined"
                 size="small"
                 label="Description"
-                onChange={(e) =>
-                    setGame((prev) => {
-                        return { ...prev, description: e.target.value };
-                    })
+                onChange={
+                    (e) => onInput({ ...game, description: e.target.value })
+                    // setGame((prev) => {
+                    //     return { ...prev, description: e.target.value };
+                    // })
                 }
             />
 
@@ -167,9 +167,10 @@ export function GameInfoForm({
                     label={'Release Date'}
                     onChange={(date) => {
                         if (date) {
-                            setGame((prev) => {
-                                return { ...prev, releaseDate: date };
-                            });
+                            onInput({ ...game, releaseDate: date });
+                            // setGame((prev) => {
+                            //     return { ...prev, releaseDate: date };
+                            // });
                         }
                     }}
                     renderInput={(params) => <TextField {...params} />}

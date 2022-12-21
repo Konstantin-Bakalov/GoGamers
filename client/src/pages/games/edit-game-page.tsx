@@ -1,27 +1,14 @@
 import { Container } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { GameModelRequest, User } from 'shared';
+import { GameModelRequest } from 'shared';
 import { useAsync } from '../../hooks/use-async';
 import { useAsyncAction } from '../../hooks/use-async-action';
-import { useCurrentUser } from '../../hooks/use-current-user';
 import { gameService } from '../../services/games-service';
 import { GameInfoForm } from './game-info-form';
 
 export function EditGamePage() {
-    const user = useCurrentUser() as User;
-
-    const [game, setGame] = useState<GameModelRequest>({
-        name: '',
-        userId: user.id,
-        releaseDate: new Date(),
-        developer: '',
-        freeToPlay: false,
-        price: undefined,
-        description: '',
-        genres: [],
-        media: [],
-    });
+    const [game, setGame] = useState<GameModelRequest | undefined>();
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -33,8 +20,8 @@ export function EditGamePage() {
     const { trigger, loading, error } = useAsyncAction(async () => {
         if (game) {
             const createdGame = await gameService.update(game);
-            console.log(createdGame);
-            navigate(`/games/${createdGame.id}`);
+
+            navigate(`/games/${createdGame.id}`, { replace: true });
         }
     });
 
@@ -43,7 +30,7 @@ export function EditGamePage() {
             {game && (
                 <GameInfoForm
                     game={game}
-                    setGame={setGame}
+                    onInput={(game: GameModelRequest) => setGame(game)}
                     onSubmit={trigger}
                     loading={loading}
                     error={error}

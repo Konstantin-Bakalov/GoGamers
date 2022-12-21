@@ -2,8 +2,12 @@ import { Box } from '@mui/material';
 import { GameModelRequest, MediaRequestModel } from 'shared';
 import { useMediaForm } from '../../hooks/use-image-form';
 import { useAsyncAction } from '../../hooks/use-async-action';
-import { GameInfoForm, SetGameType } from './game-info-form';
+import { GameInfoForm } from './game-info-form';
 import { GenreSelect } from './genre-select';
+
+type SetGameType = (
+    game: GameModelRequest | ((prev: GameModelRequest) => GameModelRequest),
+) => void;
 
 interface GameFormProps {
     game: GameModelRequest;
@@ -26,7 +30,7 @@ export function GameForm({ game, setGame, onSubmit, error }: GameFormProps) {
         <Box>
             <GameInfoForm
                 game={game}
-                setGame={setGame}
+                onInput={(game: GameModelRequest) => setGame(game)}
                 onSubmit={trigger}
                 loading={uploadLoading}
                 error={error}
