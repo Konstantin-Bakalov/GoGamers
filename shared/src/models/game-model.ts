@@ -54,8 +54,8 @@ export const DetailedGameModelSchema = BaseGameModelSchema.extend({
 
 export const UpdateGameModelSchema = BaseGameModelSchema.extend({
     creator: UserModelSchema,
-    genres: z.array(GenreModelSchema.or(GenreModelRequestSchema)),
-    media: z.array(MediaModelSchema.or(MediaRequestModelSchema)),
+    genres: z.array(GenreModelSchema),
+    media: z.array(MediaModelSchema),
 });
 
 export type BaseGameModel = z.infer<typeof BaseGameModelSchema>;
