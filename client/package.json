@@ -19,6 +19,8 @@
         "react-router-dom": "^6.3.0",
         "react-scripts": "5.0.1",
         "react-select": "^5.5.4",
+        "react-swipeable-views": "^0.14.0",
+        "react-swipeable-views-utils": "^0.14.0",
         "shared": "file:../shared"
     },
     "devDependencies": {
@@ -27,6 +29,8 @@
         "@types/react": "^18.0.17",
         "@types/react-dom": "^18.0.6",
         "@types/react-router-dom": "^5.3.3",
+        "@types/react-swipeable-views": "^0.13.1",
+        "@types/react-swipeable-views-utils": "^0.13.4",
         "@typescript-eslint/eslint-plugin": "^5.35.1",
         "@typescript-eslint/parser": "^5.35.1",
         "eslint": "^8.22.0",
