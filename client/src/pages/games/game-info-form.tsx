@@ -10,6 +10,7 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LoadingButton } from '@mui/lab';
 import { useValidation } from '../../hooks/use-validation';
+import { GenreSelect } from './genre-select';
 
 interface GameInfo {
     name: string;
@@ -18,11 +19,13 @@ interface GameInfo {
     developer: string;
     price?: number | undefined;
     description: string;
+    genres: { name: string }[];
 }
 
 interface FormProps<T> {
     game: T;
     onInput: (game: T) => void;
+    onGenreChange: (game: T) => void;
     onSubmit: () => void;
     loading: boolean;
     error: unknown;
@@ -31,6 +34,7 @@ interface FormProps<T> {
 export function GameInfoForm<T extends GameInfo>({
     game,
     onSubmit,
+    onGenreChange,
     onInput,
     loading,
     error,
@@ -144,7 +148,14 @@ export function GameInfoForm<T extends GameInfo>({
                 </Alert>
             )}
 
-            {children}
+            {/* {children} */}
+
+            <GenreSelect
+                onChange={(genres: { name: string }[]) =>
+                    onGenreChange({ ...game, genres })
+                }
+                defaultGenres={game.genres}
+            />
 
             <LoadingButton
                 loading={loading}

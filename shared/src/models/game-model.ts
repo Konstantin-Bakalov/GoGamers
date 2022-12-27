@@ -1,5 +1,9 @@
 import { z } from 'zod';
-import { GenreModelRequestSchema, GenreModelSchema } from './genre-model';
+import {
+    GenreDetailedModel,
+    GenreModelRequestSchema,
+    GenreModelSchema,
+} from './genre-model';
 import { MediaModelSchema, MediaRequestModelSchema } from './media-model';
 import { UserModelSchema } from './user-model';
 
@@ -53,8 +57,10 @@ export const DetailedGameModelSchema = BaseGameModelSchema.extend({
 });
 
 export const UpdateGameModelSchema = BaseGameModelSchema.extend({
-    creator: UserModelSchema,
-    genres: z.array(GenreModelSchema),
+    // creator: UserModelSchema,
+    genres: z.array(
+        GenreModelSchema.or(GenreModelRequestSchema).or(GenreDetailedModel),
+    ),
     media: z.array(MediaModelSchema),
 });
 

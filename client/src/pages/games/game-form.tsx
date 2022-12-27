@@ -35,17 +35,19 @@ export function GameForm({ game, setGame, onSubmit, error }: GameFormProps) {
                         return { ...prev, ...game };
                     })
                 }
+                onGenreChange={(game) => setGame(game)}
                 onSubmit={trigger}
                 loading={uploadLoading}
                 error={error}
             >
-                <GenreSelect
+                {/* <GenreSelect
                     onChange={(genres: { name: string }[]) =>
                         setGame((prev) => {
                             return { ...prev, genres };
                         })
                     }
-                />
+                /> */}
+
                 {render}
             </GameInfoForm>
         </Box>

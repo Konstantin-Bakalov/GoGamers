@@ -9,9 +9,10 @@ type Option = {
 
 interface GenreSelectProps {
     onChange: (genres: { name: string }[]) => void;
+    defaultGenres?: { name: string }[];
 }
 
-export function GenreSelect({ onChange }: GenreSelectProps) {
+export function GenreSelect({ onChange, defaultGenres }: GenreSelectProps) {
     const loadOptions = async (inputValue: string) => {
         return (await genreService.all())
             .map<Option>((genre) => {
@@ -38,6 +39,9 @@ export function GenreSelect({ onChange }: GenreSelectProps) {
                 isMulti
                 cacheOptions
                 defaultOptions
+                defaultValue={defaultGenres?.map((genre) => {
+                    return { value: genre.name, label: genre.name };
+                })}
                 placeholder={'Select genres *'}
                 loadOptions={loadOptions}
                 onChange={handleChange}

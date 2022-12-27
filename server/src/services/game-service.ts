@@ -97,7 +97,17 @@ class GameService {
 
     async update(game: UpdateGameModel, userId: number) {
         if (game.userId === userId) {
-            return await GameModel.query().upsertGraphAndFetch(game);
+            console.log(game.genres);
+            return await GameModel.query()
+                .findById(game.id)
+                .patchAndFetchById(game.id, {
+                    name: game.name,
+                    releaseDate: game.releaseDate,
+                    developer: game.developer,
+                    freeToPlay: game.freeToPlay,
+                    price: game.price,
+                    description: game.description,
+                });
         }
         throw new ForbiddenError('You have no permission to update this game');
     }
