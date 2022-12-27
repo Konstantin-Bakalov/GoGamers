@@ -25,16 +25,6 @@ export function EditGamePage() {
         }
     });
 
-    const newGenre = (genre: { name: string }) => {
-        if (game?.genres) {
-            for (const gen of game.genres) {
-                if (gen.name === genre.name) return false;
-            }
-        }
-
-        return true;
-    };
-
     return (
         <Container disableGutters>
             {game && (
