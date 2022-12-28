@@ -152,7 +152,10 @@ export function GameInfoForm<T extends GameInfo>({
 
             <GenreSelect
                 onChange={(genres: { name: string }[]) =>
-                    onGenreChange({ ...game, genres })
+                    onGenreChange({
+                        ...game,
+                        genres,
+                    })
                 }
                 defaultGenres={game.genres}
             />

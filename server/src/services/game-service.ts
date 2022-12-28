@@ -97,17 +97,41 @@ class GameService {
 
     async update(game: UpdateGameModel, userId: number) {
         if (game.userId === userId) {
-            console.log(game.genres);
-            return await GameModel.query()
-                .findById(game.id)
-                .patchAndFetchById(game.id, {
-                    name: game.name,
-                    releaseDate: game.releaseDate,
-                    developer: game.developer,
-                    freeToPlay: game.freeToPlay,
-                    price: game.price,
-                    description: game.description,
+            return await Model.transaction(async (trx) => {
+                await GameGenreModel.query(trx)
+                    .where({
+                        gameId: game.id,
+                    })
+                    .delete();
+
+                const genres = [];
+
+                for (const genreName of game.genres) {
+                    const genre = await GenreModel.query(trx)
+                        .insert(genreName)
+                        .onConflict('name')
+                        .merge();
+
+                    genres.push(genre);
+                }
+
+                const gameGenres = genres.map((genre) => {
+                    return { gameId: game.id, genreId: genre.id };
                 });
+
+                await GameGenreModel.query(trx).insert(gameGenres);
+
+                return await GameModel.query(trx)
+                    .findById(game.id)
+                    .patchAndFetchById(game.id, {
+                        name: game.name,
+                        releaseDate: game.releaseDate,
+                        developer: game.developer,
+                        freeToPlay: game.freeToPlay,
+                        price: game.price,
+                        description: game.description,
+                    });
+            });
         }
         throw new ForbiddenError('You have no permission to update this game');
     }
