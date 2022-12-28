@@ -148,7 +148,7 @@ export function GameInfoForm<T extends GameInfo>({
                 </Alert>
             )}
 
-            {/* {children} */}
+            {children}
 
             <GenreSelect
                 onChange={(genres: { name: string }[]) =>

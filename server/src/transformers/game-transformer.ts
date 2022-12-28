@@ -10,7 +10,7 @@ export class GameTransformer {
             releaseDate: game.releaseDate,
             developer: game.developer,
             freeToPlay: game.freeToPlay,
-            price: Number(game.price),
+            price: game.price ? Number(game.price) : undefined,
             description: game.description,
             creator: game.creator,
             genres: game.genres,
