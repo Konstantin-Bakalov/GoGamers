@@ -15,8 +15,12 @@ const emptyMedia: Media = {
 
 const emptyMediaArray: Media[] = new Array(maxMediaCount).fill(emptyMedia);
 
-export function useMediaForm() {
-    const [media, setMedia] = useState<Media[]>(emptyMediaArray);
+export function useMediaForm(editMedia?: Media[]) {
+    const [media, setMedia] = useState<Media[]>(
+        editMedia
+            ? emptyMediaArray.splice(0, editMedia.length, ...editMedia)
+            : emptyMediaArray,
+    );
     const [mediaError, setMediaError] = useState<Error>();
 
     const { perform } = useAsyncAction(async () => {

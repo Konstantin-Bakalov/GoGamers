@@ -33,15 +33,19 @@ export function GenreSelect({ onChange, defaultGenres }: GenreSelectProps) {
         onChange(genres);
     };
 
+    const transformDefaultGenres = (genres?: { name: string }[]) => {
+        return genres?.map((genre) => {
+            return { value: genre.name, label: genre.name };
+        });
+    };
+
     return (
         <Box>
             <AsyncCreatableSelect
                 isMulti
                 cacheOptions
                 defaultOptions
-                defaultValue={defaultGenres?.map((genre) => {
-                    return { value: genre.name, label: genre.name };
-                })}
+                defaultValue={transformDefaultGenres(defaultGenres)}
                 placeholder={'Select genres *'}
                 loadOptions={loadOptions}
                 onChange={handleChange}

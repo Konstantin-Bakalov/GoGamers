@@ -121,6 +121,16 @@ class GameService {
 
                 await GameGenreModel.query(trx).insert(gameGenres);
 
+                await MediaModel.query().where({ gameId: game.id }).delete();
+
+                for (const media of game.media) {
+                    await MediaModel.query(trx).insert({
+                        gameId: game.id,
+                        type: media.type,
+                        url: media.url,
+                    });
+                }
+
                 return await GameModel.query(trx)
                     .findById(game.id)
                     .patchAndFetchById(game.id, {
