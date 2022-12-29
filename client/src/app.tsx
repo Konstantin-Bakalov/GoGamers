@@ -14,6 +14,7 @@ import { EditGamePage } from './pages/games/edit-game-page';
 
 const theme = createTheme({
     palette: {
+        mode: 'dark',
         primary: {
             main: '#ed6c02',
         },
@@ -45,7 +46,7 @@ export function App() {
                                         <Route
                                             path=":id/edit"
                                             element={<EditGamePage />}
-                                        ></Route>
+                                        />
                                     </Route>
                                 </Route>
                                 <Route path="*" element={<Navigate to="/" />} />

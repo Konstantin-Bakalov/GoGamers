@@ -1,6 +1,7 @@
 import {
     Alert,
     Box,
+    Button,
     Checkbox,
     FormControlLabel,
     TextField,
@@ -11,6 +12,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LoadingButton } from '@mui/lab';
 import { useValidation } from '../../hooks/use-validation';
 import { GenreSelect } from './genre-select';
+import { useNavigate } from 'react-router-dom';
 
 interface GameInfo {
     name: string;
@@ -40,6 +42,7 @@ export function GameInfoForm<T extends GameInfo>({
     error,
     children,
 }: PropsWithChildren<FormProps<T>>) {
+    const navigate = useNavigate();
     const { validationError } = useValidation({ error });
 
     const checkBoxHandler = () =>
@@ -167,6 +170,10 @@ export function GameInfoForm<T extends GameInfo>({
             >
                 Submit
             </LoadingButton>
+
+            <Button variant="outlined" onClick={() => navigate(-1)}>
+                Cancel
+            </Button>
         </Box>
     );
 }

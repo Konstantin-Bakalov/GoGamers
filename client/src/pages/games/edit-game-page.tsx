@@ -1,4 +1,4 @@
-import { Button, Container } from '@mui/material';
+import { Container } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { MediaModel } from 'shared';
@@ -28,19 +28,17 @@ export function EditGamePage() {
         loading,
         error,
     } = useAsyncAction(async () => {
-        if (game) {
-            if (validate()) {
-                const media = await perform();
-                const createdGame = await gameService.update({
-                    ...game,
-                    media,
-                });
+        if (game && validate()) {
+            const media = await perform();
+            const updatedGame = await gameService.update({
+                ...game,
+                media,
+            });
 
-                navigate(`/games/${createdGame.id}`, { replace: true });
-            }
+            navigate(`/games/${updatedGame.id}`);
         }
     });
-    console.log('edit page', game);
+    console.log('game media', game?.media);
     return (
         <Container disableGutters>
             {game && (
@@ -61,9 +59,6 @@ export function EditGamePage() {
                     {render}
                 </GameInfoForm>
             )}
-            <Button variant="outlined" onClick={() => navigate(-1)}>
-                Cancel
-            </Button>
         </Container>
     );
 }
