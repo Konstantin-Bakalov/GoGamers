@@ -1,32 +1,20 @@
 import { Button, Container } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { MediaModel, MediaRequestModel } from 'shared';
+import { MediaModel } from 'shared';
 import { UpdateGameModel } from 'shared/src/models/game-model';
 import { useAsync } from '../../hooks/use-async';
 import { useAsyncAction } from '../../hooks/use-async-action';
-import { useMediaEditForm } from '../../hooks/use-image-edit-form';
+import { useMediaForm } from '../../hooks/use-image-form';
 import { gameService } from '../../services/games-service';
 import { GameInfoForm } from './game-info-form';
-
-function mediaIsDetailed(
-    media: MediaModel[] | MediaRequestModel[],
-): media is MediaModel[] {
-    for (const med of media) {
-        if (!('id' in med)) {
-            return false;
-        }
-    }
-
-    return true;
-}
 
 export function EditGamePage() {
     const [game, setGame] = useState<UpdateGameModel>();
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const { render, perform, validate } = useMediaEditForm(
+    const { render, perform, validate } = useMediaForm(
         game?.media as MediaModel[],
     );
 

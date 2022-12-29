@@ -1,7 +1,9 @@
 import { Button } from '@mui/material';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { MediaType } from 'shared';
 
 export interface Media {
+    type?: MediaType;
     mediaFile: File;
     source: string;
 }
