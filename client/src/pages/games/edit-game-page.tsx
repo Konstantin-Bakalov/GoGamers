@@ -5,7 +5,7 @@ import { MediaModel } from 'shared';
 import { UpdateGameModel } from 'shared/src/models/game-model';
 import { useAsync } from '../../hooks/use-async';
 import { useAsyncAction } from '../../hooks/use-async-action';
-import { useMediaForm } from '../../hooks/use-image-form';
+import { useMediaEditForm } from '../../hooks/use-media-edit-form';
 import { gameService } from '../../services/games-service';
 import { GameInfoForm } from './game-info-form';
 
@@ -14,14 +14,14 @@ export function EditGamePage() {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const { render, perform, validate } = useMediaForm(
-        game?.media as MediaModel[],
-    );
-
     useAsync(async () => {
         const result = await gameService.loadGameById(Number(id));
         setGame(result);
     }, [id]);
+
+    const { render, perform, validate } = useMediaEditForm(
+        game?.media as MediaModel[],
+    );
 
     const {
         trigger: submitGame,
@@ -31,7 +31,6 @@ export function EditGamePage() {
         if (game) {
             if (validate()) {
                 const media = await perform();
-                console.log(media);
                 const createdGame = await gameService.update({
                     ...game,
                     media,
@@ -41,6 +40,7 @@ export function EditGamePage() {
             }
         }
     });
+    console.log('edit page', game);
     return (
         <Container disableGutters>
             {game && (

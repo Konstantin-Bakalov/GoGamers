@@ -2,8 +2,19 @@ import { Model } from 'objection';
 import { GameGenreModel } from '../models/game-genre-model';
 import { GameModel } from '../models/game-model';
 import { GenreModel } from '../models/genre-model';
-import { ForbiddenError, GameModelRequest, UpdateGameModel } from 'shared';
+import {
+    ForbiddenError,
+    GameModelRequest,
+    MediaRequestModel,
+    UpdateGameModel,
+} from 'shared';
 import { MediaModel } from '../models/media-model';
+
+function isMediaModel(
+    media: MediaModel | MediaRequestModel,
+): media is MediaModel {
+    return (media as MediaModel).id !== undefined;
+}
 
 class GameService {
     async create(input: GameModelRequest) {
@@ -121,15 +132,49 @@ class GameService {
 
                 await GameGenreModel.query(trx).insert(gameGenres);
 
-                // await MediaModel.query().where({ gameId: game.id }).delete();
-                console.log(game.media);
-                // for (const media of game.media) {
-                //     await MediaModel.query(trx).insert({
-                //         gameId: game.id,
-                //         type: media.type,
-                //         url: media.url,
-                //     });
-                // }
+                const idsToKeep: number[] = [];
+
+                game.media.forEach((med) => {
+                    if (isMediaModel(med)) {
+                        idsToKeep.push(med.id);
+                    }
+                });
+
+                const media = await MediaModel.query(trx).where({
+                    gameId: game.id,
+                });
+
+                await Promise.all(
+                    media
+                        .filter((med) => {
+                            if (!idsToKeep.includes(med.id)) {
+                                return true;
+                            }
+
+                            return false;
+                        })
+                        .map((med) => MediaModel.query(trx).deleteById(med.id)),
+                );
+
+                const newMedia: MediaRequestModel[] = game.media.filter(
+                    (med) => {
+                        if (isMediaModel(med)) {
+                            return false;
+                        }
+
+                        return true;
+                    },
+                );
+
+                await Promise.all(
+                    newMedia.map((med) =>
+                        MediaModel.query(trx).insert({
+                            gameId: game.id,
+                            url: med.url,
+                            type: med.type,
+                        }),
+                    ),
+                );
 
                 return await GameModel.query(trx)
                     .findById(game.id)

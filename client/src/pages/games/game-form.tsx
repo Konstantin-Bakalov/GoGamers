@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { GameModelRequest, MediaRequestModel } from 'shared';
-import { useMediaForm } from '../../hooks/use-image-form';
+import { useMediaForm } from '../../hooks/use-media-form';
 import { useAsyncAction } from '../../hooks/use-async-action';
 import { GameInfoForm } from './game-info-form';
 
