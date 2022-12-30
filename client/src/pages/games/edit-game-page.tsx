@@ -38,7 +38,7 @@ export function EditGamePage() {
             navigate(`/games/${updatedGame.id}`);
         }
     });
-    console.log('game media', game?.media);
+
     return (
         <Container disableGutters>
             {game && (

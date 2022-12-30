@@ -1,5 +1,5 @@
 import { Alert, Box } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Media } from '../components/media-upload';
 import placeholderImage from '../images/empty-image.png';
 import { useAsyncAction } from './use-async-action';
@@ -22,26 +22,31 @@ interface EditMedia extends Media {
 const emptyMediaArray: Media[] = new Array(maxMediaCount).fill(emptyMedia);
 
 export function useMediaEditForm(editMedia?: MediaModel[]) {
-    const [media, setMedia] = useState<EditMedia[]>(
-        editMedia
-            ? emptyMediaArray.splice(
-                  0,
-                  editMedia.length,
-                  ...editMedia.map((m) => {
-                      return {
-                          id: m.id,
-                          gameId: m.gameId,
-                          type: m.type,
-                          mediaFile: new File([''], 'already uploaded media'),
-                          source: m.url,
-                      };
-                  }),
-              )
-            : emptyMediaArray,
-    );
+    const [media, setMedia] = useState<EditMedia[]>(emptyMediaArray);
+
+    useEffect(() => {
+        console.log(editMedia);
+        const newMedia = editMedia?.map((med) => {
+            return {
+                id: med.id,
+                gameId: med.gameId,
+                type: med.type,
+                mediaFile: new File([''], 'already uploaded media'),
+                source: med.url,
+            };
+        });
+
+        if (newMedia) {
+            const emptyMed = new Array(
+                emptyMediaArray.length - newMedia.length,
+            ).fill(emptyMedia);
+
+            setMedia([...newMedia, ...emptyMed]);
+        }
+    }, [editMedia]);
 
     const [mediaError, setMediaError] = useState<Error>();
-    console.log('media', media);
+
     const { perform } = useAsyncAction(async () => {
         const uploadedMedia: (MediaRequestModel | MediaModel)[] = (
             await Promise.all(
