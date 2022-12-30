@@ -13,7 +13,7 @@ const emptyMedia: Media = {
     source: placeholderImage,
 };
 
-interface EditMedia extends Media {
+export interface EditMedia extends Media {
     id?: number;
     gameId?: number;
     type?: MediaType;
@@ -25,7 +25,6 @@ export function useMediaEditForm(editMedia?: MediaModel[]) {
     const [media, setMedia] = useState<EditMedia[]>(emptyMediaArray);
 
     useEffect(() => {
-        console.log(editMedia);
         const newMedia = editMedia?.map((med) => {
             return {
                 id: med.id,

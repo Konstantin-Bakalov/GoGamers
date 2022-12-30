@@ -1,3 +1,4 @@
+import { MediaType } from 'shared';
 import { isVideo } from '../pages/games/media-list';
 import { httpService } from './http-service';
 
@@ -13,7 +14,7 @@ class MediaUploadService {
             body: media,
         });
 
-        const type: 'image' | 'video' = isVideo(media) ? 'video' : 'image';
+        const type: MediaType = isVideo(media) ? 'video' : 'image';
 
         return { url: url.split('?')[0], type };
     }
