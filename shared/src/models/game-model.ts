@@ -54,7 +54,20 @@ export const DetailedGameModelSchema = BaseGameModelSchema.extend({
 
 export const UpdateGameModelSchema = BaseGameModelSchema.extend({
     genres: z.array(GenreModelRequestSchema),
-    media: z.array(MediaModelSchema.or(MediaRequestModelSchema)),
+    media: z.array(MediaModelSchema.or(MediaRequestModelSchema)).refine(
+        (val) => {
+            for (const element of val) {
+                if (element.type === 'image') {
+                    return true;
+                }
+            }
+
+            return false;
+        },
+        {
+            message: 'You must upload at least one image',
+        },
+    ),
 });
 
 export type BaseGameModel = z.infer<typeof BaseGameModelSchema>;
