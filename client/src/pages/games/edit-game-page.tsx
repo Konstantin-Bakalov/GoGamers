@@ -31,6 +31,7 @@ export function EditGamePage() {
     } = useAsyncAction(async () => {
         if (game && validate()) {
             const media = await perform();
+
             const updatedGame = await gameService.update({
                 ...game,
                 media,

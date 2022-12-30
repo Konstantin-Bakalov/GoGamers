@@ -5,7 +5,7 @@ import placeholderImage from '../images/empty-image.png';
 import { useAsyncAction } from './use-async-action';
 import { mediaUploadService } from '../services/media-upload-service';
 import { MediaModel, MediaRequestModel, MediaType } from 'shared';
-import { MediaList } from '../pages/games/media-list';
+import { isEditMedia, MediaList } from '../pages/games/media-list';
 import { maxMediaCount } from 'shared';
 
 const emptyMedia: Media = {
@@ -14,15 +14,16 @@ const emptyMedia: Media = {
 };
 
 export interface EditMedia extends Media {
-    id?: number;
-    gameId?: number;
-    type?: MediaType;
+    id: number;
+    gameId: number;
+    type: MediaType;
 }
 
 const emptyMediaArray: Media[] = new Array(maxMediaCount).fill(emptyMedia);
 
 export function useMediaEditForm(editMedia?: MediaModel[]) {
-    const [media, setMedia] = useState<EditMedia[]>(emptyMediaArray);
+    const [media, setMedia] = useState<(Media | EditMedia)[]>(emptyMediaArray);
+    const [mediaError, setMediaError] = useState<Error>();
 
     useEffect(() => {
         const newMedia = editMedia?.map((med) => {
@@ -44,10 +45,8 @@ export function useMediaEditForm(editMedia?: MediaModel[]) {
         }
     }, [editMedia]);
 
-    const [mediaError, setMediaError] = useState<Error>();
-
     const { perform } = useAsyncAction(async () => {
-        const uploadedMedia: (MediaRequestModel | MediaModel)[] = (
+        const uploadedMedia = (
             await Promise.all(
                 media
                     .filter(
@@ -61,17 +60,25 @@ export function useMediaEditForm(editMedia?: MediaModel[]) {
             return { url: med.url, type: med.type };
         });
 
-        const alreadyUploadedMedia = media
-            .filter((med) => med.mediaFile.name === 'already uploaded media')
-            .map<MediaModel>((med) => {
-                // fix this
-                return {
-                    id: med.id ?? 0,
-                    gameId: med.gameId ?? 0,
-                    url: med.source,
-                    type: med.type ?? 'image',
-                };
-            });
+        const alreadyUploaded: EditMedia[] = [];
+
+        media.forEach((med) => {
+            if (
+                med.mediaFile.name === 'already uploaded media' &&
+                isEditMedia(med)
+            ) {
+                alreadyUploaded.push(med);
+            }
+        });
+
+        const alreadyUploadedMedia = alreadyUploaded.map<MediaModel>((med) => {
+            return {
+                id: med.id,
+                gameId: med.gameId,
+                url: med.source,
+                type: med.type,
+            };
+        });
 
         return [...uploadedMedia, ...alreadyUploadedMedia];
     });

@@ -52,11 +52,11 @@ export function isVideo(mediaFile: File) {
     return acceptedVideoFormats.includes(videoType);
 }
 
-function isEditMedia(media: Media | EditMedia): media is EditMedia {
+export function isEditMedia(media: Media | EditMedia): media is EditMedia {
     return 'type' in media;
 }
 
-function editMediaIsVideo(media: EditMedia) {
+function editMediaIsVideo(media: Media | EditMedia) {
     if (isEditMedia(media) && media.type === 'video') {
         return true;
     }
