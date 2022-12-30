@@ -1,4 +1,4 @@
-import { Container } from '@mui/material';
+import { Alert, Container } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { MediaModel } from 'shared';
@@ -6,6 +6,7 @@ import { UpdateGameModel } from 'shared/src/models/game-model';
 import { useAsync } from '../../hooks/use-async';
 import { useAsyncAction } from '../../hooks/use-async-action';
 import { useMediaEditForm } from '../../hooks/use-media-edit-form';
+import { useValidation } from '../../hooks/use-validation';
 import { gameService } from '../../services/games-service';
 import { GameInfoForm } from './game-info-form';
 
@@ -39,6 +40,8 @@ export function EditGamePage() {
         }
     });
 
+    const { validationError } = useValidation({ error });
+
     return (
         <Container disableGutters>
             {game && (
@@ -57,6 +60,9 @@ export function EditGamePage() {
                     error={error}
                 >
                     {render}
+                    {validationError && (
+                        <Alert severity="error">{validationError.media}</Alert>
+                    )}
                 </GameInfoForm>
             )}
         </Container>
