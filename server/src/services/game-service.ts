@@ -106,6 +106,8 @@ class GameService {
         }
     }
 
+    // the nature of transactions in objectionjs prevents us
+    // from splitting this in a few helper methods
     async update(game: UpdateGameModel, userId: number) {
         if (game.userId === userId) {
             return await Model.transaction(async (trx) => {
