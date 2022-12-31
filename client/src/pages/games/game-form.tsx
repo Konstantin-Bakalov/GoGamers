@@ -43,7 +43,7 @@ export function GameForm({ game, setGame, onSubmit, error }: GameFormProps) {
                 error={error}
             >
                 {render}
-                {validationError && (
+                {validationError?.media && (
                     <Alert severity="error">{validationError.media}</Alert>
                 )}
             </GameInfoForm>

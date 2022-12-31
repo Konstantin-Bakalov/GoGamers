@@ -61,7 +61,7 @@ export function EditGamePage() {
                     error={error}
                 >
                     {render}
-                    {validationError && (
+                    {validationError?.media && (
                         <Alert severity="error">{validationError.media}</Alert>
                     )}
                 </GameInfoForm>
