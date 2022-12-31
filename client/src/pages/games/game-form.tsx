@@ -1,8 +1,9 @@
-import { Box } from '@mui/material';
+import { Alert, Box } from '@mui/material';
 import { GameModelRequest, MediaRequestModel } from 'shared';
 import { useMediaForm } from '../../hooks/use-media-form';
 import { useAsyncAction } from '../../hooks/use-async-action';
 import { GameInfoForm } from './game-info-form';
+import { useValidation } from '../../hooks/use-validation';
 
 type SetGameType = (
     game: GameModelRequest | ((prev: GameModelRequest) => GameModelRequest),
@@ -25,6 +26,8 @@ export function GameForm({ game, setGame, onSubmit, error }: GameFormProps) {
         }
     });
 
+    const { validationError } = useValidation({ error });
+
     return (
         <Box>
             <GameInfoForm
@@ -40,6 +43,9 @@ export function GameForm({ game, setGame, onSubmit, error }: GameFormProps) {
                 error={error}
             >
                 {render}
+                {validationError && (
+                    <Alert severity="error">{validationError.media}</Alert>
+                )}
             </GameInfoForm>
         </Box>
     );
