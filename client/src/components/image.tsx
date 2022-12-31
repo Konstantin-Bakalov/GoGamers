@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { CardMedia } from '@mui/material';
 import { makeStyles } from '../lib/make-styles';
 
 interface ImageProps {
@@ -7,20 +7,22 @@ interface ImageProps {
 
 const styles = makeStyles({
     image: {
-        width: '150px',
-        height: '150px',
+        width: '100%',
+        height: '12rem',
         objectFit: 'cover',
         objectPosition: 'center',
+        display: 'flex',
+        aspectRatio: '3/2',
     },
 });
 
 export function Image({ imageUrl }: ImageProps) {
     return (
-        <Box
-            component="img"
-            placeholder="image"
-            src={imageUrl}
+        <CardMedia
             sx={styles.image}
+            component="img"
+            image={imageUrl}
+            alt="game image"
         />
     );
 }
