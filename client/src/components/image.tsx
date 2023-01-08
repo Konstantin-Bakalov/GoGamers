@@ -7,12 +7,12 @@ interface ImageProps {
 
 const styles = makeStyles({
     image: {
+        display: 'block',
         width: '100%',
-        height: '12rem',
+        aspectRatio: '16 / 9',
         objectFit: 'cover',
+        maxHeight: '200px',
         objectPosition: 'center',
-        display: 'flex',
-        aspectRatio: '3/2',
     },
 });
 

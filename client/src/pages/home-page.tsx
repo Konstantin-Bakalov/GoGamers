@@ -98,7 +98,7 @@ export function Homepage() {
     };
 
     return (
-        <Container>
+        <Container disableGutters>
             <Box
                 sx={{
                     display: 'flex',
@@ -156,9 +156,15 @@ export function Homepage() {
 
             <Box
                 sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    flexWrap: 'wrap',
+                    // display: 'grid',
+                    // width: '100%',
+                    // gridTemplateColumns: 'repeat(4, 1fr)',
+                    // gap: '20px',
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                    gridAutoRows: '1fr',
+                    gap: '1rem',
+                    alignItems: 'start',
                 }}
             >
                 {data?.results &&

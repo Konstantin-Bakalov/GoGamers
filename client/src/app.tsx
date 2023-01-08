@@ -47,7 +47,7 @@ const theme = createTheme({
         },
     },
     typography: {
-        fontFamily: 'Hind Madurai',
+        fontFamily: 'Open Sans',
     },
     components: {
         MuiButton: {
