@@ -1,4 +1,4 @@
-import { Box, Card, Typography } from '@mui/material';
+import { Box, Card, Chip, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { DetailedGameModel } from 'shared';
 import { makeStyles } from '../lib/make-styles';
@@ -25,14 +25,20 @@ const styles = makeStyles({
     cardTitle: {
         padding: '0 1rem',
         display: 'flex',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         textDecoration: 'none',
+        fontWeight: 'bold',
+        // fontSize: '20px',
     },
     cardBody: {
         alignContent: 'flex-start',
         display: 'flex',
         justifyContent: 'space-around',
         flexWrap: 'wrap',
+    },
+    priceBox: {},
+    price: {
+        fontSize: '2rem',
     },
 });
 
@@ -48,17 +54,23 @@ export function GameCard({ game }: GameCardProps) {
                 </Typography>
             </Box>
 
-            <Box sx={styles.cardBody}>
+            {/* <Box sx={styles.cardBody}>
                 {game.genres?.map((genre, index) => (
-                    <Typography key={index}>{genre.name}</Typography>
+                    <Chip key={index} label={genre.name} variant="outlined" />
                 ))}
+            </Box> */}
 
+            {/* <Box sx={{ lineHeight: '1.6px' }}>
+                <Typography>{game.description}</Typography>
+            </Box> */}
+
+            {/* <Box sx={styles.priceBox}>
                 {game.price ? (
-                    <Typography>{game.price}€</Typography>
+                    <Typography sx={styles.price}>{game.price}€</Typography>
                 ) : (
-                    <Typography>Free</Typography>
+                    <Typography sx={styles.price}>Free</Typography>
                 )}
-            </Box>
+            </Box> */}
         </Card>
     );
 }
