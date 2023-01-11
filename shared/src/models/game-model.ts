@@ -18,7 +18,7 @@ export const BaseGameModelSchema = z.object({
     developer: z.string().min(5),
     freeToPlay: z.boolean(),
     price: z.number().positive().optional(),
-    description: z.string().min(20).max(150),
+    description: z.string().min(20).max(1000),
 });
 
 export const GameModelRequestSchema = BaseGameModelSchema.omit({

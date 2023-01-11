@@ -1,4 +1,4 @@
-import { Box, Card, Chip, Typography } from '@mui/material';
+import { Box, Card, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { DetailedGameModel } from 'shared';
 import { makeStyles } from '../lib/make-styles';
@@ -12,10 +12,9 @@ const styles = makeStyles({
     card: {
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
         alignSelf: 'stretch',
         borderRadius: '.5rem',
-        elevation: '8',
         textDecoration: 'none',
         transition: '200ms transform ease-in-out',
         '&:hover': {
@@ -23,22 +22,22 @@ const styles = makeStyles({
         },
     },
     cardTitle: {
-        padding: '0 1rem',
         display: 'flex',
         justifyContent: 'flex-start',
         textDecoration: 'none',
         fontWeight: 'bold',
-        // fontSize: '20px',
     },
     cardBody: {
         alignContent: 'flex-start',
         display: 'flex',
-        justifyContent: 'space-around',
         flexWrap: 'wrap',
+        justifyContent: 'center',
     },
-    priceBox: {},
-    price: {
-        fontSize: '2rem',
+    description: {
+        display: '-webkit-box',
+        WebkitLineClamp: 3,
+        WebkitBoxOrient: 'vertical',
+        overflow: 'hidden',
     },
 });
 
@@ -49,20 +48,23 @@ export function GameCard({ game }: GameCardProps) {
         <Card component={Link} to={`/games/${game.id}`} sx={styles.card}>
             <Box>
                 <Image imageUrl={image} />
+            </Box>
+
+            <Box>
                 <Typography variant="h6" sx={styles.cardTitle}>
                     {game.name}
                 </Typography>
+
+                <Box sx={styles.description}>
+                    <Typography>{game.description}</Typography>
+                </Box>
+
+                <Box sx={styles.cardBody}>
+                    {game.genres?.map((genre, index) => (
+                        <Typography key={index}>{genre.name}</Typography>
+                    ))}
+                </Box>
             </Box>
-
-            {/* <Box sx={styles.cardBody}>
-                {game.genres?.map((genre, index) => (
-                    <Chip key={index} label={genre.name} variant="outlined" />
-                ))}
-            </Box> */}
-
-            {/* <Box sx={{ lineHeight: '1.6px' }}>
-                <Typography>{game.description}</Typography>
-            </Box> */}
 
             {/* <Box sx={styles.priceBox}>
                 {game.price ? (
