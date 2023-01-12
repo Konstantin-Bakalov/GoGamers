@@ -17,9 +17,10 @@ const styles = makeStyles({
         alignSelf: 'stretch',
         borderRadius: '.5rem',
         textDecoration: 'none',
-        transition: '200ms transform ease-in-out',
         '&:hover': {
-            transform: 'scale(1.025)',
+            '.MuiCardMedia-root': {
+                transform: 'scale(1.025)',
+            },
         },
     },
     cardTitle: {

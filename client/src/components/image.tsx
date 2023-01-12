@@ -13,6 +13,7 @@ const styles = makeStyles({
         objectFit: 'cover',
         maxHeight: '200px',
         objectPosition: 'center',
+        transition: '200ms transform ease-in-out',
     },
 });
 
