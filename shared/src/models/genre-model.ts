@@ -1,8 +1,11 @@
 import { z } from 'zod';
 
+const minCharacters = 3;
+const maxCharacters = 20;
+
 export const GenreModelSchema = z.object({
     id: z.number(),
-    name: z.string(),
+    name: z.string().min(minCharacters).max(maxCharacters),
 });
 
 export const GenreModelRequestSchema = GenreModelSchema.omit({
