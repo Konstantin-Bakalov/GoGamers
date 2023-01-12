@@ -34,7 +34,7 @@ const styles = makeStyles({
         flexGrow: 1,
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between',
+        // justifyContent: 'space-between',
         gap: '1rem',
     },
     genresContainer: {
@@ -74,8 +74,9 @@ export function GameCard({ game }: GameCardProps) {
             to={`/games/${game.id}`}
             sx={styles.card}
         >
+            {/* TODO: Pass styles as props */}
             <Image imageUrl={image} />
-
+            {/* TODO: Align genres using grid */}
             <Box sx={styles.cardContent}>
                 <Box>
                     <Typography variant="h6" sx={styles.cardTitle}>
