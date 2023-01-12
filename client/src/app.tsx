@@ -136,7 +136,7 @@ const theme = createTheme({
         MuiPaper: {
             styleOverrides: {
                 root: () => ({
-                    boxShadow: '0px 3px 10px #400B3014',
+                    // boxShadow: '0px 3px 10px #400B3014',
                 }),
             },
         },
