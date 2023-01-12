@@ -27,11 +27,16 @@ const styles = makeStyles({
         textDecoration: 'none',
         fontWeight: 'bold',
     },
-    cardBody: {
+    genresContainer: {
         alignContent: 'flex-start',
         display: 'flex',
         flexWrap: 'wrap',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
+    },
+    genres: {
+        padding: '.2rem .5rem',
+        borderRadius: '1rem',
+        background: 'lightgrey',
     },
     description: {
         display: '-webkit-box',
@@ -46,6 +51,7 @@ export function GameCard({ game }: GameCardProps) {
 
     return (
         <Card component={Link} to={`/games/${game.id}`} sx={styles.card}>
+            {/* // TODO: Delete useless Box */}
             <Box>
                 <Image imageUrl={image} />
             </Box>
@@ -55,15 +61,27 @@ export function GameCard({ game }: GameCardProps) {
                     {game.name}
                 </Typography>
 
+                {/* <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignContent: 'flex-end',
+                    }}
+                > */}
                 <Box sx={styles.description}>
                     <Typography>{game.description}</Typography>
                 </Box>
 
-                <Box sx={styles.cardBody}>
+                <Box sx={styles.genresContainer}>
                     {game.genres?.map((genre, index) => (
-                        <Typography key={index}>{genre.name}</Typography>
+                        <Box sx={styles.genres} key={index}>
+                            <Typography sx={{ fontSize: '13px' }}>
+                                {genre.name.toLowerCase()}
+                            </Typography>
+                        </Box>
                     ))}
                 </Box>
+                {/* </Box> */}
             </Box>
 
             {/* <Box sx={styles.priceBox}>
