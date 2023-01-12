@@ -4,7 +4,7 @@ import { MediaModelSchema, MediaRequestModelSchema } from './media-model';
 import { UserModelSchema } from './user-model';
 
 const minGenreCount = 1;
-const maxGenreCount = 5;
+const maxGenreCount = 7;
 const minCharacters = 3;
 const maxCharacters = 30;
 export const minMediaCount = 1;

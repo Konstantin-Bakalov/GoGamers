@@ -145,12 +145,6 @@ export function GameInfoForm<T extends GameInfo>({
                 />
             </LocalizationProvider>
 
-            {validationError?.genres && (
-                <Alert severity="error">
-                    You must select at least one genre
-                </Alert>
-            )}
-
             {children}
 
             <GenreSelect
@@ -162,6 +156,12 @@ export function GameInfoForm<T extends GameInfo>({
                 }
                 defaultGenres={game.genres}
             />
+
+            {validationError?.genres && (
+                <Alert severity="error">
+                    {validationError.genres.replace('Array', 'Genres')}
+                </Alert>
+            )}
 
             <LoadingButton
                 loading={loading}
