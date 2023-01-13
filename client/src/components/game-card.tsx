@@ -34,13 +34,13 @@ const styles = makeStyles({
         flexGrow: 1,
         display: 'flex',
         flexDirection: 'column',
-        // justifyContent: 'space-between',
+        justifyContent: 'space-between',
         gap: '1rem',
     },
     genresContainer: {
         alignContent: 'flex-start',
         display: 'flex',
-        flexWrap: 'wrap',
+        flexWrap: 'wrap-reverse',
         justifyContent: 'flex-start',
         gap: '.5rem',
     },
@@ -85,7 +85,7 @@ export function GameCard({ game }: GameCardProps) {
             sx={styles.card}
         >
             <Image imageUrl={image} style={imageStyle} />
-            {/* TODO: Align genres using grid */}
+
             <Box sx={styles.cardContent}>
                 <Box>
                     <Typography variant="h6" sx={styles.cardTitle}>
