@@ -84,7 +84,8 @@ export function MediaList({
                         {isVideo(media.mediaFile) || editMediaIsVideo(media) ? (
                             <Video videoUrl={media.source} />
                         ) : (
-                            <Image imageUrl={media.source} />
+                            // TODO: Add style to Image
+                            <Image style={{}} imageUrl={media.source} />
                         )}
 
                         {media.source !== placeholderImage && (

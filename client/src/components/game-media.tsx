@@ -4,14 +4,11 @@ import { MediaModel } from 'shared';
 import { Image } from './image';
 import { Video } from './video';
 import SwipeableViews from 'react-swipeable-views';
-import { autoPlay } from 'react-swipeable-views-utils';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 
 interface GameMediaProps {
     media: MediaModel[];
 }
-
-// const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 export function GameMedia({ media }: GameMediaProps) {
     const [activeStep, setActiveStep] = useState(0);
@@ -52,7 +49,8 @@ export function GameMedia({ media }: GameMediaProps) {
             >
                 {media.map((med, index) =>
                     med.type === 'image' ? (
-                        <Image key={index} imageUrl={med.url} />
+                        // TODO: Add styles to Image
+                        <Image style={{}} key={index} imageUrl={med.url} />
                     ) : (
                         <Video key={index} videoUrl={med.url} />
                     ),

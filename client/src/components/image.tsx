@@ -1,26 +1,14 @@
-import { CardMedia } from '@mui/material';
-import { makeStyles } from '../lib/make-styles';
+import { CardMedia, SxProps } from '@mui/material';
 
 interface ImageProps {
     imageUrl: string | undefined;
+    style: SxProps;
 }
 
-const styles = makeStyles({
-    image: {
-        display: 'block',
-        width: '100%',
-        aspectRatio: '16 / 9',
-        objectFit: 'cover',
-        maxHeight: '200px',
-        objectPosition: 'center',
-        transition: '200ms transform ease-in-out',
-    },
-});
-
-export function Image({ imageUrl }: ImageProps) {
+export function Image({ imageUrl, style }: ImageProps) {
     return (
         <CardMedia
-            sx={styles.image}
+            sx={style}
             component="img"
             image={imageUrl}
             alt="game image"

@@ -1,4 +1,4 @@
-import { Box, Card, Typography } from '@mui/material';
+import { Box, Card, SxProps, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
 import { DetailedGameModel } from 'shared';
@@ -64,6 +64,16 @@ const styles = makeStyles({
     },
 });
 
+const imageStyle: SxProps = {
+    display: 'block',
+    width: '100%',
+    aspectRatio: '16 / 9',
+    objectFit: 'cover',
+    maxHeight: '200px',
+    objectPosition: 'center',
+    transition: '200ms transform ease-in-out',
+};
+
 export function GameCard({ game }: GameCardProps) {
     const image = game.media.find((image) => image.type === 'image')?.url;
 
@@ -74,8 +84,7 @@ export function GameCard({ game }: GameCardProps) {
             to={`/games/${game.id}`}
             sx={styles.card}
         >
-            {/* TODO: Pass styles as props */}
-            <Image imageUrl={image} />
+            <Image imageUrl={image} style={imageStyle} />
             {/* TODO: Align genres using grid */}
             <Box sx={styles.cardContent}>
                 <Box>
