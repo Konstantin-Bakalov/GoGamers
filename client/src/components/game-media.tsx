@@ -49,10 +49,10 @@ export function GameMedia({ media }: GameMediaProps) {
             >
                 {media.map((med, index) =>
                     med.type === 'image' ? (
-                        // TODO: Add styles to Image
+                        // TODO: Add styles to Image and Video
                         <Image style={{}} key={index} imageUrl={med.url} />
                     ) : (
-                        <Video key={index} videoUrl={med.url} />
+                        <Video style={{}} key={index} videoUrl={med.url} />
                     ),
                 )}
             </SwipeableViews>

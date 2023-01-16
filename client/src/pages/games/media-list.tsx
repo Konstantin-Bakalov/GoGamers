@@ -82,10 +82,21 @@ export function MediaList({
                 {media.map((media, index) => (
                     <Box key={index} sx={styles.listItem}>
                         {isVideo(media.mediaFile) || editMediaIsVideo(media) ? (
-                            <Video videoUrl={media.source} />
+                            <Video
+                                style={{
+                                    width: '300px',
+                                    height: '200px',
+                                    objectFit: 'cover',
+                                    objectPosition: 'center',
+                                }}
+                                videoUrl={media.source}
+                            />
                         ) : (
                             // TODO: Add style to Image
-                            <Image style={{}} imageUrl={media.source} />
+                            <Image
+                                style={{ height: '200px' }}
+                                imageUrl={media.source}
+                            />
                         )}
 
                         {media.source !== placeholderImage && (
