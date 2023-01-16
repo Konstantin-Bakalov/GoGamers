@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import { GameCard } from '../components/game-card';
+import { makeStyles } from '../lib/make-styles';
 
 export interface FilterState {
     searchText: string;
@@ -54,6 +55,16 @@ function paramsToState(params: URLSearchParams): FilterState {
         orderBy: params.get('orderBy') || 'Name',
     };
 }
+
+const styles = makeStyles({
+    cardGrid: {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+        gridAutoRows: '1fr',
+        gap: '1rem',
+        alignItems: 'start',
+    },
+});
 
 export function Homepage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -154,19 +165,7 @@ export function Homepage() {
 
             {loading && <CircularProgress />}
 
-            <Box
-                sx={{
-                    // display: 'grid',
-                    // width: '100%',
-                    // gridTemplateColumns: 'repeat(4, 1fr)',
-                    // gap: '20px',
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-                    gridAutoRows: '1fr',
-                    gap: '1rem',
-                    alignItems: 'start',
-                }}
-            >
+            <Box sx={styles.cardGrid}>
                 {data?.results &&
                     data.results.map((game, index) => (
                         <GameCard key={index} game={game} />
