@@ -1,7 +1,6 @@
 import { genreService } from '../../services/genre-service';
 import { Box } from '@mui/material';
 import AsyncCreatableSelect from 'react-select/async-creatable';
-import { CSSObjectWithLabel } from 'react-select';
 
 type Option = {
     value: string;
