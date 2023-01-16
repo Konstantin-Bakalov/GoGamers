@@ -8,7 +8,7 @@ const maxGenreCount = 7;
 const minCharacters = 3;
 const maxCharacters = 30;
 export const minMediaCount = 1;
-export const maxMediaCount = 7;
+export const maxMediaCount = 8;
 
 export const BaseGameModelSchema = z.object({
     id: z.number(),

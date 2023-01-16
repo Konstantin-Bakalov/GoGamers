@@ -20,10 +20,14 @@ const styles = makeStyles({
         justifyContent: 'center',
     },
     list: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        marginTop: '20px',
+        // display: 'flex',
+        // justifyContent: 'space-between',
+        // flexWrap: 'wrap',
+        // marginTop: '20px',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(2, 1fr)',
+        gridTemplateRows: 'repeat(2, 1fr)',
+        gap: '1rem',
     },
     iconButton: {
         color: 'red',

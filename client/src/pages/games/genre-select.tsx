@@ -1,6 +1,7 @@
 import { genreService } from '../../services/genre-service';
 import { Box } from '@mui/material';
 import AsyncCreatableSelect from 'react-select/async-creatable';
+import { CSSObjectWithLabel } from 'react-select';
 
 type Option = {
     value: string;
@@ -49,6 +50,12 @@ export function GenreSelect({ onChange, defaultGenres }: GenreSelectProps) {
                 placeholder={'Select genres *'}
                 loadOptions={loadOptions}
                 onChange={handleChange}
+                styles={{
+                    dropdownIndicator: (base) => ({
+                        ...base,
+                        padding: '1rem',
+                    }),
+                }}
             />
         </Box>
     );

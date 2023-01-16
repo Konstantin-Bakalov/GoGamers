@@ -70,8 +70,8 @@ export function GameInfoForm<T extends GameInfo>({
                 error={!!validationError?.name}
                 helperText={helperText('Name', validationError?.name)}
                 required
+                size="medium"
                 variant="outlined"
-                size="small"
                 label="Name"
                 onChange={(e) => onInput({ ...game, name: e.target.value })}
             />
@@ -81,8 +81,8 @@ export function GameInfoForm<T extends GameInfo>({
                 error={!!validationError?.developer}
                 helperText={helperText('Developer', validationError?.developer)}
                 required
+                size="medium"
                 variant="outlined"
-                size="small"
                 label="Developer"
                 onChange={(e) =>
                     onInput({ ...game, developer: e.target.value })
@@ -104,10 +104,10 @@ export function GameInfoForm<T extends GameInfo>({
                 error={!!validationError?.price}
                 helperText={helperText('Price', validationError?.price)}
                 required
+                size="medium"
                 disabled={game.freeToPlay}
                 type="number"
                 variant="outlined"
-                size="small"
                 label="Price"
                 onChange={(e) =>
                     onInput({ ...game, price: Number(e.target.value) })
@@ -125,7 +125,7 @@ export function GameInfoForm<T extends GameInfo>({
                 multiline
                 minRows={5}
                 variant="outlined"
-                size="small"
+                size="medium"
                 label="Description"
                 onChange={(e) =>
                     onInput({ ...game, description: e.target.value })
@@ -164,6 +164,8 @@ export function GameInfoForm<T extends GameInfo>({
             )}
 
             <LoadingButton
+                size="large"
+                color="inherit"
                 loading={loading}
                 onClick={onSubmit}
                 variant="contained"
@@ -171,7 +173,12 @@ export function GameInfoForm<T extends GameInfo>({
                 Submit
             </LoadingButton>
 
-            <Button variant="outlined" onClick={() => navigate(-1)}>
+            <Button
+                variant="outlined"
+                color="secondary"
+                size="large"
+                onClick={() => navigate(-1)}
+            >
                 Cancel
             </Button>
         </Box>
