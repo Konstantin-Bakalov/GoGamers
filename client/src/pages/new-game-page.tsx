@@ -1,4 +1,4 @@
-import { CircularProgress, Container } from '@mui/material';
+import { CircularProgress, Container, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAsyncAction } from '../hooks/use-async-action';
@@ -6,6 +6,24 @@ import { GameForm } from './games/game-form';
 import { GameModelRequest, MediaRequestModel, User } from 'shared';
 import { useCurrentUser } from '../hooks/use-current-user';
 import { gameService } from '../services/games-service';
+import { makeStyles } from '../lib/make-styles';
+
+const styles = makeStyles({
+    container: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        gap: '20px',
+        width: {
+            xs: '95%',
+            sm: '95%',
+            md: '55%',
+            lg: '45%',
+            xl: '35%',
+        },
+        marginTop: '20px',
+    },
+});
 
 export function NewGamePage() {
     const user = useCurrentUser() as User;
@@ -35,11 +53,12 @@ export function NewGamePage() {
     });
 
     return (
-        <Container
-            disableGutters
-            sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
-        >
+        <Container disableGutters sx={styles.container}>
             {loading && <CircularProgress />}
+
+            <Typography variant="h4" sx={{ alignSelf: 'center' }}>
+                Create New Game
+            </Typography>
 
             <GameForm
                 game={game}
