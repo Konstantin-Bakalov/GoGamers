@@ -6,7 +6,5 @@ interface VideoProps {
 }
 
 export function Video({ videoUrl, style }: VideoProps) {
-    return (
-        <CardMedia component="video" src={videoUrl} sx={style} controls muted />
-    );
+    return <CardMedia component="video" src={videoUrl} sx={style} muted />;
 }

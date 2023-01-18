@@ -8,6 +8,9 @@ import { Video } from '../../components/video';
 import { Image } from '../../components/image';
 import { EditMedia } from '../../hooks/use-media-edit-form';
 import InfoIcon from '@mui/icons-material/Info';
+import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+import { useState } from 'react';
+import { BaseDialog } from '../../dialogs/base-dialog';
 
 interface MediaListProps {
     media: (Media | EditMedia)[];
@@ -25,13 +28,14 @@ const styles = makeStyles({
         justifyContent: 'space-between',
         flexWrap: 'wrap',
         marginTop: '20px',
+        gap: '20px',
         // display: 'grid',
         // gridTemplateColumns: 'repeat(2, 1fr)',
         // gridTemplateRows: 'repeat(2, 1fr)',
         // gap: '1rem',
     },
     iconButton: {
-        color: 'red',
+        color: '#FF1744',
         position: 'absolute',
         right: 0,
         top: 0,
@@ -41,6 +45,25 @@ const styles = makeStyles({
         '.deleteButton': { display: 'none' },
         '&:hover .deleteButton': { display: 'block' },
         position: 'relative',
+    },
+    media: {
+        width: '150px',
+        height: '150px',
+        objectFit: 'cover',
+        objectPosition: 'center',
+        borderRadius: '.5rem',
+    },
+    playVideo: {
+        transform: 'scale(1.7)',
+        padding: 0,
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        bottom: '50%',
+        right: '50%',
+        '&:hover': {
+            color: 'primary.main',
+        },
     },
 });
 
@@ -74,6 +97,7 @@ export function MediaList({
     onMediaAdded,
     onMediaDeleted,
 }: MediaListProps) {
+    const [open, setOpen] = useState(false);
     return (
         <Box>
             <Box sx={styles.box}>
@@ -93,30 +117,28 @@ export function MediaList({
                 {media.map((media, index) => (
                     <Box key={index} sx={styles.listItem}>
                         {isVideo(media.mediaFile) || editMediaIsVideo(media) ? (
-                            <Video
-                                style={{
-                                    width: '120px',
-                                    height: '120px',
-                                    objectFit: 'cover',
-                                    objectPosition: 'center',
-                                }}
-                                videoUrl={media.source}
-                            />
+                            <Box>
+                                <Video
+                                    style={styles.media}
+                                    videoUrl={media.source}
+                                />
+                                <IconButton
+                                    sx={styles.playVideo}
+                                    onClick={() => setOpen(true)}
+                                >
+                                    <PlayCircleIcon />
+                                </IconButton>
+                            </Box>
                         ) : (
-                            // TODO: Add style to Image
                             <Image
-                                style={{
-                                    width: '120px',
-                                    height: '120px',
-                                    objectFit: 'cover',
-                                    objectPosition: 'center',
-                                }}
+                                style={styles.media}
                                 imageUrl={media.source}
                             />
                         )}
 
                         {media.source !== placeholderImage && (
                             <IconButton
+                                disableRipple={true}
                                 sx={styles.iconButton}
                                 className="deleteButton"
                                 onClick={() => onMediaDeleted(index)}
@@ -127,6 +149,17 @@ export function MediaList({
                     </Box>
                 ))}
             </Box>
+
+            {open && (
+                <BaseDialog
+                    title="Video Preview"
+                    fullWidth={true}
+                    onClose={() => setOpen(false)}
+                    onSubmit={() => console.log('close')}
+                >
+                    <Box>Child</Box>
+                </BaseDialog>
+            )}
         </Box>
     );
 }
