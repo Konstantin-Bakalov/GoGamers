@@ -15,18 +15,23 @@ import { EditGamePage } from './pages/games/edit-game-page';
 const theme = createTheme({
     palette: {
         primary: {
-            main: '#FFFFFF',
+            // main: '#FFFFFF',
+            main: '#1A192A',
+            dark: '#464457',
+            light: '#F1EDFF',
         },
         secondary: {
-            main: '#FF3916',
-            light: '#F8371580',
-            dark: '#F83715',
-            contrastText: '#FFFFFF',
+            main: '#00C895',
+            // main: '#FF3916',
+            // light: '#F8371580',
+            // dark: '#F83715',
+            // contrastText: '#FFFFFF',
         },
         text: {
-            primary: '#34012F',
-            secondary: '#695767',
-            disabled: 'rgba(0,0,0,0.39)',
+            // primary: '#34012F',
+            // secondary: '#695767',
+            // disabled: 'rgba(0,0,0,0.39)',
+            primary: '#1A192A',
         },
         background: {
             default: '#F4F4F4',

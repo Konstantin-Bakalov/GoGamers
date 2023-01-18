@@ -10,6 +10,7 @@ import { makeStyles } from '../lib/make-styles';
 
 const styles = makeStyles({
     container: {
+        backgroundColor: 'primary.light',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',
