@@ -27,14 +27,18 @@ const styles = makeStyles({
     },
     list: {
         display: 'flex',
-        justifyContent: 'space-between',
+        flexDirection: 'row',
+        justifyContent: {
+            xs: 'center',
+            sm: 'space-between',
+            md: 'space-between',
+            lg: 'space-between',
+            xl: 'space-between',
+        },
+        alignItems: 'center',
         flexWrap: 'wrap',
         marginTop: '20px',
         gap: '20px',
-        // display: 'grid',
-        // gridTemplateColumns: 'repeat(2, 1fr)',
-        // gridTemplateRows: 'repeat(2, 1fr)',
-        // gap: '1rem',
     },
     iconButton: {
         color: '#FF1744',

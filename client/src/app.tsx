@@ -11,6 +11,7 @@ import { Login } from './pages/login';
 import { config } from './config';
 import { NewGamePage } from './pages/new-game-page';
 import { EditGamePage } from './pages/games/edit-game-page';
+import { Footer } from './components/footer';
 
 const theme = createTheme({
     palette: {
@@ -73,6 +74,7 @@ export function App() {
                                 </Route>
                                 <Route path="*" element={<Navigate to="/" />} />
                             </Routes>
+                            <Footer />
                         </CssBaseline>
                     </BrowserRouter>
                 </CurrentUserProvider>

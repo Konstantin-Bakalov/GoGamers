@@ -42,7 +42,7 @@ const styles = makeStyles({
     },
     lineContainer: {
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         gap: '20px',
     },
     width: {
@@ -202,7 +202,7 @@ export function GameInfoForm<T extends GameInfo>({
                     onClick={onSubmit}
                     variant="contained"
                 >
-                    Submit
+                    Create Game
                 </LoadingButton>
             </Box>
         </Box>
