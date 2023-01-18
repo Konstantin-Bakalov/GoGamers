@@ -1,4 +1,4 @@
-import { Box, IconButton } from '@mui/material';
+import { Box, IconButton, Tooltip } from '@mui/material';
 import { MediaUpload } from '../../components/media-upload';
 import { Media } from '../../components/media-upload';
 import { makeStyles } from '../../lib/make-styles';
@@ -7,6 +7,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { Video } from '../../components/video';
 import { Image } from '../../components/image';
 import { EditMedia } from '../../hooks/use-media-edit-form';
+import InfoIcon from '@mui/icons-material/Info';
 
 interface MediaListProps {
     media: (Media | EditMedia)[];
@@ -20,14 +21,14 @@ const styles = makeStyles({
         justifyContent: 'center',
     },
     list: {
-        // display: 'flex',
-        // justifyContent: 'space-between',
-        // flexWrap: 'wrap',
-        // marginTop: '20px',
-        display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)',
-        gridTemplateRows: 'repeat(2, 1fr)',
-        gap: '1rem',
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        marginTop: '20px',
+        // display: 'grid',
+        // gridTemplateColumns: 'repeat(2, 1fr)',
+        // gridTemplateRows: 'repeat(2, 1fr)',
+        // gap: '1rem',
     },
     iconButton: {
         color: 'red',
@@ -81,6 +82,12 @@ export function MediaList({
                         onMediaAdded({ mediaFile, source })
                     }
                 />
+
+                <Tooltip title="Image format .png .jpg .jpeg, Video format .mp4">
+                    <IconButton>
+                        <InfoIcon />
+                    </IconButton>
+                </Tooltip>
             </Box>
             <Box sx={styles.list}>
                 {media.map((media, index) => (
@@ -88,8 +95,8 @@ export function MediaList({
                         {isVideo(media.mediaFile) || editMediaIsVideo(media) ? (
                             <Video
                                 style={{
-                                    width: '300px',
-                                    height: '200px',
+                                    width: '120px',
+                                    height: '120px',
                                     objectFit: 'cover',
                                     objectPosition: 'center',
                                 }}
@@ -98,7 +105,12 @@ export function MediaList({
                         ) : (
                             // TODO: Add style to Image
                             <Image
-                                style={{ height: '200px' }}
+                                style={{
+                                    width: '120px',
+                                    height: '120px',
+                                    objectFit: 'cover',
+                                    objectPosition: 'center',
+                                }}
                                 imageUrl={media.source}
                             />
                         )}
