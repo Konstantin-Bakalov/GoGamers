@@ -52,7 +52,12 @@ export function GameMedia({ media }: GameMediaProps) {
                         // TODO: Add styles to Image and Video
                         <Image style={{}} key={index} imageUrl={med.url} />
                     ) : (
-                        <Video style={{}} key={index} videoUrl={med.url} />
+                        <Video
+                            style={{}}
+                            key={index}
+                            videoUrl={med.url}
+                            controls={true}
+                        />
                     ),
                 )}
             </SwipeableViews>

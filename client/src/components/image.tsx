@@ -2,7 +2,7 @@ import { CardMedia, SxProps } from '@mui/material';
 
 interface ImageProps {
     imageUrl: string | undefined;
-    style: SxProps;
+    style?: SxProps;
 }
 
 export function Image({ imageUrl, style }: ImageProps) {

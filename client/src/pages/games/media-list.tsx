@@ -10,7 +10,9 @@ import { EditMedia } from '../../hooks/use-media-edit-form';
 import InfoIcon from '@mui/icons-material/Info';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import { useState } from 'react';
-import { BaseDialog } from '../../dialogs/base-dialog';
+import { VideoDialog } from '../../dialogs/video-dialog';
+
+const tooltipMessage = 'Image format .png .jpg .jpeg, Video format .mp4';
 
 interface MediaListProps {
     media: (Media | EditMedia)[];
@@ -98,6 +100,13 @@ export function MediaList({
     onMediaDeleted,
 }: MediaListProps) {
     const [open, setOpen] = useState(false);
+    const [mediaIndex, setMediaIndex] = useState(-1);
+
+    const openDialog = (index: number) => {
+        setMediaIndex(index);
+        setOpen(true);
+    };
+
     return (
         <Box>
             <Box sx={styles.box}>
@@ -107,7 +116,7 @@ export function MediaList({
                     }
                 />
 
-                <Tooltip title="Image format .png .jpg .jpeg, Video format .mp4">
+                <Tooltip title={tooltipMessage}>
                     <IconButton>
                         <InfoIcon />
                     </IconButton>
@@ -121,10 +130,11 @@ export function MediaList({
                                 <Video
                                     style={styles.media}
                                     videoUrl={media.source}
+                                    controls={false}
                                 />
                                 <IconButton
                                     sx={styles.playVideo}
-                                    onClick={() => setOpen(true)}
+                                    onClick={() => openDialog(index)}
                                 >
                                     <PlayCircleIcon />
                                 </IconButton>
@@ -151,14 +161,10 @@ export function MediaList({
             </Box>
 
             {open && (
-                <BaseDialog
-                    title="Video Preview"
-                    fullWidth={true}
+                <VideoDialog
+                    videoUrl={media[mediaIndex].source}
                     onClose={() => setOpen(false)}
-                    onSubmit={() => console.log('close')}
-                >
-                    <Box>Child</Box>
-                </BaseDialog>
+                />
             )}
         </Box>
     );

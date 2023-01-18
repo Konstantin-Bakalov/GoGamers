@@ -2,9 +2,18 @@ import { CardMedia, SxProps } from '@mui/material';
 
 interface VideoProps {
     videoUrl: string | undefined;
-    style: SxProps;
+    style?: SxProps;
+    controls: boolean;
 }
 
-export function Video({ videoUrl, style }: VideoProps) {
-    return <CardMedia component="video" src={videoUrl} sx={style} muted />;
+export function Video({ videoUrl, style, controls }: VideoProps) {
+    return (
+        <CardMedia
+            component="video"
+            src={videoUrl}
+            sx={style}
+            controls={controls}
+            muted
+        />
+    );
 }
