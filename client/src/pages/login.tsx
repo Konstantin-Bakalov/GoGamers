@@ -10,7 +10,8 @@ export function Login() {
     const navigate = useNavigate();
 
     return (
-        <Container>
+        // TODO: Remove margin
+        <Container sx={{ marginTop: '100px' }}>
             {invalidCredential && <Alert>Invalid Credentials</Alert>}
             {loginFailed && <Alert>Login Failed</Alert>}
 
