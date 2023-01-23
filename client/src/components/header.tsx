@@ -2,6 +2,7 @@ import {
     AppBar,
     Avatar,
     Box,
+    CardMedia,
     IconButton,
     Menu,
     MenuItem,
@@ -11,13 +12,19 @@ import { MouseEvent, useState } from 'react';
 import { useCurrentUser } from '../hooks/use-current-user';
 import { makeStyles } from '../lib/make-styles';
 import { authService } from '../services/auth-service';
+import Logo from '../images/logo-no-background.png';
 
 const styles = makeStyles({
     header: {
-        height: '50px',
-        top: 0,
         position: 'fixed',
+        top: 0,
         zIndex: 2,
+    },
+    toolbar: {
+        padding: '5px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
 });
 
@@ -39,8 +46,17 @@ export function Header() {
     };
 
     return (
-        <AppBar position="static" sx={styles.header}>
-            <Toolbar>
+        <AppBar position="static" sx={styles.header} elevation={12}>
+            <Toolbar sx={styles.toolbar}>
+                <CardMedia
+                    sx={{
+                        height: '60px',
+                        width: '300px',
+                    }}
+                    component="img"
+                    image={Logo}
+                />
+
                 {user && (
                     <Box>
                         <IconButton onClick={handleMenu}>
