@@ -19,8 +19,7 @@ const styles = makeStyles({
         textDecoration: 'none',
         '&:hover': {
             '.MuiCardMedia-root': {
-                // transform: 'scale(1.025)',
-                transform: 'translate(.5rem, -.5rem)',
+                transform: 'scale(1.025)',
             },
         },
     },
@@ -71,8 +70,7 @@ const imageStyle: SxProps = {
     objectFit: 'cover',
     maxHeight: '200px',
     objectPosition: 'center',
-    // transition: '200ms transform ease-in-out',
-    transition: 'all 500ms ease-in-out',
+    transition: '400ms transform ease-in-out',
 };
 
 export function GameCard({ game }: GameCardProps) {
@@ -85,14 +83,7 @@ export function GameCard({ game }: GameCardProps) {
             to={`/games/${game.id}`}
             sx={styles.card}
         >
-            <Box
-                sx={{
-                    backgroundColor: 'fuchsia',
-                    position: 'relative',
-                }}
-            >
-                <Image imageUrl={image} style={imageStyle} />
-            </Box>
+            <Image imageUrl={image} style={imageStyle} />
 
             <Box sx={styles.cardContent}>
                 <Box>
