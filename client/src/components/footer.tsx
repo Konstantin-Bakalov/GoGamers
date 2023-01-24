@@ -6,6 +6,7 @@ const styles = makeStyles({
         martinTop: 'auto',
     },
     paper: {
+        width: 'auto',
         marginTop: '3rem',
         minHeight: '45px',
         display: 'flex',

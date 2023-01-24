@@ -26,6 +26,13 @@ const styles = makeStyles({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        flexDirection: {
+            xs: 'column',
+            sm: 'row',
+            md: 'row',
+            lg: 'row',
+            xl: 'row',
+        },
     },
     logo: {
         cursor: 'pointer',
@@ -35,6 +42,13 @@ const styles = makeStyles({
             md: '25px',
             lg: '50px',
             xl: '100px',
+        },
+        paddingTop: {
+            xs: '10px',
+            sm: '0px',
+            md: '0px',
+            lg: '0px',
+            xl: '0px',
         },
     },
     avatar: {

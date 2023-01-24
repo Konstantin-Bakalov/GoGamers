@@ -50,32 +50,28 @@ export function App() {
             <ThemeProvider theme={theme}>
                 <CurrentUserProvider>
                     <BrowserRouter>
-                        <CssBaseline>
-                            <Header />
-                            <Routes>
-                                <Route path="/login" element={<Login />} />
-                                <Route path="/" element={<PrivateOutlet />}>
-                                    <Route path="/" element={<Homepage />} />
+                        <CssBaseline />
+                        <Header />
+                        <Routes>
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/" element={<PrivateOutlet />}>
+                                <Route path="/" element={<Homepage />} />
 
-                                    <Route path="/games">
-                                        <Route
-                                            path=":id"
-                                            element={<GamePage />}
-                                        />
-                                        <Route
-                                            path="new"
-                                            element={<NewGamePage />}
-                                        />
-                                        <Route
-                                            path=":id/edit"
-                                            element={<EditGamePage />}
-                                        />
-                                    </Route>
+                                <Route path="/games">
+                                    <Route path=":id" element={<GamePage />} />
+                                    <Route
+                                        path="new"
+                                        element={<NewGamePage />}
+                                    />
+                                    <Route
+                                        path=":id/edit"
+                                        element={<EditGamePage />}
+                                    />
                                 </Route>
-                                <Route path="*" element={<Navigate to="/" />} />
-                            </Routes>
-                            <Footer />
-                        </CssBaseline>
+                            </Route>
+                            <Route path="*" element={<Navigate to="/" />} />
+                        </Routes>
+                        <Footer />
                     </BrowserRouter>
                 </CurrentUserProvider>
             </ThemeProvider>

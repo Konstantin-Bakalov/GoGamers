@@ -1,4 +1,4 @@
-import { Alert, Container } from '@mui/material';
+import { Alert, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { authService } from '../services/auth-service';
 import { GoogleLogin } from '@react-oauth/google';
@@ -11,7 +11,7 @@ export function Login() {
 
     return (
         // TODO: Remove margin
-        <Container sx={{ marginTop: '100px' }}>
+        <Box sx={{ marginTop: '100px' }}>
             {invalidCredential && <Alert>Invalid Credentials</Alert>}
             {loginFailed && <Alert>Login Failed</Alert>}
 
@@ -28,6 +28,6 @@ export function Login() {
                     setLoginFailed(true);
                 }}
             />
-        </Container>
+        </Box>
     );
 }
