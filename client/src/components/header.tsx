@@ -19,7 +19,6 @@ import { useNavigate } from 'react-router-dom';
 
 const styles = makeStyles({
     header: {
-        position: 'fixed',
         top: 0,
         zIndex: 2,
     },
@@ -30,6 +29,24 @@ const styles = makeStyles({
     },
     logo: {
         cursor: 'pointer',
+        paddingLeft: {
+            xs: '5px',
+            sm: '10px',
+            md: '25px',
+            lg: '50px',
+            xl: '100px',
+        },
+    },
+    avatar: {
+        display: 'flex',
+        alignItems: 'center',
+        paddingRight: {
+            xs: '5px',
+            sm: '10px',
+            md: '25px',
+            lg: '50px',
+            xl: '100px',
+        },
     },
 });
 
@@ -55,7 +72,7 @@ export function Header() {
     };
 
     return (
-        <AppBar position="static" sx={styles.header} elevation={12}>
+        <AppBar position="fixed" sx={styles.header} elevation={12}>
             <Toolbar sx={styles.toolbar}>
                 <Box
                     component="img"
@@ -65,7 +82,7 @@ export function Header() {
                 />
 
                 {user && (
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Box sx={styles.avatar}>
                         <IconButton onClick={handleMenu}>
                             <Avatar
                                 alt="user avatar"
@@ -77,6 +94,7 @@ export function Header() {
                             {!fullName && `Hi, ${user.name.split(' ')[0]}`}
                         </Typography>
                         <Menu
+                            disableScrollLock
                             anchorOrigin={{
                                 horizontal: 'center',
                                 vertical: 'bottom',
