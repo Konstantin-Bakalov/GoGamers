@@ -19,6 +19,7 @@ import { useNavigate } from 'react-router-dom';
 
 const styles = makeStyles({
     header: {
+        minHeight: '64px',
         top: 0,
         zIndex: 2,
     },

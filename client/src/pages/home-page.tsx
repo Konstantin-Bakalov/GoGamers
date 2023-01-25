@@ -139,6 +139,7 @@ export function Homepage() {
                         value={state.orderBy}
                         onChange={handleSortChange}
                     >
+                        {/* TODO: Fix scroll hide */}
                         {sortOptions.map((option, index) => (
                             <MenuItem key={index} value={option.value}>
                                 {option.label}

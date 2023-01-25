@@ -11,7 +11,7 @@ export function Login() {
 
     return (
         // TODO: Remove margin
-        <Box sx={{ marginTop: '100px' }}>
+        <Box sx={{ marginTop: '64px', height: '100%', backgroundColor: 'red' }}>
             {invalidCredential && <Alert>Invalid Credentials</Alert>}
             {loginFailed && <Alert>Login Failed</Alert>}
 
