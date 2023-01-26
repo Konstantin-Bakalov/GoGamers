@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { authService } from '../services/auth-service';
 import { GoogleLogin } from '@react-oauth/google';
 import { useState } from 'react';
-import logo from '../images/controller.png';
+import logo from '../images/chest_dark.png';
 import { makeStyles } from '../lib/make-styles';
 
 const styles = makeStyles({
