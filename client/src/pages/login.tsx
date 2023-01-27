@@ -28,19 +28,22 @@ export function Login() {
 
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Box sx={{ alignSelf: 'center' }}>
-                    <Typography sx={{ fontWeight: 700 }} variant="h2">
-                        Your personal
+                    <Typography fontWeight={700} variant="h2">
+                        Discover the world of
                     </Typography>
+
                     <Typography
-                        sx={{ fontWeight: 700 }}
+                        fontWeight={700}
                         color="background.paper"
                         variant="h2"
                     >
-                        gaming library
+                        unlimited gaming
                     </Typography>
+
                     <Typography>
                         Discover and store games of all sorts
                     </Typography>
+
                     <GoogleLogin
                         onSuccess={async (credentialResponse) => {
                             if (credentialResponse.credential) {
