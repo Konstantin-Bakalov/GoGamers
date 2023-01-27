@@ -58,10 +58,6 @@ const styles = makeStyles({
     descriptionText: {
         fontSize: '15px',
     },
-    genreFont: {
-        fontSize: '13px',
-        fontWeight: 'bold',
-    },
 });
 
 const imageStyle: SxProps = {
@@ -101,7 +97,7 @@ export function GameCard({ game }: GameCardProps) {
                 <Box sx={styles.genresContainer}>
                     {game.genres?.map((genre, index) => (
                         <Box sx={styles.genres} key={index}>
-                            <Typography sx={styles.genreFont}>
+                            <Typography variant="subtitle2" fontWeight={700}>
                                 {genre.name.toLowerCase()}
                             </Typography>
                         </Box>

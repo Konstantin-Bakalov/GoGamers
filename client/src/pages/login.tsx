@@ -25,8 +25,8 @@ export function Login() {
             {invalidCredential && <Alert>Invalid Credentials</Alert>}
             {loginFailed && <Alert>Login Failed</Alert>}
 
-            <Box sx={{ display: 'flex' }}>
-                <Box>
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Box sx={{ alignSelf: 'center' }}>
                     <Typography sx={{ fontWeight: 700 }} variant="h2">
                         Your personal
                     </Typography>
@@ -37,30 +37,29 @@ export function Login() {
                     >
                         gaming library
                     </Typography>
-                </Box>
-
-                <Box>
                     <Typography>
                         Discover and store games of all sorts
                     </Typography>
+                    <GoogleLogin
+                        onSuccess={async (credentialResponse) => {
+                            if (credentialResponse.credential) {
+                                await authService.login(
+                                    credentialResponse.credential,
+                                );
+                                navigate('/');
+                            } else {
+                                setInvalidCredential(true);
+                            }
+                        }}
+                        onError={() => {
+                            setLoginFailed(true);
+                        }}
+                    />
                 </Box>
 
                 <Box sx={styles.picture} component="img" src={logo} />
+                <Box></Box>
             </Box>
-
-            <GoogleLogin
-                onSuccess={async (credentialResponse) => {
-                    if (credentialResponse.credential) {
-                        await authService.login(credentialResponse.credential);
-                        navigate('/');
-                    } else {
-                        setInvalidCredential(true);
-                    }
-                }}
-                onError={() => {
-                    setLoginFailed(true);
-                }}
-            />
         </Box>
     );
 }
