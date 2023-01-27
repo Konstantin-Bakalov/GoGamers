@@ -3,15 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { authService } from '../services/auth-service';
 import { GoogleLogin } from '@react-oauth/google';
 import { useState } from 'react';
-import logo from '../images/chest_dark.png';
+import logo from '../images/chest_cartoon.png';
 import { makeStyles } from '../lib/make-styles';
 
 const styles = makeStyles({
     picture: {
+        alignSelf: 'center',
         objectFit: 'cover',
         objectPosition: 'center',
-        height: '800px',
-        width: '800px',
+        height: '700px',
+        width: '700px',
     },
 });
 
@@ -58,7 +59,6 @@ export function Login() {
                 </Box>
 
                 <Box sx={styles.picture} component="img" src={logo} />
-                <Box></Box>
             </Box>
         </Box>
     );
