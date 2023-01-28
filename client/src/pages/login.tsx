@@ -7,12 +7,60 @@ import logo from '../images/chest_cartoon.png';
 import { makeStyles } from '../lib/make-styles';
 
 const styles = makeStyles({
+    container: {
+        height: '100%',
+        gap: {
+            xs: '3rem',
+            sm: '4rem',
+        },
+        display: 'flex',
+        justifyContent: {
+            xs: 'flex-start',
+            sm: 'flex-start',
+            md: 'center',
+            lg: 'center',
+            xl: 'center',
+        },
+        flexDirection: {
+            xs: 'column',
+            sm: 'column',
+            md: 'row',
+            lg: 'row',
+            xl: 'row',
+        },
+        marginX: {
+            md: '20px',
+        },
+    },
     picture: {
         alignSelf: 'center',
         objectFit: 'cover',
         objectPosition: 'center',
-        height: '700px',
-        width: '700px',
+        height: {
+            xs: '300px',
+            sm: '300px',
+            md: '500px',
+            lg: '600px',
+            xl: '800px',
+        },
+    },
+    font: {
+        textAlign: {
+            xs: 'center',
+            sm: 'center',
+            md: 'start',
+            lg: 'start',
+            xl: 'start',
+        },
+        lineHeight: 1.2,
+        fontWeight: 700,
+        fontSize: {
+            xs: '2rem',
+            sm: '3.75rem',
+            md: '2.25rem',
+            lg: '3.75rem',
+            xl: '3.75rem',
+        },
     },
 });
 
@@ -22,11 +70,11 @@ export function Login() {
     const navigate = useNavigate();
 
     return (
-        <Box sx={{ marginTop: '64px' }}>
+        <Box sx={{ marginTop: '64px', height: '100%' }}>
             {invalidCredential && <Alert>Invalid Credentials</Alert>}
             {loginFailed && <Alert>Login Failed</Alert>}
 
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Box sx={styles.container}>
                 <Box
                     sx={{
                         alignSelf: 'center',
@@ -36,20 +84,26 @@ export function Login() {
                     }}
                 >
                     <Box>
-                        <Typography fontWeight={700} variant="h2">
+                        <Typography sx={styles.font}>
                             Explore the vast
                         </Typography>
 
-                        <Typography
-                            fontWeight={700}
-                            color="background.paper"
-                            variant="h2"
-                        >
+                        <Typography sx={styles.font} color="background.paper">
                             world of gaming
                         </Typography>
                     </Box>
 
-                    <Box>
+                    <Box
+                        sx={{
+                            textAlign: {
+                                xs: 'center',
+                                sm: 'center',
+                                md: 'start',
+                                lg: 'start',
+                                xl: 'start',
+                            },
+                        }}
+                    >
                         <Typography variant="h6">
                             Your personal library for pc games
                         </Typography>
@@ -59,7 +113,17 @@ export function Login() {
                         </Typography>
                     </Box>
 
-                    <Box>
+                    <Box
+                        sx={{
+                            alignSelf: {
+                                xs: 'center',
+                                sm: 'center',
+                                md: 'flex-start',
+                                lg: 'flex-start',
+                                xl: 'flex-start',
+                            },
+                        }}
+                    >
                         <GoogleLogin
                             onSuccess={async (credentialResponse) => {
                                 if (credentialResponse.credential) {
