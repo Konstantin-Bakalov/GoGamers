@@ -1,5 +1,4 @@
-import { ThemeProvider } from '@emotion/react';
-import { createTheme, CssBaseline } from '@mui/material';
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { GamePage } from './pages/game-page';
 import { Homepage } from './pages/home-page';

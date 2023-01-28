@@ -109,7 +109,7 @@ export function Homepage() {
     };
 
     return (
-        <Container disableGutters sx={{ marginTop: '100px' }}>
+        <Container disableGutters sx={{ marginTop: '64px' }}>
             <Box
                 sx={{
                     display: 'flex',
@@ -118,9 +118,9 @@ export function Homepage() {
                 }}
             >
                 <TextField
-                    label="Search"
+                    label="Search game"
                     type="search"
-                    variant="standard"
+                    variant="outlined"
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
                 />
@@ -139,7 +139,6 @@ export function Homepage() {
                         value={state.orderBy}
                         onChange={handleSortChange}
                     >
-                        {/* TODO: Fix scroll hide */}
                         {sortOptions.map((option, index) => (
                             <MenuItem key={index} value={option.value}>
                                 {option.label}

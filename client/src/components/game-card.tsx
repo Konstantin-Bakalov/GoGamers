@@ -1,5 +1,4 @@
-import { Box, Card, SxProps, Typography } from '@mui/material';
-import { grey } from '@mui/material/colors';
+import { Box, Card, SxProps, Typography, useTheme } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { DetailedGameModel } from 'shared';
 import { makeStyles } from '../lib/make-styles';
@@ -47,7 +46,6 @@ const styles = makeStyles({
     genres: {
         padding: '.2rem .5rem',
         borderRadius: '1rem',
-        background: grey[300],
     },
     description: {
         display: '-webkit-box',
@@ -71,6 +69,7 @@ const imageStyle: SxProps = {
 
 export function GameCard({ game }: GameCardProps) {
     const image = game.media.find((image) => image.type === 'image')?.url;
+    const theme = useTheme();
 
     return (
         <Card
@@ -96,8 +95,16 @@ export function GameCard({ game }: GameCardProps) {
 
                 <Box sx={styles.genresContainer}>
                     {game.genres?.map((genre, index) => (
-                        <Box sx={styles.genres} key={index}>
-                            <Typography variant="subtitle2" fontWeight={700}>
+                        <Box
+                            bgcolor={theme.palette.primary.main}
+                            sx={styles.genres}
+                            key={index}
+                        >
+                            <Typography
+                                color="background.paper"
+                                variant="subtitle2"
+                                fontWeight={700}
+                            >
                                 {genre.name.toLowerCase()}
                             </Typography>
                         </Box>
