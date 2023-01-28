@@ -1,16 +1,20 @@
-import { Alert, Box, Typography } from '@mui/material';
+import { Alert, Box, CircularProgress, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { authService } from '../services/auth-service';
-import { GoogleLogin } from '@react-oauth/google';
-import { useState } from 'react';
+import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 import logo from '../images/chest_cartoon.png';
 import { makeStyles } from '../lib/make-styles';
+import { useAsyncAction } from '../hooks/use-async-action';
 
 const styles = makeStyles({
+    outerContainer: {
+        marginTop: '64px',
+        height: '100%',
+    },
     container: {
         height: '100%',
         gap: {
-            xs: '3rem',
+            xs: '4rem',
             sm: '4rem',
         },
         display: 'flex',
@@ -31,6 +35,12 @@ const styles = makeStyles({
         marginX: {
             md: '20px',
         },
+    },
+    textContainer: {
+        alignSelf: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '.5rem',
     },
     picture: {
         alignSelf: 'center',
@@ -55,34 +65,65 @@ const styles = makeStyles({
         lineHeight: 1.2,
         fontWeight: 700,
         fontSize: {
-            xs: '2rem',
+            xs: '2.25rem',
             sm: '3.75rem',
             md: '2.25rem',
             lg: '3.75rem',
             xl: '3.75rem',
         },
     },
+    button: {
+        display: 'flex',
+        width: '100%',
+        flexDirection: {
+            xs: 'column',
+            sm: 'column',
+            md: 'row',
+            lg: 'row',
+            xl: 'row',
+        },
+        gap: '1rem',
+        alignSelf: {
+            xs: 'center',
+            sm: 'center',
+            md: 'flex-start',
+            lg: 'flex-start',
+            xl: 'flex-start',
+        },
+    },
+    textAlign: {
+        textAlign: {
+            xs: 'center',
+            sm: 'center',
+            md: 'start',
+            lg: 'start',
+            xl: 'start',
+        },
+    },
+    alert: {
+        borderRadius: '1.5rem',
+        width: '150px',
+        paddingY: 0,
+        alignSelf: 'center',
+    },
 });
 
 export function Login() {
-    const [invalidCredential, setInvalidCredential] = useState(false);
-    const [loginFailed, setLoginFailed] = useState(false);
     const navigate = useNavigate();
 
-    return (
-        <Box sx={{ marginTop: '64px', height: '100%' }}>
-            {invalidCredential && <Alert>Invalid Credentials</Alert>}
-            {loginFailed && <Alert>Login Failed</Alert>}
+    const { trigger, loading, error } = useAsyncAction(
+        async (credentialResponse: CredentialResponse) => {
+            if (credentialResponse.credential) {
+                await authService.login(credentialResponse.credential);
+                navigate('/');
+            }
+        },
+    );
 
+    return (
+        <Box sx={styles.outerContainer}>
             <Box sx={styles.container}>
-                <Box
-                    sx={{
-                        alignSelf: 'center',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '.5rem',
-                    }}
-                >
+                <Box sx={styles.textContainer}>
                     <Box>
                         <Typography sx={styles.font}>
                             Explore the vast
@@ -93,17 +134,7 @@ export function Login() {
                         </Typography>
                     </Box>
 
-                    <Box
-                        sx={{
-                            textAlign: {
-                                xs: 'center',
-                                sm: 'center',
-                                md: 'start',
-                                lg: 'start',
-                                xl: 'start',
-                            },
-                        }}
-                    >
+                    <Box sx={styles.textAlign}>
                         <Typography variant="h6">
                             Your personal library for pc games
                         </Typography>
@@ -113,32 +144,16 @@ export function Login() {
                         </Typography>
                     </Box>
 
-                    <Box
-                        sx={{
-                            alignSelf: {
-                                xs: 'center',
-                                sm: 'center',
-                                md: 'flex-start',
-                                lg: 'flex-start',
-                                xl: 'flex-start',
-                            },
-                        }}
-                    >
-                        <GoogleLogin
-                            onSuccess={async (credentialResponse) => {
-                                if (credentialResponse.credential) {
-                                    await authService.login(
-                                        credentialResponse.credential,
-                                    );
-                                    navigate('/');
-                                } else {
-                                    setInvalidCredential(true);
-                                }
-                            }}
-                            onError={() => {
-                                setLoginFailed(true);
-                            }}
-                        />
+                    <Box sx={styles.button}>
+                        <Box sx={{ alignSelf: 'center' }}>
+                            <GoogleLogin shape="pill" onSuccess={trigger} />
+                        </Box>
+                        {loading && <CircularProgress />}
+                        {!!error && (
+                            <Alert sx={styles.alert} severity="error">
+                                Login failed
+                            </Alert>
+                        )}
                     </Box>
                 </Box>
 
