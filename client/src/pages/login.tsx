@@ -27,38 +27,55 @@ export function Login() {
             {loginFailed && <Alert>Login Failed</Alert>}
 
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Box sx={{ alignSelf: 'center' }}>
-                    <Typography fontWeight={700} variant="h2">
-                        Discover the world of
-                    </Typography>
+                <Box
+                    sx={{
+                        alignSelf: 'center',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '.5rem',
+                    }}
+                >
+                    <Box>
+                        <Typography fontWeight={700} variant="h2">
+                            Explore the vast
+                        </Typography>
 
-                    <Typography
-                        fontWeight={700}
-                        color="background.paper"
-                        variant="h2"
-                    >
-                        unlimited gaming
-                    </Typography>
+                        <Typography
+                            fontWeight={700}
+                            color="background.paper"
+                            variant="h2"
+                        >
+                            world of gaming
+                        </Typography>
+                    </Box>
 
-                    <Typography>
-                        Discover and store games of all sorts
-                    </Typography>
+                    <Box>
+                        <Typography variant="h6">
+                            Your personal library for pc games
+                        </Typography>
 
-                    <GoogleLogin
-                        onSuccess={async (credentialResponse) => {
-                            if (credentialResponse.credential) {
-                                await authService.login(
-                                    credentialResponse.credential,
-                                );
-                                navigate('/');
-                            } else {
-                                setInvalidCredential(true);
-                            }
-                        }}
-                        onError={() => {
-                            setLoginFailed(true);
-                        }}
-                    />
+                        <Typography variant="h6">
+                            Create, discover and comment on games
+                        </Typography>
+                    </Box>
+
+                    <Box>
+                        <GoogleLogin
+                            onSuccess={async (credentialResponse) => {
+                                if (credentialResponse.credential) {
+                                    await authService.login(
+                                        credentialResponse.credential,
+                                    );
+                                    navigate('/');
+                                } else {
+                                    setInvalidCredential(true);
+                                }
+                            }}
+                            onError={() => {
+                                setLoginFailed(true);
+                            }}
+                        />
+                    </Box>
                 </Box>
 
                 <Box sx={styles.picture} component="img" src={logo} />
