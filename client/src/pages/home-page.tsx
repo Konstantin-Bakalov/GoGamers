@@ -70,8 +70,34 @@ const styles = makeStyles({
         '& .MuiOutlinedInput-root': {
             '& .MuiOutlinedInput-notchedOutline': {
                 borderColor: 'primary.main',
+                borderWidth: 1.5,
+            },
+            '&:hover .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'primary.main',
+                borderWidth: 2,
+            },
+            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'primary.main',
+                borderWidth: 2,
             },
         },
+    },
+    select: {
+        '.MuiOutlinedInput-notchedOutline': {
+            borderColor: 'primary.main',
+            borderWidth: 1.5,
+        },
+        '&:hover .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'primary.main',
+            borderWidth: 2,
+        },
+        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'primary.main',
+            borderWidth: 2,
+        },
+    },
+    selectLabel: {
+        color: 'primary.main',
     },
 });
 
@@ -139,6 +165,12 @@ export function Homepage() {
                         autoComplete="off"
                         value={inputText}
                         onChange={(e) => setInputText(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                setSearch(inputText);
+                            }
+                        }}
                         InputProps={{
                             endAdornment: inputText && (
                                 <IconButton
@@ -161,8 +193,9 @@ export function Homepage() {
 
                 <Box sx={{ display: 'flex', gap: '1rem' }}>
                     <FormControl>
-                        <InputLabel>Sort by</InputLabel>
+                        <InputLabel sx={styles.selectLabel}>Sort by</InputLabel>
                         <Select
+                            sx={styles.select}
                             label="Sort by"
                             value={state.orderBy}
                             onChange={handleSortChange}
@@ -176,8 +209,9 @@ export function Homepage() {
                     </FormControl>
 
                     <FormControl>
-                        <InputLabel>Show by</InputLabel>
+                        <InputLabel sx={styles.selectLabel}>Show by</InputLabel>
                         <Select
+                            sx={styles.select}
                             label="Show by"
                             value={state.maxItems}
                             onChange={handleItemsChange}
