@@ -9,10 +9,8 @@ import { useAsyncAction } from '../hooks/use-async-action';
 const styles = makeStyles({
     outerContainer: {
         marginTop: '64px',
-        height: '100%',
     },
     container: {
-        height: '100%',
         gap: {
             xs: '4rem',
             sm: '4rem',
