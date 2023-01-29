@@ -3,10 +3,10 @@ import { useAsync } from '../hooks/use-async';
 import { gameService } from '../services/games-service';
 import {
     Box,
-    Button,
     CircularProgress,
     Container,
     FormControl,
+    IconButton,
     InputLabel,
     MenuItem,
     Pagination,
@@ -17,6 +17,8 @@ import {
 import { useSearchParams } from 'react-router-dom';
 import { GameCard } from '../components/game-card';
 import { makeStyles } from '../lib/make-styles';
+import SearchIcon from '@mui/icons-material/Search';
+import ClearIcon from '@mui/icons-material/Clear';
 
 export interface FilterState {
     searchText: string;
@@ -64,6 +66,13 @@ const styles = makeStyles({
         gap: '1rem',
         alignItems: 'start',
     },
+    textField: {
+        '& .MuiOutlinedInput-root': {
+            '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'primary.main',
+            },
+        },
+    },
 });
 
 export function Homepage() {
@@ -108,6 +117,11 @@ export function Homepage() {
         );
     };
 
+    const onSearchClear = () => {
+        setInputText('');
+        setSearch('');
+    };
+
     return (
         <Container disableGutters sx={{ marginTop: '64px' }}>
             <Box
@@ -117,50 +131,65 @@ export function Homepage() {
                     marginTop: '20px',
                 }}
             >
-                <TextField
-                    label="Search game"
-                    type="search"
-                    variant="outlined"
-                    value={inputText}
-                    onChange={(e) => setInputText(e.target.value)}
-                />
+                <Box sx={{ display: 'flex' }}>
+                    <TextField
+                        sx={styles.textField}
+                        label="Search game"
+                        variant="outlined"
+                        autoComplete="off"
+                        value={inputText}
+                        onChange={(e) => setInputText(e.target.value)}
+                        InputProps={{
+                            endAdornment: inputText && (
+                                <IconButton
+                                    size="small"
+                                    onClick={onSearchClear}
+                                >
+                                    <ClearIcon color="primary" />
+                                </IconButton>
+                            ),
+                        }}
+                    />
 
-                <Button
-                    variant="contained"
-                    onClick={() => setSearch(inputText)}
-                >
-                    Search
-                </Button>
-
-                <FormControl>
-                    <InputLabel>Sort by</InputLabel>
-                    <Select
-                        label="Sort by"
-                        value={state.orderBy}
-                        onChange={handleSortChange}
+                    <IconButton
+                        disableRipple
+                        onClick={() => setSearch(inputText)}
                     >
-                        {sortOptions.map((option, index) => (
-                            <MenuItem key={index} value={option.value}>
-                                {option.label}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
+                        <SearchIcon fontSize="large" color="primary" />
+                    </IconButton>
+                </Box>
 
-                <FormControl>
-                    <InputLabel>Show by</InputLabel>
-                    <Select
-                        label="Show by"
-                        value={state.maxItems}
-                        onChange={handleItemsChange}
-                    >
-                        {itemsOptions.map((option, index) => (
-                            <MenuItem key={index} value={option.value}>
-                                {option.label}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
+                <Box sx={{ display: 'flex', gap: '1rem' }}>
+                    <FormControl>
+                        <InputLabel>Sort by</InputLabel>
+                        <Select
+                            label="Sort by"
+                            value={state.orderBy}
+                            onChange={handleSortChange}
+                        >
+                            {sortOptions.map((option, index) => (
+                                <MenuItem key={index} value={option.value}>
+                                    {option.label}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+
+                    <FormControl>
+                        <InputLabel>Show by</InputLabel>
+                        <Select
+                            label="Show by"
+                            value={state.maxItems}
+                            onChange={handleItemsChange}
+                        >
+                            {itemsOptions.map((option, index) => (
+                                <MenuItem key={index} value={option.value}>
+                                    {option.label}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </Box>
             </Box>
 
             {loading && <CircularProgress />}
