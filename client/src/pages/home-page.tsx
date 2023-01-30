@@ -62,6 +62,8 @@ const styles = makeStyles({
     container: {
         display: 'flex',
         flexDirection: 'column',
+        flexGrow: 1,
+        position: 'relative',
         width: '80%',
         marginTop: {
             xs: '109px',
@@ -138,8 +140,9 @@ const styles = makeStyles({
         color: 'primary.main',
     },
     pagination: {
-        marginTop: '20px',
+        marginTop: 'auto',
         alignSelf: 'center',
+        paddingTop: '30px',
     },
 });
 
