@@ -59,12 +59,48 @@ function paramsToState(params: URLSearchParams): FilterState {
 }
 
 const styles = makeStyles({
+    container: {
+        width: '80%',
+        marginTop: {
+            xs: '109px',
+            sm: '64px',
+            md: '64px',
+            lg: '64px',
+            xl: '64px',
+        },
+    },
+    topBar: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: {
+            xs: 'column',
+            sm: 'row',
+            md: 'row',
+            lg: 'row',
+            xl: 'row',
+        },
+        alignItems: 'center',
+        marginTop: '20px',
+        gap: {
+            xs: '20px',
+        },
+    },
+    searchIcon: {
+        display: {
+            xs: 'none',
+            sm: 'inline-block',
+            md: 'inline-block',
+            lg: 'inline-block',
+            xl: 'inline-block',
+        },
+    },
     cardGrid: {
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
         gridAutoRows: '1fr',
-        gap: '1rem',
+        gap: '20px',
         alignItems: 'start',
+        marginTop: '20px',
     },
     textField: {
         '& .MuiOutlinedInput-root': {
@@ -149,38 +185,8 @@ export function Homepage() {
     };
 
     return (
-        <Container
-            disableGutters
-            maxWidth={false}
-            sx={{
-                width: '80%',
-                marginTop: {
-                    xs: '109px',
-                    sm: '64px',
-                    md: '64px',
-                    lg: '64px',
-                    xl: '64px',
-                },
-            }}
-        >
-            <Box
-                sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    flexDirection: {
-                        xs: 'column',
-                        sm: 'row',
-                        md: 'row',
-                        lg: 'row',
-                        xl: 'row',
-                    },
-                    alignItems: 'center',
-                    marginTop: '20px',
-                    gap: {
-                        xs: '20px',
-                    },
-                }}
-            >
+        <Container disableGutters maxWidth={false} sx={styles.container}>
+            <Box sx={styles.topBar}>
                 <Box sx={{ display: 'flex' }}>
                     <TextField
                         sx={styles.textField}
@@ -208,15 +214,7 @@ export function Homepage() {
                     />
 
                     <IconButton
-                        sx={{
-                            display: {
-                                xs: 'none',
-                                sm: 'inline-block',
-                                md: 'inline-block',
-                                lg: 'inline-block',
-                                xl: 'inline-block',
-                            },
-                        }}
+                        sx={styles.searchIcon}
                         disableRipple
                         onClick={() => setSearch(inputText)}
                     >
