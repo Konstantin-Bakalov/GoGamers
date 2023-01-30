@@ -149,12 +149,36 @@ export function Homepage() {
     };
 
     return (
-        <Container disableGutters sx={{ marginTop: '64px' }}>
+        <Container
+            disableGutters
+            maxWidth={false}
+            sx={{
+                width: '80%',
+                marginTop: {
+                    xs: '109px',
+                    sm: '64px',
+                    md: '64px',
+                    lg: '64px',
+                    xl: '64px',
+                },
+            }}
+        >
             <Box
                 sx={{
                     display: 'flex',
                     justifyContent: 'space-between',
+                    flexDirection: {
+                        xs: 'column',
+                        sm: 'row',
+                        md: 'row',
+                        lg: 'row',
+                        xl: 'row',
+                    },
+                    alignItems: 'center',
                     marginTop: '20px',
+                    gap: {
+                        xs: '20px',
+                    },
                 }}
             >
                 <Box sx={{ display: 'flex' }}>
@@ -172,7 +196,7 @@ export function Homepage() {
                             }
                         }}
                         InputProps={{
-                            endAdornment: inputText && (
+                            endAdornment: (
                                 <IconButton
                                     size="small"
                                     onClick={onSearchClear}
@@ -184,6 +208,15 @@ export function Homepage() {
                     />
 
                     <IconButton
+                        sx={{
+                            display: {
+                                xs: 'none',
+                                sm: 'inline-block',
+                                md: 'inline-block',
+                                lg: 'inline-block',
+                                xl: 'inline-block',
+                            },
+                        }}
                         disableRipple
                         onClick={() => setSearch(inputText)}
                     >
