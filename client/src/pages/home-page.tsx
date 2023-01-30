@@ -60,6 +60,8 @@ function paramsToState(params: URLSearchParams): FilterState {
 
 const styles = makeStyles({
     container: {
+        display: 'flex',
+        flexDirection: 'column',
         width: '80%',
         marginTop: {
             xs: '109px',
@@ -112,7 +114,7 @@ const styles = makeStyles({
                 borderColor: 'primary.main',
                 borderWidth: 2,
             },
-            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
                 borderColor: 'primary.main',
                 borderWidth: 2,
             },
@@ -134,6 +136,10 @@ const styles = makeStyles({
     },
     selectLabel: {
         color: 'primary.main',
+    },
+    pagination: {
+        marginTop: '20px',
+        alignSelf: 'center',
     },
 });
 
@@ -267,9 +273,14 @@ export function Homepage() {
             </Box>
 
             <Pagination
+                sx={styles.pagination}
+                size="large"
+                color="primary"
+                shape="rounded"
+                variant="outlined"
                 count={Math.ceil((data?.total || 0) / Number(state.maxItems))}
                 page={Number(state.page)}
-                onChange={(e, value) => {
+                onChange={(_, value) => {
                     setSearchParams({
                         ...state,
                         page: value.toString(),
