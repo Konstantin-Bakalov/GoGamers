@@ -15,10 +15,10 @@ const styles = makeStyles({
         justifyContent: 'flex-start',
         gap: '20px',
         width: {
-            xs: '95%',
-            sm: '95%',
-            md: '55%',
-            lg: '45%',
+            xs: '90%',
+            sm: '90%',
+            md: '50%',
+            lg: '50%',
             xl: '35%',
         },
         marginTop: {
@@ -59,10 +59,14 @@ export function NewGamePage() {
     });
 
     return (
-        <Container disableGutters sx={styles.container}>
+        <Container disableGutters maxWidth={false} sx={styles.container}>
             {loading && <CircularProgress />}
 
-            <Typography variant="h4" sx={{ alignSelf: 'center' }}>
+            <Typography
+                variant="h4"
+                fontWeight={700}
+                sx={{ alignSelf: 'center' }}
+            >
                 Create New Game
             </Typography>
 

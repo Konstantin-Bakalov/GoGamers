@@ -44,9 +44,22 @@ const styles = makeStyles({
         display: 'flex',
         justifyContent: 'center',
         gap: '20px',
+        flexDirection: {
+            xs: 'column',
+            sm: 'row',
+            md: 'row',
+            lg: 'row',
+            xl: 'row',
+        },
     },
     width: {
-        width: '50%',
+        width: {
+            xs: '100%',
+            sm: '50%',
+            md: '50%',
+            lg: '50%',
+            xl: '50%',
+        },
     },
 });
 
@@ -188,7 +201,6 @@ export function GameInfoForm<T extends GameInfo>({
             <Box sx={styles.lineContainer}>
                 <Button
                     variant="outlined"
-                    color="secondary"
                     size="large"
                     onClick={() => navigate(-1)}
                 >
@@ -197,7 +209,7 @@ export function GameInfoForm<T extends GameInfo>({
 
                 <LoadingButton
                     size="large"
-                    color="inherit"
+                    color="primary"
                     loading={loading}
                     onClick={onSubmit}
                     variant="contained"

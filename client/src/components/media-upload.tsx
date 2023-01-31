@@ -33,12 +33,7 @@ export function MediaUpload({ onMediaSelected }: MediaUploadProps) {
     }, [selectedMedia]);
 
     return (
-        <Button
-            variant="outlined"
-            color="secondary"
-            component="label"
-            size="large"
-        >
+        <Button variant="outlined" component="label" size="large">
             Upload Image or Video
             <input
                 type="file"

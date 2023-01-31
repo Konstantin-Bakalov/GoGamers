@@ -12,7 +12,7 @@ import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import { useState } from 'react';
 import { VideoDialog } from '../../dialogs/video-dialog';
 
-const tooltipMessage = 'Image format .png .jpg .jpeg, Video format .mp4';
+const tooltipMessage = 'Image format .png .jpg .jpeg Video format .mp4';
 
 interface MediaListProps {
     media: (Media | EditMedia)[];

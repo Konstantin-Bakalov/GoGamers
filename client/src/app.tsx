@@ -15,7 +15,6 @@ import { Footer } from './components/footer';
 const theme = createTheme({
     palette: {
         primary: {
-            // main: '#FFFFFF',
             main: '#1A192A',
             dark: '#464457',
             light: '#F1EDFF',
@@ -25,7 +24,6 @@ const theme = createTheme({
             // main: '#FF3916',
             // light: '#F8371580',
             // dark: '#F83715',
-            // contrastText: '#FFFFFF',
         },
         text: {
             // primary: '#34012F',
