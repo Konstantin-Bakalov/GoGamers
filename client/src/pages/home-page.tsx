@@ -3,6 +3,7 @@ import { useAsync } from '../hooks/use-async';
 import { gameService } from '../services/games-service';
 import {
     Box,
+    Button,
     CircularProgress,
     Container,
     FormControl,
@@ -13,12 +14,14 @@ import {
     Select,
     SelectChangeEvent,
     TextField,
+    Typography,
 } from '@mui/material';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { GameCard } from '../components/game-card';
 import { makeStyles } from '../lib/make-styles';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
+import AddIcon from '@mui/icons-material/Add';
 
 export interface FilterState {
     searchText: string;
@@ -155,6 +158,8 @@ export function Homepage() {
 
     const [inputText, setInputText] = useState(state.searchText);
 
+    const navigate = useNavigate();
+
     const setSearch = useCallback(
         (searchText: string) => {
             setSearchParams(
@@ -232,6 +237,13 @@ export function Homepage() {
                 </Box>
 
                 <Box sx={{ display: 'flex', gap: '1rem' }}>
+                    <Button
+                        variant="contained"
+                        onClick={() => navigate('/games/new')}
+                    >
+                        <AddIcon />
+                        <Typography>New game</Typography>
+                    </Button>
                     <FormControl>
                         <InputLabel sx={styles.selectLabel}>Sort by</InputLabel>
                         <Select
