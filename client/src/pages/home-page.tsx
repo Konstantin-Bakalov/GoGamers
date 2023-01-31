@@ -317,7 +317,9 @@ export function Homepage() {
                 </Box>
             </Box>
 
-            {loading && <CircularProgress />}
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                {loading && <CircularProgress />}
+            </Box>
 
             <Box sx={styles.cardGrid}>
                 {data?.results &&
