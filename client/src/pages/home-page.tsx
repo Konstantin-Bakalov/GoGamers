@@ -81,7 +81,7 @@ const styles = makeStyles({
         justifyContent: 'space-between',
         flexDirection: {
             xs: 'column',
-            sm: 'row',
+            sm: 'column',
             md: 'row',
             lg: 'row',
             xl: 'row',
@@ -92,7 +92,28 @@ const styles = makeStyles({
             xs: '20px',
         },
     },
+    button: {
+        display: 'flex',
+        alignSelf: 'stretch',
+        justifyContent: {
+            xs: 'center',
+            sm: 'center',
+        },
+    },
+    search: {
+        display: 'flex',
+        gap: '1rem',
+        flexDirection: {
+            xs: 'column',
+            sm: 'row',
+            md: 'row',
+            lg: 'row',
+            xl: 'row',
+        },
+    },
     searchIcon: {
+        p: 0,
+        paddingLeft: '8px',
         display: {
             xs: 'none',
             sm: 'inline-block',
@@ -201,80 +222,97 @@ export function Homepage() {
     return (
         <Container disableGutters maxWidth={false} sx={styles.container}>
             <Box sx={styles.topBar}>
-                <Box sx={{ display: 'flex' }}>
-                    <TextField
-                        sx={styles.textField}
-                        label="Search game"
-                        variant="outlined"
-                        autoComplete="off"
-                        value={inputText}
-                        onChange={(e) => setInputText(e.target.value)}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                setSearch(inputText);
-                            }
-                        }}
-                        InputProps={{
-                            endAdornment: (
-                                <IconButton
-                                    size="small"
-                                    onClick={onSearchClear}
-                                >
-                                    <ClearIcon color="primary" />
-                                </IconButton>
-                            ),
-                        }}
-                    />
-
-                    <IconButton
-                        sx={styles.searchIcon}
-                        disableRipple
-                        onClick={() => setSearch(inputText)}
-                    >
-                        <SearchIcon fontSize="large" color="primary" />
-                    </IconButton>
-                </Box>
-
-                <Box sx={{ display: 'flex', gap: '1rem' }}>
+                <Box sx={styles.button}>
                     <Button
+                        size="large"
                         variant="contained"
                         onClick={() => navigate('/games/new')}
                     >
                         <AddIcon />
                         <Typography>New game</Typography>
                     </Button>
-                    <FormControl>
-                        <InputLabel sx={styles.selectLabel}>Sort by</InputLabel>
-                        <Select
-                            sx={styles.select}
-                            label="Sort by"
-                            value={state.orderBy}
-                            onChange={handleSortChange}
-                        >
-                            {sortOptions.map((option, index) => (
-                                <MenuItem key={index} value={option.value}>
-                                    {option.label}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
+                </Box>
 
-                    <FormControl>
-                        <InputLabel sx={styles.selectLabel}>Show by</InputLabel>
-                        <Select
-                            sx={styles.select}
-                            label="Show by"
-                            value={state.maxItems}
-                            onChange={handleItemsChange}
+                <Box sx={styles.search}>
+                    <Box sx={{ display: 'flex' }}>
+                        <TextField
+                            sx={styles.textField}
+                            label="Search game"
+                            variant="outlined"
+                            autoComplete="off"
+                            value={inputText}
+                            onChange={(e) => setInputText(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    e.preventDefault();
+                                    setSearch(inputText);
+                                }
+                            }}
+                            InputProps={{
+                                endAdornment: (
+                                    <IconButton
+                                        sx={{ p: 0 }}
+                                        size="small"
+                                        onClick={onSearchClear}
+                                    >
+                                        <ClearIcon color="primary" />
+                                    </IconButton>
+                                ),
+                            }}
+                        />
+
+                        <IconButton
+                            sx={styles.searchIcon}
+                            disableRipple
+                            onClick={() => setSearch(inputText)}
                         >
-                            {itemsOptions.map((option, index) => (
-                                <MenuItem key={index} value={option.value}>
-                                    {option.label}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
+                            <SearchIcon fontSize="large" color="primary" />
+                        </IconButton>
+                    </Box>
+
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            gap: '1rem',
+                            justifyContent: 'space-between',
+                        }}
+                    >
+                        <FormControl>
+                            <InputLabel sx={styles.selectLabel}>
+                                Sort by
+                            </InputLabel>
+                            <Select
+                                sx={styles.select}
+                                label="Sort by"
+                                value={state.orderBy}
+                                onChange={handleSortChange}
+                            >
+                                {sortOptions.map((option, index) => (
+                                    <MenuItem key={index} value={option.value}>
+                                        {option.label}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+
+                        <FormControl>
+                            <InputLabel sx={styles.selectLabel}>
+                                Show by
+                            </InputLabel>
+                            <Select
+                                sx={styles.select}
+                                label="Show by"
+                                value={state.maxItems}
+                                onChange={handleItemsChange}
+                            >
+                                {itemsOptions.map((option, index) => (
+                                    <MenuItem key={index} value={option.value}>
+                                        {option.label}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </Box>
                 </Box>
             </Box>
 
