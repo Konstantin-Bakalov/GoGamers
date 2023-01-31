@@ -1,5 +1,6 @@
 import { Button } from '@mui/material';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { makeStyles } from '../lib/make-styles';
 
 export interface Media {
     mediaFile: File;
@@ -9,6 +10,15 @@ export interface Media {
 interface MediaUploadProps {
     onMediaSelected: (mediaFile: File, source: string) => void;
 }
+
+const styles = makeStyles({
+    button: {
+        '&.MuiButtonBase-root': {
+            borderColor: 'primary.main',
+            borderWidth: 1.5,
+        },
+    },
+});
 
 export function MediaUpload({ onMediaSelected }: MediaUploadProps) {
     const [selectedMedia, setSelectedMedia] = useState<File>();
@@ -33,7 +43,12 @@ export function MediaUpload({ onMediaSelected }: MediaUploadProps) {
     }, [selectedMedia]);
 
     return (
-        <Button variant="outlined" component="label" size="large">
+        <Button
+            sx={styles.button}
+            variant="outlined"
+            component="label"
+            size="large"
+        >
             Upload Image or Video
             <input
                 type="file"

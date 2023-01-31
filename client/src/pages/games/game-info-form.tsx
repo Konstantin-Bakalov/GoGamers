@@ -61,6 +61,28 @@ const styles = makeStyles({
             xl: '50%',
         },
     },
+    textField: {
+        '& .MuiOutlinedInput-root': {
+            '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'primary.main',
+                borderWidth: 1.5,
+            },
+            '&:hover .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'primary.main',
+                borderWidth: 2,
+            },
+            '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'primary.main',
+                borderWidth: 2,
+            },
+        },
+    },
+    button: {
+        '&.MuiButton-outlined': {
+            borderColor: 'primary.main',
+            borderWidth: 1.5,
+        },
+    },
 });
 
 export function GameInfoForm<T extends GameInfo>({
@@ -90,11 +112,12 @@ export function GameInfoForm<T extends GameInfo>({
         <Box sx={styles.container}>
             <Box sx={styles.lineContainer}>
                 <TextField
-                    sx={styles.width}
+                    sx={{ ...styles.width, ...styles.textField }}
                     value={game.name}
                     error={!!validationError?.name}
                     helperText={helperText('Name', validationError?.name)}
                     required
+                    autoComplete="off"
                     size="medium"
                     variant="outlined"
                     label="Name"
@@ -102,7 +125,7 @@ export function GameInfoForm<T extends GameInfo>({
                 />
 
                 <TextField
-                    sx={styles.width}
+                    sx={{ ...styles.width, ...styles.textField }}
                     value={game.developer}
                     error={!!validationError?.developer}
                     helperText={helperText(
@@ -110,6 +133,7 @@ export function GameInfoForm<T extends GameInfo>({
                         validationError?.developer,
                     )}
                     required
+                    autoComplete="off"
                     size="medium"
                     variant="outlined"
                     label="Developer"
@@ -120,6 +144,7 @@ export function GameInfoForm<T extends GameInfo>({
             </Box>
 
             <TextField
+                sx={styles.textField}
                 value={game.description}
                 error={!!validationError?.description}
                 helperText={helperText(
@@ -149,7 +174,7 @@ export function GameInfoForm<T extends GameInfo>({
 
             <Box sx={styles.lineContainer}>
                 <TextField
-                    sx={styles.width}
+                    sx={{ ...styles.width, ...styles.textField }}
                     value={game.price ?? 0}
                     error={!!validationError?.price}
                     helperText={helperText('Price', validationError?.price)}
@@ -174,7 +199,10 @@ export function GameInfoForm<T extends GameInfo>({
                             }
                         }}
                         renderInput={(params) => (
-                            <TextField {...params} sx={styles.width} />
+                            <TextField
+                                {...params}
+                                sx={{ ...styles.width, ...styles.textField }}
+                            />
                         )}
                     />
                 </LocalizationProvider>
@@ -200,6 +228,7 @@ export function GameInfoForm<T extends GameInfo>({
 
             <Box sx={styles.lineContainer}>
                 <Button
+                    sx={styles.button}
                     variant="outlined"
                     size="large"
                     onClick={() => navigate(-1)}
