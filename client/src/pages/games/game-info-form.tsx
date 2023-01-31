@@ -179,6 +179,7 @@ export function GameInfoForm<T extends GameInfo>({
                     error={!!validationError?.price}
                     helperText={helperText('Price', validationError?.price)}
                     required
+                    autoComplete="off"
                     size="medium"
                     disabled={game.freeToPlay}
                     type="number"

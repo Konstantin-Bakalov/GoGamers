@@ -52,7 +52,44 @@ export function GenreSelect({ onChange, defaultGenres }: GenreSelectProps) {
                 styles={{
                     dropdownIndicator: (base) => ({
                         ...base,
-                        padding: '1rem',
+                        color: 'primary',
+                        ':hover': {
+                            color: '#F1EDFF',
+                        },
+                    }),
+                    control: (styles) => ({
+                        ...styles,
+                        backgroundColor: 'primary',
+                        borderRadius: '4px',
+                        borderColor: 'primary.main',
+                        boxShadow: undefined,
+                        borderWidth: 1.5,
+                        '&:hover': {
+                            borderColor: 'primary.main',
+                        },
+                    }),
+                    clearIndicator: (styles) => ({
+                        ...styles,
+                        color: 'primary',
+                        ':hover': {
+                            color: 'red',
+                        },
+                    }),
+                    valueContainer: (styles) => ({
+                        ...styles,
+                        padding: '14px',
+                    }),
+                    indicatorSeparator: (styles) => ({
+                        ...styles,
+                        backgroundColor: '#1A192A',
+                    }),
+                    input: (styles) => ({
+                        ...styles,
+                        color: 'primary',
+                    }),
+                    placeholder: (styles) => ({
+                        ...styles,
+                        color: 'primary',
                     }),
                 }}
             />
