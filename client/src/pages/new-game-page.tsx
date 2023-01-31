@@ -21,7 +21,13 @@ const styles = makeStyles({
             lg: '45%',
             xl: '35%',
         },
-        marginTop: '20px',
+        marginTop: {
+            xs: '114px',
+            sm: '69px',
+            md: '69px',
+            lg: '69px',
+            xl: '69px',
+        },
     },
 });
 
