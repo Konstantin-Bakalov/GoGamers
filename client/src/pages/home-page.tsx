@@ -114,6 +114,7 @@ const styles = makeStyles({
     searchIcon: {
         p: 0,
         paddingLeft: '8px',
+        paddingTop: '5px',
         display: {
             xs: 'none',
             sm: 'inline-block',
