@@ -1,6 +1,7 @@
 import { genreService } from '../../services/genre-service';
 import { Box } from '@mui/material';
 import AsyncCreatableSelect from 'react-select/async-creatable';
+import { StylesConfig } from 'react-select';
 
 type Option = {
     value: string;
@@ -11,6 +12,57 @@ interface GenreSelectProps {
     onChange: (genres: { name: string }[]) => void;
     defaultGenres?: { name: string }[];
 }
+
+const primaryColor = '#1A192A';
+const paperColor = '#F1EDFF';
+
+const colorStyles: StylesConfig<Option, true> = {
+    dropdownIndicator: (base) => ({
+        ...base,
+        color: 'primary',
+        ':hover': {
+            color: paperColor,
+        },
+    }),
+    control: (styles) => ({
+        ...styles,
+        backgroundColor: 'primary',
+        borderRadius: '4px',
+        borderColor: 'primary.main',
+        boxShadow: undefined,
+        borderWidth: 1.5,
+        '&:hover': {
+            borderColor: 'primary.main',
+        },
+    }),
+    clearIndicator: (styles) => ({
+        ...styles,
+        color: 'primary',
+        ':hover': {
+            color: 'red',
+        },
+    }),
+    valueContainer: (styles) => ({
+        ...styles,
+        padding: '14px',
+    }),
+    indicatorSeparator: (styles) => ({
+        ...styles,
+        backgroundColor: primaryColor,
+    }),
+    input: (styles) => ({
+        ...styles,
+        color: 'primary',
+    }),
+    placeholder: (styles) => ({
+        ...styles,
+        color: 'primary',
+    }),
+    multiValue: (styles) => ({
+        ...styles,
+        backgroundColor: paperColor,
+    }),
+};
 
 export function GenreSelect({ onChange, defaultGenres }: GenreSelectProps) {
     const loadOptions = async (inputValue: string) => {
@@ -49,49 +101,7 @@ export function GenreSelect({ onChange, defaultGenres }: GenreSelectProps) {
                 placeholder={'Select genres *'}
                 loadOptions={loadOptions}
                 onChange={handleChange}
-                styles={{
-                    dropdownIndicator: (base) => ({
-                        ...base,
-                        color: 'primary',
-                        ':hover': {
-                            color: '#F1EDFF',
-                        },
-                    }),
-                    control: (styles) => ({
-                        ...styles,
-                        backgroundColor: 'primary',
-                        borderRadius: '4px',
-                        borderColor: 'primary.main',
-                        boxShadow: undefined,
-                        borderWidth: 1.5,
-                        '&:hover': {
-                            borderColor: 'primary.main',
-                        },
-                    }),
-                    clearIndicator: (styles) => ({
-                        ...styles,
-                        color: 'primary',
-                        ':hover': {
-                            color: 'red',
-                        },
-                    }),
-                    valueContainer: (styles) => ({
-                        ...styles,
-                        padding: '14px',
-                    }),
-                    indicatorSeparator: (styles) => ({
-                        ...styles,
-                        backgroundColor: '#1A192A',
-                    }),
-                    input: (styles) => ({
-                        ...styles,
-                        color: 'primary',
-                    }),
-                    placeholder: (styles) => ({
-                        ...styles,
-                        color: 'primary',
-                    }),
-                }}
+                styles={colorStyles}
             />
         </Box>
     );
