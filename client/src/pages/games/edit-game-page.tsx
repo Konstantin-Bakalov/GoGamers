@@ -89,6 +89,7 @@ export function EditGamePage() {
                     }
                     onGenreChange={(game) => setGame(game)}
                     onSubmit={submitGame}
+                    edit={true}
                     loading={loading}
                     error={error}
                 >

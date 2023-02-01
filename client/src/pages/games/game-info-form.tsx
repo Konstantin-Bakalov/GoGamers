@@ -30,6 +30,7 @@ interface FormProps<T> {
     onInput: (game: T) => void;
     onGenreChange: (game: T) => void;
     onSubmit: () => void;
+    edit?: boolean;
     loading: boolean;
     error: unknown;
 }
@@ -90,6 +91,7 @@ export function GameInfoForm<T extends GameInfo>({
     onSubmit,
     onGenreChange,
     onInput,
+    edit,
     loading,
     error,
     children,
@@ -244,7 +246,7 @@ export function GameInfoForm<T extends GameInfo>({
                     onClick={onSubmit}
                     variant="contained"
                 >
-                    Create Game
+                    {edit ? <>Update Game</> : <>Create Game</>}
                 </LoadingButton>
             </Box>
         </Box>
