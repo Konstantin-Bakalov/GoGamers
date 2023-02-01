@@ -75,19 +75,24 @@ export function GamePage() {
     const deleteDialogClose = () => setDeleteDialog(false);
 
     return (
-        <Container disableGutters>
+        <Container disableGutters sx={{ marginTop: '120px' }}>
             {loading && <CircularProgress />}
 
             {user && user.id === game?.userId && (
                 <Box>
-                    <IconButton aria-label="delete" onClick={deleteDialogOpen}>
-                        <DeleteIcon />
+                    <IconButton
+                        size="large"
+                        aria-label="delete"
+                        onClick={deleteDialogOpen}
+                    >
+                        <DeleteIcon color="primary" />
                     </IconButton>
                     <IconButton
+                        size="large"
+                        aria-label="edit game"
                         onClick={() => navigate(`/games/${id}/edit`)}
-                        aria-label="edit"
                     >
-                        <EditIcon />
+                        <EditIcon color="primary" />
                     </IconButton>
                 </Box>
             )}

@@ -1,4 +1,4 @@
-import { Alert, Container } from '@mui/material';
+import { Alert, Container, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { MediaModel } from 'shared';
@@ -7,8 +7,32 @@ import { useAsync } from '../../hooks/use-async';
 import { useAsyncAction } from '../../hooks/use-async-action';
 import { useMediaEditForm } from '../../hooks/use-media-edit-form';
 import { useValidation } from '../../hooks/use-validation';
+import { makeStyles } from '../../lib/make-styles';
 import { gameService } from '../../services/games-service';
 import { GameInfoForm } from './game-info-form';
+
+const styles = makeStyles({
+    container: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        gap: '20px',
+        width: {
+            xs: '90%',
+            sm: '90%',
+            md: '50%',
+            lg: '50%',
+            xl: '35%',
+        },
+        marginTop: {
+            xs: '114px',
+            sm: '69px',
+            md: '69px',
+            lg: '69px',
+            xl: '69px',
+        },
+    },
+});
 
 export function EditGamePage() {
     const [game, setGame] = useState<UpdateGameModel>();
@@ -44,7 +68,15 @@ export function EditGamePage() {
     const { validationError } = useValidation({ error });
 
     return (
-        <Container disableGutters>
+        <Container disableGutters maxWidth={false} sx={styles.container}>
+            <Typography
+                variant="h4"
+                fontWeight={700}
+                sx={{ alignSelf: 'center' }}
+            >
+                Edit Game
+            </Typography>
+
             {game && (
                 <GameInfoForm
                     game={game}

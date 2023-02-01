@@ -1,4 +1,4 @@
-import { CircularProgress, Container, Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAsyncAction } from '../hooks/use-async-action';
@@ -48,20 +48,16 @@ export function NewGamePage() {
 
     const navigate = useNavigate();
 
-    const {
-        trigger: submit,
-        loading,
-        error,
-    } = useAsyncAction(async (media: MediaRequestModel[]) => {
-        const createdGame = await gameService.create({ ...game, media });
+    const { trigger: submit, error } = useAsyncAction(
+        async (media: MediaRequestModel[]) => {
+            const createdGame = await gameService.create({ ...game, media });
 
-        navigate(`/games/${createdGame.id}`);
-    });
+            navigate(`/games/${createdGame.id}`);
+        },
+    );
 
     return (
         <Container disableGutters maxWidth={false} sx={styles.container}>
-            {loading && <CircularProgress />}
-
             <Typography
                 variant="h4"
                 fontWeight={700}
