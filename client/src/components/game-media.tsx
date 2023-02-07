@@ -1,4 +1,4 @@
-import { Box, Button, MobileStepper, Paper, Typography } from '@mui/material';
+import { Box, Button, MobileStepper } from '@mui/material';
 import { useState } from 'react';
 import { MediaModel } from 'shared';
 import { Image } from './image';
@@ -29,39 +29,8 @@ export function GameMedia({ media }: GameMediaProps) {
 
     return (
         <Box sx={{ maxWidth: '400px' }}>
-            <Paper
-                square
-                elevation={0}
-                sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    height: 50,
-                    pl: 2,
-                    bgcolor: 'background.default',
-                }}
-            >
-                <Typography>Media text</Typography>
-            </Paper>
-            <SwipeableViews
-                index={activeStep}
-                onChangeIndex={handleStepChange}
-                enableMouseEvents
-            >
-                {media.map((med, index) =>
-                    med.type === 'image' ? (
-                        // TODO: Add styles to Image and Video
-                        <Image style={{}} key={index} imageUrl={med.url} />
-                    ) : (
-                        <Video
-                            style={{}}
-                            key={index}
-                            videoUrl={med.url}
-                            controls={true}
-                        />
-                    ),
-                )}
-            </SwipeableViews>
             <MobileStepper
+                variant="text"
                 steps={maxSteps}
                 position="static"
                 activeStep={activeStep}
@@ -86,15 +55,21 @@ export function GameMedia({ media }: GameMediaProps) {
                     </Button>
                 }
             />
+            <SwipeableViews
+                index={activeStep}
+                autoPlay={false}
+                animateHeight
+                onChangeIndex={handleStepChange}
+                enableMouseEvents
+            >
+                {media.map((med, index) =>
+                    med.type === 'image' ? (
+                        <Image key={index} imageUrl={med.url} />
+                    ) : (
+                        <Video key={index} videoUrl={med.url} controls={true} />
+                    ),
+                )}
+            </SwipeableViews>
         </Box>
-        // <Box>
-        // {media.map((med, index) =>
-        //     med.type === 'image' ? (
-        //         <Image key={index} imageUrl={med.url} />
-        //     ) : (
-        //         <Video key={index} videoUrl={med.url} />
-        //     ),
-        // )}
-        // </Box>
     );
 }
