@@ -23,9 +23,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import { GameInfos } from '../components/game-infos';
 import { makeStyles } from '../lib/make-styles';
 import { useValidation } from '../hooks/use-validation';
+import { DeleteEditControls } from '../components/delete-edit-controls';
 
 const styles = makeStyles({
     container: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
         marginTop: {
             xs: '114px',
             sm: '69px',
@@ -40,10 +44,6 @@ export function GamePage() {
     const { id } = useParams();
     const user = useCurrentUser();
     const [deleteDialog, setDeleteDialog] = useState(false);
-
-    // const [forbiddenError, setForbiddenError] = useState<string | undefined>(
-    //     undefined,
-    // );
 
     const navigate = useNavigate();
 
@@ -76,20 +76,11 @@ export function GamePage() {
         },
     );
 
-    // useEffect(() => {
-    //     if (!error) {
-    //         setForbiddenError(undefined);
-    //     }
-
-    //     if (error instanceof ForbiddenError) {
-    //         setForbiddenError(error.message);
-    //         deleteDialogClose();
-    //     }
-    // }, [error]);
-
     const deleteDialogOpen = () => setDeleteDialog(true);
 
     const deleteDialogClose = () => setDeleteDialog(false);
+
+    const onEdit = () => navigate(`/games/${id}/edit`);
 
     return (
         <Container disableGutters sx={styles.container}>
@@ -104,22 +95,10 @@ export function GamePage() {
             {loading && <CircularProgress />}
 
             {user && user.id === game?.userId && (
-                <Box>
-                    <IconButton
-                        size="large"
-                        aria-label="delete"
-                        onClick={deleteDialogOpen}
-                    >
-                        <DeleteIcon color="primary" />
-                    </IconButton>
-                    <IconButton
-                        size="large"
-                        aria-label="edit game"
-                        onClick={() => navigate(`/games/${id}/edit`)}
-                    >
-                        <EditIcon color="primary" />
-                    </IconButton>
-                </Box>
+                <DeleteEditControls
+                    onDelete={deleteDialogOpen}
+                    onEdit={onEdit}
+                />
             )}
 
             {forbiddenError && (

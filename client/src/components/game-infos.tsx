@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import { BaseGameModel } from 'shared';
+import { DetailedGameModel } from 'shared';
 
 export function GameInfos({
     description,
@@ -8,13 +8,18 @@ export function GameInfos({
     freeToPlay,
     price,
 }: Pick<
-    BaseGameModel,
-    'description' | 'developer' | 'releaseDate' | 'freeToPlay' | 'price'
+    DetailedGameModel,
+    | 'description'
+    | 'developer'
+    | 'genres'
+    | 'releaseDate'
+    | 'freeToPlay'
+    | 'price'
 >) {
     return (
         <Box>
-            <Typography>{description}</Typography>
-            <Typography>{developer}</Typography>
+            <Typography variant="h5">{description}</Typography>
+            <Typography>{`Developer: ${developer}`}</Typography>
             <Typography>{releaseDate.toString()}</Typography>
             <Typography>{freeToPlay ? 'free' : price}</Typography>
         </Box>
