@@ -10,25 +10,40 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useAsync } from '../hooks/use-async';
 import { gameService } from '../services/games-service';
 import { useCurrentUser } from '../hooks/use-current-user';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { DeleteGameDialog } from '../dialogs/delete-game-dialog';
 import { useAsyncAction } from '../hooks/use-async-action';
-import { ForbiddenError, ReviewModelDetailed } from 'shared';
+import { ReviewModelDetailed } from 'shared';
 import { ReviewForm } from '../components/review-form';
 import { reviewService } from '../services/reviews-service';
 import { ReviewList } from '../components/review-list';
 import { GameMedia } from '../components/game-media';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { GameInfos } from '../components/game-infos';
+import { makeStyles } from '../lib/make-styles';
+import { useValidation } from '../hooks/use-validation';
+
+const styles = makeStyles({
+    container: {
+        marginTop: {
+            xs: '114px',
+            sm: '69px',
+            md: '69px',
+            lg: '69px',
+            xl: '69px',
+        },
+    },
+});
 
 export function GamePage() {
     const { id } = useParams();
     const user = useCurrentUser();
     const [deleteDialog, setDeleteDialog] = useState(false);
 
-    const [forbiddenError, setForbiddenError] = useState<string | undefined>(
-        undefined,
-    );
+    // const [forbiddenError, setForbiddenError] = useState<string | undefined>(
+    //     undefined,
+    // );
 
     const navigate = useNavigate();
 
@@ -41,6 +56,8 @@ export function GamePage() {
         await gameService.deleteById(Number(game?.id));
         navigate('/');
     });
+
+    const { forbiddenError } = useValidation({ error });
 
     const [reviews, setReviews] = useState<ReviewModelDetailed[]>([]);
     const [page, setPage] = useState(1);
@@ -59,23 +76,31 @@ export function GamePage() {
         },
     );
 
-    useEffect(() => {
-        if (!error) {
-            setForbiddenError(undefined);
-        }
+    // useEffect(() => {
+    //     if (!error) {
+    //         setForbiddenError(undefined);
+    //     }
 
-        if (error instanceof ForbiddenError) {
-            setForbiddenError(error.message);
-            deleteDialogClose();
-        }
-    }, [error]);
+    //     if (error instanceof ForbiddenError) {
+    //         setForbiddenError(error.message);
+    //         deleteDialogClose();
+    //     }
+    // }, [error]);
 
     const deleteDialogOpen = () => setDeleteDialog(true);
 
     const deleteDialogClose = () => setDeleteDialog(false);
 
     return (
-        <Container disableGutters sx={{ marginTop: '120px' }}>
+        <Container disableGutters sx={styles.container}>
+            <Typography
+                variant="h4"
+                fontWeight={700}
+                sx={{ alignSelf: 'center' }}
+            >
+                {game?.name}
+            </Typography>
+
             {loading && <CircularProgress />}
 
             {user && user.id === game?.userId && (
@@ -111,15 +136,14 @@ export function GamePage() {
             )}
 
             {game && (
-                <Box>
+                <Box sx={{ display: 'flex' }}>
                     <GameMedia media={game.media} />
-                    <Typography>{game.name}</Typography>
-                    <Typography>{game.description}</Typography>
-                    <Typography>{game.developer}</Typography>
-                    <Typography>{game.releaseDate.toString()}</Typography>
-                    <Typography>
-                        {game.freeToPlay ? 'free' : game.price}
-                    </Typography>
+                    <GameInfos {...game} />
+                </Box>
+            )}
+
+            {game && (
+                <Box>
                     <ReviewForm
                         gameId={game.id}
                         loading={createLoading}
