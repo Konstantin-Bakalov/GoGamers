@@ -17,7 +17,7 @@ export function GameInfos({
     | 'price'
 >) {
     return (
-        <Box>
+        <Box sx={{ maxWidth: '500px' }}>
             <Typography variant="h5">{description}</Typography>
             <Typography>{`Developer: ${developer}`}</Typography>
             <Typography>{releaseDate.toString()}</Typography>

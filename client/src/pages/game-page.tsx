@@ -1,10 +1,4 @@
-import {
-    Alert,
-    Box,
-    CircularProgress,
-    IconButton,
-    Typography,
-} from '@mui/material';
+import { Alert, Box, CircularProgress, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAsync } from '../hooks/use-async';
@@ -18,8 +12,6 @@ import { ReviewForm } from '../components/review-form';
 import { reviewService } from '../services/reviews-service';
 import { ReviewList } from '../components/review-list';
 import { GameMedia } from '../components/game-media';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import { GameInfos } from '../components/game-infos';
 import { makeStyles } from '../lib/make-styles';
 import { useValidation } from '../hooks/use-validation';
@@ -29,13 +21,12 @@ const styles = makeStyles({
     container: {
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-start',
         marginTop: {
-            xs: '114px',
-            sm: '69px',
-            md: '69px',
-            lg: '69px',
-            xl: '69px',
+            xs: '134px',
+            sm: '89px',
+            md: '89px',
+            lg: '89px',
+            xl: '89px',
         },
     },
 });
@@ -84,22 +75,20 @@ export function GamePage() {
 
     return (
         <Container disableGutters sx={styles.container}>
-            <Typography
-                variant="h4"
-                fontWeight={700}
-                sx={{ alignSelf: 'center' }}
-            >
-                {game?.name}
-            </Typography>
-
             {loading && <CircularProgress />}
 
-            {user && user.id === game?.userId && (
-                <DeleteEditControls
-                    onDelete={deleteDialogOpen}
-                    onEdit={onEdit}
-                />
-            )}
+            <Box sx={{ display: 'flex', gap: '10px' }}>
+                <Typography variant="h4" fontWeight={700}>
+                    {game?.name}
+                </Typography>
+
+                {user && user.id === game?.userId && (
+                    <DeleteEditControls
+                        onDelete={deleteDialogOpen}
+                        onEdit={onEdit}
+                    />
+                )}
+            </Box>
 
             {forbiddenError && (
                 <Box>
@@ -115,7 +104,7 @@ export function GamePage() {
             )}
 
             {game && (
-                <Box sx={{ display: 'flex' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <GameMedia media={game.media} />
                     <GameInfos {...game} />
                 </Box>

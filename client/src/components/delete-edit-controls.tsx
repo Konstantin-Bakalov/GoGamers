@@ -13,11 +13,12 @@ export function DeleteEditControls({
 }: DeleteEditControlsProps) {
     return (
         <Box>
-            <IconButton size="large" aria-label="delete" onClick={onDelete}>
-                <DeleteIcon color="primary" />
-            </IconButton>
             <IconButton size="large" aria-label="edit game" onClick={onEdit}>
                 <EditIcon color="primary" />
+            </IconButton>
+
+            <IconButton size="large" aria-label="delete" onClick={onDelete}>
+                <DeleteIcon color="primary" />
             </IconButton>
         </Box>
     );

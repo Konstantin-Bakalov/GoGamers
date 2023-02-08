@@ -5,10 +5,25 @@ import { Image } from './image';
 import { Video } from './video';
 import SwipeableViews from 'react-swipeable-views';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
+import { makeStyles } from '../lib/make-styles';
 
 interface GameMediaProps {
     media: MediaModel[];
 }
+
+const styles = makeStyles({
+    container: {
+        maxWidth: '650px',
+    },
+    media: {
+        objectFit: 'cover',
+        objectPosition: 'top left',
+        height: '370px',
+    },
+    border: {
+        borderRadius: '.5rem',
+    },
+});
 
 export function GameMedia({ media }: GameMediaProps) {
     const [activeStep, setActiveStep] = useState(0);
@@ -28,7 +43,32 @@ export function GameMedia({ media }: GameMediaProps) {
     };
 
     return (
-        <Box sx={{ maxWidth: '400px' }}>
+        <Box sx={styles.container}>
+            <SwipeableViews
+                index={activeStep}
+                autoPlay={false}
+                hysteresis={0.3}
+                onChangeIndex={handleStepChange}
+                enableMouseEvents
+                slideStyle={styles.border}
+            >
+                {media.map((med, index) =>
+                    med.type === 'image' ? (
+                        <Image
+                            style={styles.media}
+                            key={index}
+                            imageUrl={med.url}
+                        />
+                    ) : (
+                        <Video
+                            style={styles.media}
+                            key={index}
+                            videoUrl={med.url}
+                            controls={true}
+                        />
+                    ),
+                )}
+            </SwipeableViews>
             <MobileStepper
                 variant="text"
                 steps={maxSteps}
@@ -55,21 +95,6 @@ export function GameMedia({ media }: GameMediaProps) {
                     </Button>
                 }
             />
-            <SwipeableViews
-                index={activeStep}
-                autoPlay={false}
-                animateHeight
-                onChangeIndex={handleStepChange}
-                enableMouseEvents
-            >
-                {media.map((med, index) =>
-                    med.type === 'image' ? (
-                        <Image key={index} imageUrl={med.url} />
-                    ) : (
-                        <Video key={index} videoUrl={med.url} controls={true} />
-                    ),
-                )}
-            </SwipeableViews>
         </Box>
     );
 }
