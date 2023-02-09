@@ -50,7 +50,7 @@ export function GameMedia({ media }: GameMediaProps) {
                 hysteresis={0.3}
                 onChangeIndex={handleStepChange}
                 enableMouseEvents
-                slideStyle={styles.border}
+                style={styles.border}
             >
                 {media.map((med, index) =>
                     med.type === 'image' ? (
