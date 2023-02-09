@@ -80,7 +80,7 @@ export function Review({ review, isLast, nextPage }: ReviewProps) {
             <Avatar alt="User" src={review.profilePicture} />
             <Box>{review.username}</Box>
             <Box>{review.body}</Box>
-            <Box>{dayjs(review.createdAt).format('D-MMM-YYYY HH:mma')}</Box>
+            <Box>{dayjs(review.createdAt).format('D MMM YYYY HH:mma')}</Box>
             <IconButton onClick={like}>
                 {liked ? <ThumbUpIcon /> : <ThumbUpOffAltIcon />}
                 <Typography>{likeCount}</Typography>

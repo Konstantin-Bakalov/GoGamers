@@ -104,7 +104,13 @@ export function GamePage() {
             )}
 
             {game && (
-                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        gap: '20px',
+                    }}
+                >
                     <GameMedia media={game.media} />
                     <GameInfos {...game} />
                 </Box>

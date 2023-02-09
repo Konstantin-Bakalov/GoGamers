@@ -1,4 +1,5 @@
 import { Box, Typography } from '@mui/material';
+import dayjs from 'dayjs';
 import { DetailedGameModel } from 'shared';
 
 export function GameInfos({
@@ -17,11 +18,13 @@ export function GameInfos({
     | 'price'
 >) {
     return (
-        <Box sx={{ maxWidth: '500px' }}>
-            <Typography variant="h5">{description}</Typography>
+        <Box sx={{ maxWidth: '400px', flexGrow: 1 }}>
             <Typography>{`Developer: ${developer}`}</Typography>
-            <Typography>{releaseDate.toString()}</Typography>
-            <Typography>{freeToPlay ? 'free' : price}</Typography>
+            <Typography>{`Release Date: ${dayjs(releaseDate).format(
+                'D MMM YYYY',
+            )}`}</Typography>
+            <Typography>{`${freeToPlay ? 'free' : price}`}</Typography>
+            {/* <Typography variant="h5">{description}</Typography> */}
         </Box>
     );
 }
