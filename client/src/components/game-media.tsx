@@ -76,7 +76,7 @@ export function GameMedia({ media }: GameMediaProps) {
                 activeStep={activeStep}
                 nextButton={
                     <Button
-                        size="small"
+                        size="large"
                         onClick={handleNext}
                         disabled={activeStep === maxSteps - 1}
                     >
@@ -86,7 +86,7 @@ export function GameMedia({ media }: GameMediaProps) {
                 }
                 backButton={
                     <Button
-                        size="small"
+                        size="large"
                         onClick={handleBack}
                         disabled={activeStep === 0}
                     >
