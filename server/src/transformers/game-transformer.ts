@@ -15,6 +15,7 @@ export class GameTransformer {
             creator: game.creator,
             genres: game.genres,
             media: game.media,
+            createdAt: game.createdAt,
         };
     }
 

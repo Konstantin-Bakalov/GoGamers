@@ -19,7 +19,13 @@ const styles = makeStyles({
 
 type GameInfosProps = Pick<
     DetailedGameModel,
-    'developer' | 'genres' | 'releaseDate' | 'freeToPlay' | 'price' | 'creator'
+    | 'developer'
+    | 'genres'
+    | 'releaseDate'
+    | 'freeToPlay'
+    | 'price'
+    | 'creator'
+    | 'createdAt'
 >;
 
 export function GameInfos({
@@ -29,6 +35,7 @@ export function GameInfos({
     freeToPlay,
     price,
     creator,
+    createdAt,
 }: GameInfosProps) {
     return (
         <Box sx={styles.container}>
@@ -50,6 +57,10 @@ export function GameInfos({
                 </Typography>
 
                 <Typography variant="h5" fontWeight={700}>
+                    Added on
+                </Typography>
+
+                <Typography variant="h5" fontWeight={700}>
                     Genres
                 </Typography>
             </Box>
@@ -66,6 +77,10 @@ export function GameInfos({
                 </Typography>
 
                 <Typography variant="h5">{creator.name}</Typography>
+
+                <Typography variant="h5">
+                    {dayjs(createdAt).format('D MMM YYYY')}
+                </Typography>
 
                 <Box sx={styles.genres}>
                     {genres.map((genre, index) => (
