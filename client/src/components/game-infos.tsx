@@ -1,30 +1,37 @@
 import { Box, Typography } from '@mui/material';
 import dayjs from 'dayjs';
+import { PropsWithChildren } from 'react';
 import { DetailedGameModel } from 'shared';
 
 export function GameInfos({
-    description,
     developer,
     releaseDate,
     freeToPlay,
     price,
-}: Pick<
-    DetailedGameModel,
-    | 'description'
-    | 'developer'
-    | 'genres'
-    | 'releaseDate'
-    | 'freeToPlay'
-    | 'price'
+    children,
+}: PropsWithChildren<
+    Pick<
+        DetailedGameModel,
+        | 'description'
+        | 'developer'
+        | 'genres'
+        | 'releaseDate'
+        | 'freeToPlay'
+        | 'price'
+    >
 >) {
     return (
         <Box sx={{ maxWidth: '400px', flexGrow: 1 }}>
+            {children}
             <Typography>{`Developer: ${developer}`}</Typography>
-            <Typography>{`Release Date: ${dayjs(releaseDate).format(
+            <Typography>{`Release date: ${dayjs(releaseDate).format(
                 'D MMM YYYY',
             )}`}</Typography>
-            <Typography>{`${freeToPlay ? 'free' : price}`}</Typography>
-            {/* <Typography variant="h5">{description}</Typography> */}
+            {freeToPlay ? (
+                <Typography>Free to play</Typography>
+            ) : (
+                <Typography>{`Price: ${price}`}</Typography>
+            )}
         </Box>
     );
 }

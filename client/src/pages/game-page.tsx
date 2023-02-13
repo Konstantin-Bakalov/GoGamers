@@ -77,7 +77,7 @@ export function GamePage() {
         <Container disableGutters sx={styles.container}>
             {loading && <CircularProgress />}
 
-            <Box sx={{ display: 'flex', gap: '10px' }}>
+            {/* <Box sx={{ display: 'flex', gap: '10px' }}>
                 <Typography variant="h4" fontWeight={700}>
                     {game?.name}
                 </Typography>
@@ -88,7 +88,7 @@ export function GamePage() {
                         onEdit={onEdit}
                     />
                 )}
-            </Box>
+            </Box> */}
 
             {forbiddenError && (
                 <Box>
@@ -112,10 +112,23 @@ export function GamePage() {
                     }}
                 >
                     <GameMedia media={game.media} />
-                    <GameInfos {...game} />
+                    <GameInfos {...game}>
+                        <Box sx={{ display: 'flex', gap: '10px' }}>
+                            <Typography variant="h4" fontWeight={700}>
+                                {game?.name}
+                            </Typography>
+
+                            {user && user.id === game?.userId && (
+                                <DeleteEditControls
+                                    onDelete={deleteDialogOpen}
+                                    onEdit={onEdit}
+                                />
+                            )}
+                        </Box>
+                    </GameInfos>
                 </Box>
             )}
-
+            <Typography variant="h5">{game?.description}</Typography>
             {game && (
                 <Box>
                     <ReviewForm
