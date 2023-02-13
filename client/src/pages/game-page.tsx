@@ -21,6 +21,9 @@ const styles = makeStyles({
     container: {
         display: 'flex',
         flexDirection: 'column',
+        // width: {
+        //     xl: '80%',
+        // },
         marginTop: {
             xs: '134px',
             sm: '89px',
@@ -75,20 +78,22 @@ export function GamePage() {
 
     return (
         <Container disableGutters sx={styles.container}>
-            {loading && <CircularProgress />}
-
-            {/* <Box sx={{ display: 'flex', gap: '10px' }}>
-                <Typography variant="h4" fontWeight={700}>
+            <Box sx={{ display: 'flex', gap: '10px' }}>
+                <Typography variant="h3" fontWeight={700}>
                     {game?.name}
                 </Typography>
 
-                {user && user.id === game?.userId && (
-                    <DeleteEditControls
-                        onDelete={deleteDialogOpen}
-                        onEdit={onEdit}
-                    />
-                )}
-            </Box> */}
+                <Box sx={{ alignSelf: 'center' }}>
+                    {user && user.id === game?.userId && (
+                        <DeleteEditControls
+                            onDelete={deleteDialogOpen}
+                            onEdit={onEdit}
+                        />
+                    )}
+                </Box>
+            </Box>
+
+            {loading && <CircularProgress />}
 
             {forbiddenError && (
                 <Box>
@@ -108,27 +113,16 @@ export function GamePage() {
                     sx={{
                         display: 'flex',
                         justifyContent: 'space-between',
-                        gap: '20px',
+                        marginTop: '10px',
                     }}
                 >
                     <GameMedia media={game.media} />
-                    <GameInfos {...game}>
-                        <Box sx={{ display: 'flex', gap: '10px' }}>
-                            <Typography variant="h4" fontWeight={700}>
-                                {game?.name}
-                            </Typography>
-
-                            {user && user.id === game?.userId && (
-                                <DeleteEditControls
-                                    onDelete={deleteDialogOpen}
-                                    onEdit={onEdit}
-                                />
-                            )}
-                        </Box>
-                    </GameInfos>
+                    <GameInfos {...game} />
                 </Box>
             )}
+
             <Typography variant="h5">{game?.description}</Typography>
+
             {game && (
                 <Box>
                     <ReviewForm
