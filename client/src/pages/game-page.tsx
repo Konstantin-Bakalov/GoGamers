@@ -22,15 +22,23 @@ const styles = makeStyles({
     container: {
         display: 'flex',
         flexDirection: 'column',
-        // width: {
-        //     xl: '80%',
-        // },
+        width: {
+            lx: '65%',
+            xl: '65%',
+        },
         marginTop: {
             xs: '134px',
             sm: '89px',
             md: '89px',
             lg: '89px',
             xl: '89px',
+        },
+        paddingX: {
+            xs: '1rem',
+            sm: '1rem',
+            md: '1rem',
+            lg: 0,
+            xl: 0,
         },
     },
 });
@@ -78,8 +86,20 @@ export function GamePage() {
     const onEdit = () => navigate(`/games/${id}/edit`);
 
     return (
-        <Container disableGutters sx={styles.container}>
-            <Box sx={{ display: 'flex', gap: '10px' }}>
+        <Container disableGutters maxWidth={false} sx={styles.container}>
+            <Box
+                sx={{
+                    display: 'flex',
+                    gap: '10px',
+                    justifyContent: {
+                        xs: 'center',
+                        sm: 'center',
+                        md: 'center',
+                        lg: 'flex-start',
+                        xl: 'flex-start',
+                    },
+                }}
+            >
                 <Typography variant="h3" fontWeight={700}>
                     {game?.name}
                 </Typography>
@@ -114,6 +134,14 @@ export function GamePage() {
                     sx={{
                         display: 'flex',
                         justifyContent: 'space-between',
+                        flexDirection: {
+                            xs: 'column',
+                            sm: 'column',
+                            md: 'column',
+                            lg: 'row',
+                            xl: 'row',
+                        },
+                        gap: '2rem',
                         marginTop: '10px',
                     }}
                 >

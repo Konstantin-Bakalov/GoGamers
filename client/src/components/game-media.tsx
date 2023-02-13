@@ -13,11 +13,17 @@ interface GameMediaProps {
 
 const styles = makeStyles({
     container: {
-        maxWidth: '650px',
+        maxWidth: {
+            xs: '100%',
+            sm: '100%',
+            md: '650px',
+            lg: '650px',
+            xl: '650px',
+        },
     },
     media: {
         objectFit: 'cover',
-        objectPosition: 'top left',
+        objectPosition: 'center',
         height: '370px',
     },
     border: {
