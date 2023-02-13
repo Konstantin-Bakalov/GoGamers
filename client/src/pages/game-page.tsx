@@ -16,6 +16,7 @@ import { GameInfos } from '../components/game-infos';
 import { makeStyles } from '../lib/make-styles';
 import { useValidation } from '../hooks/use-validation';
 import { DeleteEditControls } from '../components/delete-edit-controls';
+import { GameDescription } from '../components/game-description';
 
 const styles = makeStyles({
     container: {
@@ -121,7 +122,7 @@ export function GamePage() {
                 </Box>
             )}
 
-            <Typography variant="h5">{game?.description}</Typography>
+            {game && <GameDescription description={game.description} />}
 
             {game && (
                 <Box>
