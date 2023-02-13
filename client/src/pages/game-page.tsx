@@ -122,7 +122,9 @@ export function GamePage() {
                 </Box>
             )}
 
-            {game && <GameDescription description={game.description} />}
+            <Box sx={{ marginTop: '3rem' }}>
+                {game && <GameDescription description={game.description} />}
+            </Box>
 
             {game && (
                 <Box>

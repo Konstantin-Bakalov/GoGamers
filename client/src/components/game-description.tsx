@@ -1,18 +1,27 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import { DetailedGameModel } from 'shared';
+import { makeStyles } from '../lib/make-styles';
 
 type GameDescriptionProps = Pick<DetailedGameModel, 'description'>;
 
+const styles = makeStyles({
+    container: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem',
+    },
+    test: {
+        alignSelf: 'center',
+    },
+});
+
 export function GameDescription({ description }: GameDescriptionProps) {
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <Typography
-                sx={{ alignSelf: 'center' }}
-                variant="h3"
-                fontWeight={700}
-            >
+        <Box sx={styles.container}>
+            <Typography sx={styles.test} variant="h3" fontWeight={700}>
                 About this game
             </Typography>
+            <Divider variant="fullWidth" color="secondary" />
             <Typography variant="h5">{description}</Typography>
         </Box>
     );
