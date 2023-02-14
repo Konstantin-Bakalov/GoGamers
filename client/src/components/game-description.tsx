@@ -11,7 +11,7 @@ const styles = makeStyles({
         gap: '1rem',
     },
     test: {
-        alignSelf: 'center',
+        alignSelf: 'start',
     },
 });
 
