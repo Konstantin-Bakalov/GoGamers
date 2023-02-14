@@ -9,6 +9,7 @@ const styles = makeStyles({
         flexGrow: 1,
         display: 'grid',
         gridTemplateColumns: '1fr 1fr',
+        rowGap: '.5rem',
     },
     line: {
         display: 'flex',

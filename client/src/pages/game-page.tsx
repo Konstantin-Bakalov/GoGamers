@@ -24,8 +24,8 @@ const styles = makeStyles({
         flexDirection: 'column',
         width: {
             xs: '95%',
-            sm: '80%',
-            md: '80%',
+            sm: '95%',
+            md: '90%',
             lx: '75%',
             xl: '75%',
         },
