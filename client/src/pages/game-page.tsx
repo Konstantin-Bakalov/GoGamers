@@ -22,6 +22,7 @@ const styles = makeStyles({
     container: {
         display: 'flex',
         flexDirection: 'column',
+        gap: '10px',
         width: {
             xs: '95%',
             sm: '95%',
@@ -36,13 +37,41 @@ const styles = makeStyles({
             lg: '89px',
             xl: '89px',
         },
-        // paddingX: {
-        //     xs: '1rem',
-        //     sm: '1rem',
-        //     md: '1rem',
-        //     lg: '2rem',
-        //     xl: 0,
-        // },
+    },
+    title: {
+        display: 'flex',
+        gap: '10px',
+        justifyContent: {
+            xs: 'center',
+            sm: 'center',
+            md: 'center',
+            lg: 'flex-start',
+            xl: 'flex-start',
+        },
+    },
+    media: {
+        display: 'flex',
+        alignItems: {
+            xs: 'center',
+            sm: 'center',
+            md: 'center',
+            lg: 'flex-start',
+            xl: 'flex-start',
+        },
+        flexDirection: {
+            xs: 'column',
+            sm: 'column',
+            md: 'column',
+            lg: 'row',
+            xl: 'row',
+        },
+        gap: '2rem',
+    },
+    description: {
+        marginTop: '3rem',
+    },
+    align: {
+        alignSelf: 'center',
     },
 });
 
@@ -90,24 +119,12 @@ export function GamePage() {
 
     return (
         <Container disableGutters maxWidth={false} sx={styles.container}>
-            <Box
-                sx={{
-                    display: 'flex',
-                    gap: '10px',
-                    justifyContent: {
-                        xs: 'center',
-                        sm: 'center',
-                        md: 'center',
-                        lg: 'flex-start',
-                        xl: 'flex-start',
-                    },
-                }}
-            >
+            <Box sx={styles.title}>
                 <Typography variant="h3" fontWeight={700}>
                     {game?.name}
                 </Typography>
 
-                <Box sx={{ alignSelf: 'center' }}>
+                <Box sx={styles.align}>
                     {user && user.id === game?.userId && (
                         <DeleteEditControls
                             onDelete={deleteDialogOpen}
@@ -117,12 +134,12 @@ export function GamePage() {
                 </Box>
             </Box>
 
-            {loading && <CircularProgress />}
+            {loading && <CircularProgress sx={styles.align} />}
 
             {forbiddenError && (
-                <Box>
-                    <Alert severity="error">{forbiddenError}</Alert>
-                </Box>
+                <Alert sx={styles.align} severity="error">
+                    {forbiddenError}
+                </Alert>
             )}
 
             {deleteDialog && (
@@ -133,40 +150,13 @@ export function GamePage() {
             )}
 
             {game && (
-                <Box
-                    sx={{
-                        display: 'flex',
-                        // justifyContent: {
-                        //     xs: 'center',
-                        //     sm: 'center',
-                        //     md: 'center',
-                        //     lg: 'flex-start',
-                        //     xl: 'flex-start',
-                        // },
-                        alignItems: {
-                            xs: 'center',
-                            sm: 'center',
-                            md: 'center',
-                            lg: 'flex-start',
-                            xl: 'flex-start',
-                        },
-                        flexDirection: {
-                            xs: 'column',
-                            sm: 'column',
-                            md: 'column',
-                            lg: 'row',
-                            xl: 'row',
-                        },
-                        gap: '2rem',
-                        marginTop: '10px',
-                    }}
-                >
+                <Box sx={styles.media}>
                     <GameMedia media={game.media} />
                     <GameInfos {...game} />
                 </Box>
             )}
 
-            <Box sx={{ marginTop: '3rem' }}>
+            <Box sx={styles.description}>
                 {game && <GameDescription description={game.description} />}
             </Box>
 
