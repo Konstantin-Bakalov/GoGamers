@@ -5,10 +5,14 @@ import { makeStyles } from '../lib/make-styles';
 
 const styles = makeStyles({
     container: {
-        maxWidth: '500px',
+        maxWidth: '450px',
         flexGrow: 1,
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
+    },
+    line: {
         display: 'flex',
-        gap: '3rem',
+        gap: '1rem',
     },
     genres: {
         display: 'flex',
@@ -39,58 +43,54 @@ export function GameInfos({
 }: GameInfosProps) {
     return (
         <Box sx={styles.container}>
-            <Box>
-                <Typography variant="h5" fontWeight={700}>
-                    Developer
-                </Typography>
+            <Typography variant="h5" fontWeight={700}>
+                Developer
+            </Typography>
 
-                <Typography noWrap variant="h5" fontWeight={700}>
-                    Release date
-                </Typography>
+            <Typography variant="h5">{developer}</Typography>
 
-                <Typography variant="h5" fontWeight={700}>
-                    Price
-                </Typography>
+            <Typography noWrap variant="h5" fontWeight={700}>
+                Release date
+            </Typography>
 
-                <Typography variant="h5" fontWeight={700}>
-                    Added by
-                </Typography>
+            <Typography variant="h5">
+                {dayjs(releaseDate).format('D MMM YYYY')}
+            </Typography>
 
-                <Typography variant="h5" fontWeight={700}>
-                    Added on
-                </Typography>
+            <Typography variant="h5" fontWeight={700}>
+                Price
+            </Typography>
 
-                <Typography variant="h5" fontWeight={700}>
-                    Genres
-                </Typography>
-            </Box>
+            <Typography variant="h5">
+                {freeToPlay ? 'Free to play' : `${price} $`}
+            </Typography>
 
-            <Box>
-                <Typography variant="h5">{developer}</Typography>
+            <Typography variant="h5" fontWeight={700}>
+                Added by
+            </Typography>
 
-                <Typography variant="h5">
-                    {dayjs(releaseDate).format('D MMM YYYY')}
-                </Typography>
+            <Typography variant="h5">{creator.name}</Typography>
 
-                <Typography variant="h5">
-                    {freeToPlay ? 'Free to play' : `${price} $`}
-                </Typography>
+            <Typography variant="h5" fontWeight={700}>
+                Added on
+            </Typography>
 
-                <Typography variant="h5">{creator.name}</Typography>
+            <Typography variant="h5">
+                {dayjs(createdAt).format('D MMM YYYY')}
+            </Typography>
 
-                <Typography variant="h5">
-                    {dayjs(createdAt).format('D MMM YYYY')}
-                </Typography>
+            <Typography variant="h5" fontWeight={700}>
+                Genres
+            </Typography>
 
-                <Box sx={styles.genres}>
-                    {genres.map((genre, index) => (
-                        <Typography key={genre.name} variant="h5">
-                            {`${genre.name.toLowerCase()}${
-                                index === genres.length - 1 ? '' : ','
-                            }`}
-                        </Typography>
-                    ))}
-                </Box>
+            <Box sx={styles.genres}>
+                {genres.map((genre, index) => (
+                    <Typography key={genre.name} variant="h5">
+                        {`${genre.name.toLowerCase()}${
+                            index === genres.length - 1 ? '' : ','
+                        }`}
+                    </Typography>
+                ))}
             </Box>
         </Box>
     );
