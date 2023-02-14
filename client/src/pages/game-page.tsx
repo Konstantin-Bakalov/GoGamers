@@ -23,8 +23,11 @@ const styles = makeStyles({
         display: 'flex',
         flexDirection: 'column',
         width: {
-            lx: '65%',
-            xl: '65%',
+            xs: '95%',
+            sm: '80%',
+            md: '80%',
+            lx: '75%',
+            xl: '75%',
         },
         marginTop: {
             xs: '134px',
@@ -33,13 +36,13 @@ const styles = makeStyles({
             lg: '89px',
             xl: '89px',
         },
-        paddingX: {
-            xs: '1rem',
-            sm: '1rem',
-            md: '1rem',
-            lg: 0,
-            xl: 0,
-        },
+        // paddingX: {
+        //     xs: '1rem',
+        //     sm: '1rem',
+        //     md: '1rem',
+        //     lg: '2rem',
+        //     xl: 0,
+        // },
     },
 });
 
@@ -133,7 +136,20 @@ export function GamePage() {
                 <Box
                     sx={{
                         display: 'flex',
-                        justifyContent: 'space-between',
+                        // justifyContent: {
+                        //     xs: 'center',
+                        //     sm: 'center',
+                        //     md: 'center',
+                        //     lg: 'flex-start',
+                        //     xl: 'flex-start',
+                        // },
+                        alignItems: {
+                            xs: 'center',
+                            sm: 'center',
+                            md: 'center',
+                            lg: 'flex-start',
+                            xl: 'flex-start',
+                        },
                         flexDirection: {
                             xs: 'column',
                             sm: 'column',

@@ -13,7 +13,7 @@ const styles = makeStyles({
     genres: {
         display: 'flex',
         flexWrap: 'wrap',
-        columnGap: '1rem',
+        columnGap: '.5rem',
     },
 });
 
