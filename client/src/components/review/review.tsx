@@ -5,12 +5,12 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
-import { useAsyncAction } from '../hooks/use-async-action';
-import { likeService } from '../services/like-service';
+import { useAsyncAction } from '../../hooks/use-async-action';
+import { likeService } from '../../services/like-service';
 import { useEffect, useRef, useState } from 'react';
-import { dislikeService } from '../services/dislike-service';
-import { useObserver } from '../hooks/use-observer';
-import { makeStyles } from '../lib/make-styles';
+import { dislikeService } from '../../services/dislike-service';
+import { useObserver } from '../../hooks/use-observer';
+import { makeStyles } from '../../lib/make-styles';
 
 interface ReviewProps {
     review: ReviewModelDetailed;

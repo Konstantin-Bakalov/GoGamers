@@ -1,6 +1,6 @@
 import { Box, Divider, Typography } from '@mui/material';
 import { DetailedGameModel } from 'shared';
-import { makeStyles } from '../lib/make-styles';
+import { makeStyles } from '../../lib/make-styles';
 
 type GameDescriptionProps = Pick<DetailedGameModel, 'description'>;
 

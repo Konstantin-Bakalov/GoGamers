@@ -9,13 +9,13 @@ import { DeleteGameDialog } from '../dialogs/delete-game-dialog';
 import { useAsyncAction } from '../hooks/use-async-action';
 import { ReviewModelDetailed } from 'shared';
 import { reviewService } from '../services/reviews-service';
-import { GameMedia } from '../components/game-media';
-import { GameInfos } from '../components/game-infos';
+import { GameMedia } from '../components/game/game-media';
+import { GameInfos } from '../components/game/game-infos';
 import { makeStyles } from '../lib/make-styles';
 import { useValidation } from '../hooks/use-validation';
 import { DeleteEditControls } from '../components/delete-edit-controls';
-import { GameDescription } from '../components/game-description';
-import { Reviews } from '../components/reviews';
+import { GameDescription } from '../components/game/game-description';
+import { ReviewsContainer } from '../components/review/reviews-container';
 
 const styles = makeStyles({
     container: {
@@ -161,7 +161,7 @@ export function GamePage() {
 
             <Box sx={styles.margin}>
                 {game && (
-                    <Reviews
+                    <ReviewsContainer
                         gameId={game.id}
                         loading={createLoading}
                         onSubmit={submit}

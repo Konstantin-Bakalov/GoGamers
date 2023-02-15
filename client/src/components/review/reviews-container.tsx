@@ -1,9 +1,9 @@
 import { Box, CircularProgress, Divider, Typography } from '@mui/material';
-import { makeStyles } from '../lib/make-styles';
+import { makeStyles } from '../../lib/make-styles';
 import { ReviewForm, ReviewFormProps } from './review-form';
 import { ReviewList, ReviewListProps } from './review-list';
 
-interface ReviewsProps extends ReviewFormProps, ReviewListProps {
+interface ReviewsContainerProps extends ReviewFormProps, ReviewListProps {
     scrollLoading: boolean;
 }
 
@@ -18,14 +18,14 @@ const styles = makeStyles({
     },
 });
 
-export function Reviews({
+export function ReviewsContainer({
     reviews,
     nextPage,
     gameId,
     onSubmit,
     loading,
     scrollLoading,
-}: ReviewsProps) {
+}: ReviewsContainerProps) {
     return (
         <Box sx={styles.container}>
             <Typography variant="h3" fontWeight={700}>

@@ -1,8 +1,8 @@
 import { Box, Card, SxProps, Typography, useTheme } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { DetailedGameModel } from 'shared';
-import { makeStyles } from '../lib/make-styles';
-import { Image } from './image';
+import { makeStyles } from '../../lib/make-styles';
+import { Image } from '../image';
 
 interface GameCardProps {
     game: DetailedGameModel;

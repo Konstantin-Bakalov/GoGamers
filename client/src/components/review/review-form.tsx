@@ -1,7 +1,7 @@
 import { Box, Button, TextField } from '@mui/material';
 import { FormEvent, useState } from 'react';
 import { LoadingButton } from '@mui/lab';
-import { makeStyles } from '../lib/make-styles';
+import { makeStyles } from '../../lib/make-styles';
 
 export interface ReviewFormProps {
     gameId: number;

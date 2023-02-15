@@ -17,7 +17,7 @@ import {
     Typography,
 } from '@mui/material';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { GameCard } from '../components/game-card';
+import { GameCard } from '../components/game/game-card';
 import { makeStyles } from '../lib/make-styles';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';

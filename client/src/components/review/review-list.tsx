@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { ReviewModelDetailed } from 'shared';
-import { makeStyles } from '../lib/make-styles';
+import { makeStyles } from '../../lib/make-styles';
 import { Review } from './review';
 
 export interface ReviewListProps {

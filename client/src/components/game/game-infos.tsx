@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import { DetailedGameModel } from 'shared';
-import { makeStyles } from '../lib/make-styles';
+import { makeStyles } from '../../lib/make-styles';
 
 const styles = makeStyles({
     container: {

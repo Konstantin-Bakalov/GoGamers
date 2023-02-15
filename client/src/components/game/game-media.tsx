@@ -1,11 +1,11 @@
 import { Box, Button, MobileStepper } from '@mui/material';
 import { useState } from 'react';
 import { MediaModel } from 'shared';
-import { Image } from './image';
-import { Video } from './video';
+import { Image } from './../image';
+import { Video } from './../video';
 import SwipeableViews from 'react-swipeable-views';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
-import { makeStyles } from '../lib/make-styles';
+import { makeStyles } from '../../lib/make-styles';
 
 interface GameMediaProps {
     media: MediaModel[];
