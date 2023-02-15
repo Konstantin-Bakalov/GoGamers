@@ -1,4 +1,10 @@
-import { Alert, Box, CircularProgress, Typography } from '@mui/material';
+import {
+    Alert,
+    Box,
+    CircularProgress,
+    Divider,
+    Typography,
+} from '@mui/material';
 import { Container } from '@mui/system';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAsync } from '../hooks/use-async';
@@ -161,13 +167,27 @@ export function GamePage() {
             </Box>
 
             {game && (
-                <Box>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '1rem',
+                    }}
+                >
+                    <Typography variant="h3" fontWeight={700}>
+                        Reviews
+                    </Typography>
+
+                    <Divider variant="fullWidth" color="secondary" />
+
                     <ReviewForm
                         gameId={game.id}
                         loading={createLoading}
                         onSubmit={submit}
                     />
+
                     <ReviewList reviews={reviews} nextPage={nextPage} />
+
                     {scrollLoading && <CircularProgress />}
                 </Box>
             )}

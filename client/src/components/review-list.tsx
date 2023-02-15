@@ -1,4 +1,4 @@
-import { Container } from '@mui/material';
+import { Box } from '@mui/material';
 import { ReviewModelDetailed } from 'shared';
 import { Review } from './review';
 
@@ -9,7 +9,7 @@ interface ReviewListProps {
 
 export function ReviewList({ reviews, nextPage }: ReviewListProps) {
     return (
-        <Container disableGutters>
+        <Box>
             {reviews?.map((review, index) => (
                 <Review
                     key={review.id}
@@ -18,6 +18,6 @@ export function ReviewList({ reviews, nextPage }: ReviewListProps) {
                     nextPage={nextPage}
                 />
             ))}
-        </Container>
+        </Box>
     );
 }
