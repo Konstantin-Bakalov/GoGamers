@@ -38,9 +38,9 @@ const itemsOptions = [
 
 const sortOptions = [
     { value: 'Name', label: 'Name' },
-    { value: 'Price asc', label: 'Lowest Price' },
-    { value: 'Price desc', label: 'Highest Price' },
-    { value: 'releaseDate', label: 'Release Date' },
+    { value: 'Price ASC', label: 'Lowest Price' },
+    { value: 'Price DESC', label: 'Highest Price' },
+    { value: 'release_date', label: 'Release Date' },
 ];
 
 function stateToParams(state: FilterState): URLSearchParams {

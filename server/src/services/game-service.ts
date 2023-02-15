@@ -73,7 +73,11 @@ class GameService {
 
         let result = GameModel.query()
             .withGraphFetched('[genres, media, creator]')
-            .orderBy(`${order[0]}`, order[1] === 'DESC' ? 'DESC' : 'ASC')
+            .orderByRaw(
+                `${order[0]} ${
+                    order[1] === 'DESC' ? 'DESC' : 'ASC'
+                } NULLS LAST`,
+            )
             .page(page, pageSize);
 
         if (result && searchText) {
