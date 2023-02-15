@@ -1,6 +1,6 @@
 {
-    "short_name": "React App",
-    "name": "Create React App Sample",
+    "short_name": "Go Gamers",
+    "name": "Go Gamers is a website for creating games and finding new games to play",
     "icons": [
         {
             "src": "favicon.ico",
