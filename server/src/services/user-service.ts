@@ -2,11 +2,11 @@ import { UserModel } from '../models/user-model';
 import { User } from 'shared';
 
 class UserService {
-    async create(user: User) {
+    async create(user: Omit<User, 'id'>) {
         return await UserModel.query().insertAndFetch({
             name: user.name,
             email: user.email,
-            profilePicture: user.profilePicture,
+            picture: user.picture,
         });
     }
 

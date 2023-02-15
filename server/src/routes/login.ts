@@ -12,7 +12,7 @@ loginRouter.post(
     '/',
     requestHandler(async (req, res) => {
         const credential = z.string().parse(req.body.credential);
-        const userDecoded = jwtDecode<User>(credential);
+        const userDecoded = jwtDecode<Omit<User, 'id'>>(credential);
 
         let user = await userService.getUserByEmail(userDecoded.email);
 

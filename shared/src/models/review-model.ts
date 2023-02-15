@@ -14,8 +14,6 @@ export const ReviewModelRequestSchema = ReviewModelSchema.omit({
 
 export const ReviewModelDetailedSchema = ReviewModelSchema.extend({
     id: z.number(),
-    // like: LikeSchema.or(z.undefined()),
-    // dislike: DislikeSchema.or(z.undefined()),
     liked: z.boolean(),
     disliked: z.boolean(),
     likes: z.number().nonnegative(),

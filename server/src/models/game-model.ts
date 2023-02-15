@@ -13,7 +13,6 @@ export class GameModel extends BaseModel {
     price!: number | undefined;
     description!: string;
     creator!: UserModel;
-    // likedBy?: UserModel[];
     genres!: GenreModel[];
     media!: MediaModel[];
 

@@ -9,7 +9,7 @@ export class ReviewTransformer {
             gameId: review.gameId,
             body: review.body,
             createdAt: review.createdAt,
-            profilePicture: review.user?.profilePicture,
+            profilePicture: review.user?.picture,
             liked: review.liked ? true : false,
             disliked: review.disliked ? true : false,
             likes: review.likes?.length ?? 0,

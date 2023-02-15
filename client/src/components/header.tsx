@@ -85,7 +85,7 @@ export function Header() {
         setAnchorEl(null);
         authService.logout();
     };
-
+    console.log(user);
     return (
         <AppBar position="fixed" sx={styles.header} elevation={12}>
             <Toolbar sx={styles.toolbar}>
@@ -99,10 +99,7 @@ export function Header() {
                 {user && (
                     <Box sx={styles.avatar}>
                         <IconButton onClick={handleMenu}>
-                            <Avatar
-                                alt="user avatar"
-                                src={user.profilePicture}
-                            />
+                            <Avatar alt="user avatar" src={user.picture} />
                         </IconButton>
                         <Typography>
                             {fullName && `Hi, ${user.name}`}
