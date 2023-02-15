@@ -3,7 +3,7 @@ import { FormEvent, useState } from 'react';
 import { LoadingButton } from '@mui/lab';
 import { makeStyles } from '../lib/make-styles';
 
-interface ReviewsProps {
+export interface ReviewFormProps {
     gameId: number;
     loading: boolean;
     onSubmit: (body: string, gameId: number) => void;
@@ -38,7 +38,7 @@ const styles = makeStyles({
     },
 });
 
-export function ReviewForm({ gameId, loading, onSubmit }: ReviewsProps) {
+export function ReviewForm({ gameId, loading, onSubmit }: ReviewFormProps) {
     const [body, setBody] = useState('');
 
     const handleSubmit = (e: FormEvent<Element>) => {

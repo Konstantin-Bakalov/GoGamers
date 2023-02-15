@@ -1,10 +1,4 @@
-import {
-    Alert,
-    Box,
-    CircularProgress,
-    Divider,
-    Typography,
-} from '@mui/material';
+import { Alert, Box, CircularProgress, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAsync } from '../hooks/use-async';
@@ -14,15 +8,14 @@ import { useState } from 'react';
 import { DeleteGameDialog } from '../dialogs/delete-game-dialog';
 import { useAsyncAction } from '../hooks/use-async-action';
 import { ReviewModelDetailed } from 'shared';
-import { ReviewForm } from '../components/review-form';
 import { reviewService } from '../services/reviews-service';
-import { ReviewList } from '../components/review-list';
 import { GameMedia } from '../components/game-media';
 import { GameInfos } from '../components/game-infos';
 import { makeStyles } from '../lib/make-styles';
 import { useValidation } from '../hooks/use-validation';
 import { DeleteEditControls } from '../components/delete-edit-controls';
 import { GameDescription } from '../components/game-description';
+import { Reviews } from '../components/reviews';
 
 const styles = makeStyles({
     container: {
@@ -73,7 +66,7 @@ const styles = makeStyles({
         },
         gap: '2rem',
     },
-    description: {
+    margin: {
         marginTop: '3rem',
     },
     align: {
@@ -162,35 +155,22 @@ export function GamePage() {
                 </Box>
             )}
 
-            <Box sx={styles.description}>
+            <Box sx={styles.margin}>
                 {game && <GameDescription description={game.description} />}
             </Box>
 
-            {game && (
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '1rem',
-                    }}
-                >
-                    <Typography variant="h3" fontWeight={700}>
-                        Reviews
-                    </Typography>
-
-                    <Divider variant="fullWidth" color="secondary" />
-
-                    <ReviewForm
+            <Box sx={styles.margin}>
+                {game && (
+                    <Reviews
                         gameId={game.id}
                         loading={createLoading}
                         onSubmit={submit}
+                        reviews={reviews}
+                        nextPage={nextPage}
+                        scrollLoading={scrollLoading}
                     />
-
-                    <ReviewList reviews={reviews} nextPage={nextPage} />
-
-                    {scrollLoading && <CircularProgress />}
-                </Box>
-            )}
+                )}
+            </Box>
         </Container>
     );
 }
