@@ -21,14 +21,8 @@ const theme = createTheme({
         },
         secondary: {
             main: '#00C895',
-            // main: '#FF3916',
-            // light: '#F8371580',
-            // dark: '#F83715',
         },
         text: {
-            // primary: '#34012F',
-            // secondary: '#695767',
-            // disabled: 'rgba(0,0,0,0.39)',
             primary: '#1A192A',
         },
         background: {
