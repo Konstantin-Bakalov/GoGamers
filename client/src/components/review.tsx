@@ -10,6 +10,7 @@ import { likeService } from '../services/like-service';
 import { useEffect, useRef, useState } from 'react';
 import { dislikeService } from '../services/dislike-service';
 import { useObserver } from '../hooks/use-observer';
+import { makeStyles } from '../lib/make-styles';
 
 interface ReviewProps {
     review: ReviewModelDetailed;
@@ -22,6 +23,20 @@ const options = {
     rootMargin: '100px',
     threshhold: 0.5,
 };
+
+const styles = makeStyles({
+    container: {
+        display: 'flex',
+        gap: '.5rem',
+    },
+    username: {
+        display: 'flex',
+        gap: '.5rem',
+    },
+    margin: {
+        marginLeft: '3px',
+    },
+});
 
 export function Review({ review, isLast, nextPage }: ReviewProps) {
     const ref = useRef();
@@ -76,19 +91,34 @@ export function Review({ review, isLast, nextPage }: ReviewProps) {
     });
 
     return (
-        <Box ref={ref}>
+        <Box sx={styles.container} ref={ref}>
             <Avatar alt="User" src={review.profilePicture} />
-            <Box>{review.username}</Box>
-            <Box>{review.body}</Box>
-            <Box>{dayjs(review.createdAt).format('D MMM YYYY HH:mma')}</Box>
-            <IconButton onClick={like}>
-                {liked ? <ThumbUpIcon /> : <ThumbUpOffAltIcon />}
-                <Typography>{likeCount}</Typography>
-            </IconButton>
-            <IconButton onClick={dislike}>
-                {disliked ? <ThumbDownAltIcon /> : <ThumbDownOffAltIcon />}
-                <Typography>{dislikeCount}</Typography>
-            </IconButton>
+
+            <Box>
+                <Box sx={styles.username}>
+                    <Typography>{review.username}</Typography>
+
+                    <Typography>
+                        {dayjs(review.createdAt).format('D MMM YYYY HH:mma')}
+                    </Typography>
+                </Box>
+
+                <Box>
+                    <Typography variant="h6" fontWeight={400}>
+                        {review.body}
+                    </Typography>
+                </Box>
+
+                <IconButton onClick={like}>
+                    {liked ? <ThumbUpIcon /> : <ThumbUpOffAltIcon />}
+                    <Typography sx={styles.margin}>{likeCount}</Typography>
+                </IconButton>
+
+                <IconButton onClick={dislike}>
+                    {disliked ? <ThumbDownAltIcon /> : <ThumbDownOffAltIcon />}
+                    <Typography sx={styles.margin}>{dislikeCount}</Typography>
+                </IconButton>
+            </Box>
         </Box>
     );
 }

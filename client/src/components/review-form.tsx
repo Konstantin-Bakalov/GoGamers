@@ -15,6 +15,11 @@ const styles = makeStyles({
         flexDirection: 'column',
         gap: '1rem',
     },
+    buttons: {
+        alignSelf: 'flex-end',
+        display: 'flex',
+        gap: '1rem',
+    },
     textField: {
         '& .MuiOutlinedInput-root': {
             '& .MuiOutlinedInput-notchedOutline': {
@@ -54,7 +59,7 @@ export function ReviewForm({ gameId, loading, onSubmit }: ReviewsProps) {
                 onChange={(e) => setBody(e.target.value)}
             />
 
-            <Box sx={{ alignSelf: 'flex-end', display: 'flex', gap: '1rem' }}>
+            <Box sx={styles.buttons}>
                 <Button
                     variant="outlined"
                     disableElevation
