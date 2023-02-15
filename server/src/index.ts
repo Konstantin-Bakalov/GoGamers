@@ -4,7 +4,6 @@ import { Model } from 'objection';
 import { config } from '../config';
 import knexConfig from '../knexfile';
 import loginRouter from './routes/login';
-import usersRouter from './routes/users';
 import cors from 'cors';
 import gamesRouter from './routes/games';
 import { genresRouter } from './routes/genres';
@@ -23,7 +22,6 @@ app.use(cors());
 app.use(json());
 
 app.use('/login', loginRouter);
-app.use('/users', usersRouter);
 app.use('/games', gamesRouter);
 app.use('/genres', genresRouter);
 app.use('/s3', s3Router);
