@@ -10,7 +10,7 @@ class AuthService {
                 id: user.id,
                 name: user.name,
                 email: user.email,
-                profilePicture: user.picture,
+                picture: user.picture,
             },
             jwtKey,
             {
