@@ -1,6 +1,5 @@
 {
     "name": "client",
-    "homepage": "http://Konstantin-Bakalov.github.io/Games-Library",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
@@ -37,14 +36,11 @@
         "@typescript-eslint/parser": "^5.35.1",
         "eslint": "^8.22.0",
         "eslint-plugin-react": "^7.31.0",
-        "gh-pages": "^5.0.0",
         "prettier": "^2.7.1",
         "typescript": "^4.7.4"
     },
     "scripts": {
         "start": "react-scripts start",
-        "predeploy": "npm run build",
-        "deploy": "gh-pages -d build",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
