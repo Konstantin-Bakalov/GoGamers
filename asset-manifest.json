@@ -1,0 +1,12 @@
+{
+  "files": {
+    "main.js": "/Games-Library/static/js/main.1bae4c0c.js",
+    "static/media/chest_cartoon.png": "/Games-Library/static/media/chest_cartoon.adfc6df8bf3d4d516315.png",
+    "static/media/empty-image.png": "/Games-Library/static/media/empty-image.175082d53a44335825c2.png",
+    "index.html": "/Games-Library/index.html",
+    "main.1bae4c0c.js.map": "/Games-Library/static/js/main.1bae4c0c.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.1bae4c0c.js"
+  ]
+}
