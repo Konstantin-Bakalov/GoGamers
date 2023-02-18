@@ -2,5 +2,6 @@
 /.pnp
 .pnp.js
 .env
+build/*
 
 npm-debug.log*
