@@ -12,9 +12,19 @@ import s3Router from './routes/s3';
 import reviewRouter from './routes/reviews';
 import likesRouter from './routes/likes';
 import dislikesRouter from './routes/dislike';
+import fs from 'fs';
+import * as https from 'https';
 
 const knexClient = Knex(knexConfig.development);
 Model.knex(knexClient);
+
+const key = fs.readFileSync(__dirname + '/private,key');
+const cert = fs.readFileSync(__dirname + '/certificate.crt');
+
+const options = {
+    key: key,
+    cert: cert,
+};
 
 const app = express();
 
@@ -30,6 +40,8 @@ app.use('/likes', likesRouter);
 app.use('/dislikes', dislikesRouter);
 
 const port = config.get('server.port');
-app.listen(port, () => console.log(`Listening on ${port}`));
+const server = https.createServer(options, app);
+
+server.listen(port, () => () => console.log(`Listening on port ${port}`));
 
 app.use(errorHandler);

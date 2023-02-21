@@ -18,7 +18,7 @@ const config = convict({
         database: {
             doc: 'DB Name',
             env: 'DB_NAME',
-            default: 'games library',
+            default: 'test_database',
         },
         host: {
             env: 'DB_HOST',
