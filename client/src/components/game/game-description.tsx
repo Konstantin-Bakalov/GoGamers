@@ -21,7 +21,7 @@ export function GameDescription({ description }: GameDescriptionProps) {
             <Typography sx={styles.test} variant="h3" fontWeight={700}>
                 About this game
             </Typography>
-            <Divider variant="fullWidth" color="secondary" />
+            <Divider variant="fullWidth" color="main" />
             <Typography variant="h5">{description}</Typography>
         </Box>
     );

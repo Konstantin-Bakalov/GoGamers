@@ -32,7 +32,7 @@ export function ReviewsContainer({
                 Reviews
             </Typography>
 
-            <Divider variant="fullWidth" color="secondary" />
+            <Divider variant="fullWidth" color="main" />
 
             <ReviewForm gameId={gameId} loading={loading} onSubmit={onSubmit} />
 
