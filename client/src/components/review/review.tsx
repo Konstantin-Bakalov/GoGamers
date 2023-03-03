@@ -36,6 +36,9 @@ const styles = makeStyles({
     margin: {
         marginLeft: '3px',
     },
+    body: {
+        whiteSpace: 'pre-line',
+    },
 });
 
 export function Review({ review, isLast, nextPage }: ReviewProps) {
@@ -104,7 +107,7 @@ export function Review({ review, isLast, nextPage }: ReviewProps) {
                 </Box>
 
                 <Box>
-                    <Typography variant="h6" fontWeight={400}>
+                    <Typography variant="h6" sx={styles.body} fontWeight={400}>
                         {review.body}
                     </Typography>
                 </Box>

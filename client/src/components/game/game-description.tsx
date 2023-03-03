@@ -10,19 +10,24 @@ const styles = makeStyles({
         flexDirection: 'column',
         gap: '1rem',
     },
-    test: {
+    title: {
         alignSelf: 'start',
+    },
+    description: {
+        whiteSpace: 'pre-line',
     },
 });
 
 export function GameDescription({ description }: GameDescriptionProps) {
     return (
         <Box sx={styles.container}>
-            <Typography sx={styles.test} variant="h3" fontWeight={700}>
+            <Typography sx={styles.title} variant="h3" fontWeight={700}>
                 About this game
             </Typography>
             <Divider variant="fullWidth" color="main" />
-            <Typography variant="h5">{description}</Typography>
+            <Typography sx={styles.description} variant="h5">
+                {description}
+            </Typography>
         </Box>
     );
 }
