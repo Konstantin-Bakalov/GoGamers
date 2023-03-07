@@ -6,7 +6,7 @@ import { UserModelSchema } from './user-model';
 const minGenreCount = 1;
 const maxGenreCount = 7;
 const minCharacters = 3;
-const maxCharacters = 30;
+const maxCharacters = 40;
 export const minMediaCount = 1;
 export const maxMediaCount = 8;
 
