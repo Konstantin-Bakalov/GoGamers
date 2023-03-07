@@ -4,9 +4,10 @@ interface VideoProps {
     videoUrl: string | undefined;
     style?: SxProps;
     controls: boolean;
+    autoPlay?: boolean;
 }
 
-export function Video({ videoUrl, style, controls }: VideoProps) {
+export function Video({ videoUrl, style, controls, autoPlay }: VideoProps) {
     return (
         <CardMedia
             component="video"
@@ -14,6 +15,7 @@ export function Video({ videoUrl, style, controls }: VideoProps) {
             sx={style}
             controls={controls}
             muted
+            autoPlay={autoPlay}
         />
     );
 }

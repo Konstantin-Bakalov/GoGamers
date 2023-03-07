@@ -38,7 +38,7 @@ export function VideoDialog({ videoUrl, onClose }: VideoDialogProps) {
                 </IconButton>
             </DialogTitle>
             <DialogContent sx={styles.content}>
-                <Video videoUrl={videoUrl} controls={true} />
+                <Video videoUrl={videoUrl} controls={true} autoPlay={true} />
             </DialogContent>
         </Dialog>
     );

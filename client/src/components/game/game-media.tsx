@@ -71,6 +71,7 @@ export function GameMedia({ media }: GameMediaProps) {
                             key={index}
                             videoUrl={med.url}
                             controls={true}
+                            autoPlay={true}
                         />
                     ),
                 )}
