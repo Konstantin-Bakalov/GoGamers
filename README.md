@@ -63,5 +63,5 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
   npm start
 ```
 
-Install dependencies and run all migration.
+Install dependencies and run all migrations.
 Remember to create a database and set env variables beforehand.
