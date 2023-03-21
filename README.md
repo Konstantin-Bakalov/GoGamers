@@ -9,6 +9,7 @@ Your personal library for pc games. Create, discover and comment on games.
 ## Features
 
 - Responsive design
+- Pagination
 - Google login button
 - Support for images and videos
 - Create, edit, delete, view games
