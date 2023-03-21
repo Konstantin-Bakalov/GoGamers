@@ -1,5 +1,6 @@
-import { Box, Paper, Typography } from '@mui/material';
+import { Box, Link, Paper, Typography } from '@mui/material';
 import { makeStyles } from '../lib/make-styles';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 const styles = makeStyles({
     box: {
@@ -12,9 +13,16 @@ const styles = makeStyles({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        gap: '1rem',
     },
     text: {
         color: 'background.paper',
+    },
+    link: {
+        display: 'flex',
+    },
+    icon: {
+        color: 'primary.light',
     },
 });
 
@@ -25,6 +33,14 @@ export function Footer() {
                 <Typography sx={styles.text}>
                     Copyright © 2023 Konstantin Bakalov
                 </Typography>
+
+                <Link
+                    sx={styles.link}
+                    href={'https://github.com/Konstantin-Bakalov/Games-Library'}
+                    target="_blank"
+                >
+                    <GitHubIcon sx={styles.icon} />
+                </Link>
             </Paper>
         </Box>
     );
