@@ -63,7 +63,7 @@ export function GameInfos({
             </Typography>
 
             <Typography variant="h5">
-                {freeToPlay ? 'Free to play' : `${price} $`}
+                {freeToPlay ? 'Free to play' : `${price?.toFixed(2)} $`}
             </Typography>
 
             <Typography variant="h5" fontWeight={700}>
