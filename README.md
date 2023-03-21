@@ -43,7 +43,7 @@ To run this project, you will need to add the following environment variables to
 
 ## Deployment on AWS
 
-The client is deployed on a EC2 instance with a SSL certificate. The server runs on CloudFront. Images and videos are stored in S3.
+The client is deployed on an EC2 instance with a SSL certificate. The server runs on CloudFront. Images and videos are stored in S3.
 
 ## Installation
 
