@@ -15,6 +15,18 @@ Your personal library for pc games. Create, discover and comment on games.
 - Create, edit, delete, view games
 - Leave and rate comments (likes and dislikes shown)
 
+## Tech Stack
+
+**Client:** React, MaterialUI, Typescript, CSS
+
+**Server:** PostgreSQL, Node, Express, Typescript, JWT, Objection.js, Zod, Knex
+
+**Others:** Prettier, ESLint
+
+## Deployment on AWS
+
+The client is deployed on an EC2 instance with a SSL certificate. The server runs on CloudFront. Images and videos are stored in S3.
+
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
@@ -32,18 +44,6 @@ To run this project, you will need to add the following environment variables to
 `AWS_BUCKET_NAME`, `AWS_BUCKET_REGION`, `AWS_BUCKET_ACCESS_KEY`,`AWS_BUCKET_SECRET_KEY`
 
 `JWT_KEY`
-
-## Tech Stack
-
-**Client:** React, MaterialUI, Typescript, CSS
-
-**Server:** PostgreSQL, Node, Express, Typescript, JWT, Objection.js, Zod, Knex
-
-**Others:** Prettier, ESLint
-
-## Deployment on AWS
-
-The client is deployed on an EC2 instance with a SSL certificate. The server runs on CloudFront. Images and videos are stored in S3.
 
 ## Installation
 
