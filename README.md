@@ -12,6 +12,10 @@ Your personal library for pc games. Create, discover and comment on games.
 
 ![Homepage!](readme_images/home_page.png)
 
+![Gamepage!](readme_images/game_page.png)
+
+![Reviews!](readme_images/reviews.png)
+
 ## Features
 
 - Responsive design
