@@ -8,9 +8,9 @@ Your personal library for pc games. Create, discover and comment on games.
 
 ## Preview
 
-![Login Page]! (./readme_images/login_page.png)
+(readme_images/login_page.png)
 
-![Home Page]! (./readme_images/home_page.png)
+(readme_images/home_page.png)
 
 ## Features
 
