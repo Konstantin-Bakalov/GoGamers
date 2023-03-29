@@ -6,6 +6,12 @@ Your personal library for pc games. Create, discover and comment on games.
 
 [gogamers.store](https://gogamers.store/)
 
+## Preview
+
+![Login Page]! (./readme_images/login_page.png)
+
+![Home Page]! (./readme_images/home_page.png)
+
 ## Features
 
 - Responsive design
