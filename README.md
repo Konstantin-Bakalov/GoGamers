@@ -2,10 +2,6 @@
 
 Your personal library for pc games. Create, discover and comment on games.
 
-## Live Demo
-
-[gogamers.store](https://gogamers.store/)
-
 ## Preview
 
 ![Login!](readme_images/login_page.png)
