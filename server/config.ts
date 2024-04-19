@@ -43,22 +43,22 @@ const config = convict({
             default: '859e97c93ab485fed675cb4aded55c45da62df',
         },
     },
-    aws: {
-        bucketName: {
-            env: 'AWS_BUCKET_NAME',
+    cloudinary: {
+        name: {
+            env: 'CLOUD_NAME',
             default: '',
         },
-        bucketRegion: {
-            env: 'AWS_BUCKET_REGION',
+        key: {
+            env: 'CLOUD_KEY',
             default: '',
         },
-        bucketAccessKey: {
-            env: 'AWS_BUCKET_ACCESS_KEY',
+        secret: {
+            env: 'CLOUD_SECRET',
             format: String,
             default: '',
         },
-        bucketSecretKey: {
-            env: 'AWS_BUCKET_SECRET_KEY',
+        preset: {
+            env: 'PRESET',
             format: String,
             default: '',
         },
