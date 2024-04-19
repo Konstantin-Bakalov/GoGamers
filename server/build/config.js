@@ -1,9 +1,13 @@
-import convict from 'convict';
-import { config as envConfig } from 'dotenv';
-
-envConfig();
-
-const config = convict({
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.config = void 0;
+const convict_1 = __importDefault(require("convict"));
+const dotenv_1 = require("dotenv");
+(0, dotenv_1.config)();
+const config = (0, convict_1.default)({
     db: {
         user: {
             doc: 'DB User',
@@ -64,7 +68,5 @@ const config = convict({
         },
     },
 });
-
+exports.config = config;
 config.validate();
-
-export { config };

@@ -3,20 +3,26 @@ import { isVideo } from '../pages/games/media-list';
 import { httpService } from './http-service';
 
 class MediaUploadService {
-    async upload(media: File) {
-        const { url } = await httpService.get<{ url: string }>('/s3');
+    private reader = new FileReader();
 
-        await fetch(url, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-            body: media,
-        });
-
+    public async upload(media: File) {
+        const converted = await this.getBase64(media);
         const type: MediaType = isVideo(media) ? 'video' : 'image';
 
-        return { url: url.split('?')[0], type };
+        const { url } = await httpService.post<{ url: string }>('/media', {
+            body: { media: converted, type },
+        });
+
+        return { url, type };
+    }
+
+    private async getBase64(media: File) {
+        return new Promise((res, rej) => {
+            this.reader.readAsDataURL(media);
+            this.reader.onload = () => res(this.reader.result);
+
+            this.reader.onerror = () => rej(this.reader.error);
+        });
     }
 }
 
