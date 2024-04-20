@@ -12,5 +12,5 @@ COPY server/package.json ./server/
 RUN cd server && npm install
 COPY server/ ./server/
 
-EXPOSE 3001
+EXPOSE 80
 CMD ["npm", "start", "--prefix", "server"]
