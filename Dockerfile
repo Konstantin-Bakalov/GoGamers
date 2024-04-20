@@ -8,9 +8,9 @@ RUN cd shared && npm install
 COPY shared/ ./shared/
 RUN cd shared && npm run build
 
-COPY server/package.json ./server/
-RUN cd server && npm install
-COPY server/ ./server/
+COPY client/package.json ./client/
+RUN cd client && npm install --force
+COPY client/ ./client/
 
 EXPOSE 80
-CMD ["npm", "start", "--prefix", "server"]
+CMD ["npm", "start", "--prefix", "client"]
