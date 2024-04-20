@@ -31,6 +31,6 @@ app.use('/dislikes', dislikesRouter);
 
 const port = config.get('server.port');
 
-app.listen(port, () => () => console.log(`Listening on port ${port}`));
+app.listen(port, () => console.log(`Listening on port ${port}`));
 
 app.use(errorHandler);
