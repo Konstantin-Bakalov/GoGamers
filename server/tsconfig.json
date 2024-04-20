@@ -1,29 +1,33 @@
 {
-    "compilerOptions": {
-        /* Language and Environment */
-        "target": "es2017" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "es2017" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
 
-        /* Modules */
-        "module": "commonjs" /* Specify what module code is generated. */,
+    /* Modules */
+    "module": "commonjs" /* Specify what module code is generated. */,
 
-        "noImplicitAny": true,
+    "noImplicitAny": true,
 
-        "strictNullChecks": true,
+    "strictNullChecks": true,
 
-        /* JavaScript Support */
-        "allowJs": false /* Allow JavaScript files to be a part of your program. Use the `checkJS` option to get errors from these files. */,
+    "paths": {
+      "*": ["./node_modules/*", "./src/types/*"]
+    } /* Specify a set of entries that re-map imports to additional lookup locations. */,
 
-        /* Emit */
-        "outDir": "./build" /* Specify an output folder for all emitted files. */,
+    /* JavaScript Support */
+    "allowJs": false /* Allow JavaScript files to be a part of your program. Use the `checkJS` option to get errors from these files. */,
 
-        /* Interop Constraints */
-        "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */,
-        "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
+    /* Emit */
+    "outDir": "dist" /* Specify an output folder for all emitted files. */,
 
-        /* Type Checking */
-        "strict": true /* Enable all strict type-checking options. */,
+    /* Interop Constraints */
+    "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */,
+    "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
 
-        /* Completeness */
-        "skipLibCheck": true /* Skip type checking all .d.ts files. */
-    }
+    /* Type Checking */
+    "strict": true /* Enable all strict type-checking options. */,
+
+    /* Completeness */
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */
+  }
 }
