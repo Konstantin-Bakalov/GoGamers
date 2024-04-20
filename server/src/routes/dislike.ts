@@ -1,38 +1,38 @@
 import { Router } from 'express';
-import { zodStringAsNumber } from 'shared';
 import { z } from 'zod';
 import { requestHandler } from '../lib/request-handler';
 import auth, { currentUser } from '../middlewares/auth-middleware';
 import { dislikesService } from '../services/dislike-service';
 import { DislikeTransformer } from '../transformers/dislike-transformer';
+import { zodStringAsNumber } from 'shared';
 
 const dislikesRouter = Router();
 const dislikeTransformer = new DislikeTransformer();
 
 dislikesRouter.post(
-    '/',
-    auth,
-    requestHandler(async (req, res) => {
-        const reviewId = z.number().parse(req.body.reviewId);
-        const user = currentUser(res);
+  '/',
+  auth,
+  requestHandler(async (req, res) => {
+    const reviewId = z.number().parse(req.body.reviewId);
+    const user = currentUser(res);
 
-        const dislike = await dislikesService.create(user.id, reviewId);
+    const dislike = await dislikesService.create(user.id, reviewId);
 
-        res.status(200).json(dislikeTransformer.transform(dislike));
-    }),
+    res.status(200).json(dislikeTransformer.transform(dislike));
+  })
 );
 
 dislikesRouter.delete(
-    '/:reviewId',
-    auth,
-    requestHandler(async (req, res) => {
-        const reviewId = zodStringAsNumber().parse(req.params.reviewId);
-        const user = currentUser(res);
+  '/:reviewId',
+  auth,
+  requestHandler(async (req, res) => {
+    const reviewId = zodStringAsNumber().parse(req.params.reviewId);
+    const user = currentUser(res);
 
-        await dislikesService.delete(user.id, reviewId);
+    await dislikesService.delete(user.id, reviewId);
 
-        res.status(200).json({});
-    }),
+    res.status(200).json({});
+  })
 );
 
 export default dislikesRouter;
