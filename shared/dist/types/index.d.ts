@@ -1,4 +1,3 @@
-export * from './lib/zod-validator';
 export * from './exceptions/http-error';
 export * from './models/user-model';
 export * from './models/genre-model';

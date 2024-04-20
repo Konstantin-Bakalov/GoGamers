@@ -4,7 +4,7 @@ import { requestHandler } from '../lib/request-handler';
 import auth, { currentUser } from '../middlewares/auth-middleware';
 import { dislikesService } from '../services/dislike-service';
 import { DislikeTransformer } from '../transformers/dislike-transformer';
-import { zodStringAsNumber } from 'shared';
+import { zodStringAsNumber } from '../lib/zod-validator';
 
 const dislikesRouter = Router();
 const dislikeTransformer = new DislikeTransformer();

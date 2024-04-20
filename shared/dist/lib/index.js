@@ -15,7 +15,6 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ZodError = void 0;
-__exportStar(require("./lib/zod-validator"), exports);
 __exportStar(require("./exceptions/http-error"), exports);
 __exportStar(require("./models/user-model"), exports);
 __exportStar(require("./models/genre-model"), exports);
