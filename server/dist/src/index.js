@@ -53,5 +53,5 @@ app.use('/reviews', reviews_1.default);
 app.use('/likes', likes_1.default);
 app.use('/dislikes', dislike_1.default);
 const port = config_1.config.get('server.port');
-app.listen(port, () => () => console.log(`Listening on port ${port}`));
+app.listen(port, () => console.log(`Listening on port ${port}`));
 app.use(error_handler_1.errorHandler);
