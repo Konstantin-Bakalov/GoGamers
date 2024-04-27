@@ -25,6 +25,6 @@ mediaRouter.post(
       resource_type: type,
     });
 
-    res.status(200).json({ url: result.url.replace('http://', 'https://') });
+    res.status(200).json({ url: result.secure_url });
   })
 );

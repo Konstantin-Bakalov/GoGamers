@@ -19,7 +19,7 @@ Model.knex(knexClient);
 const app = express();
 
 app.use(cors());
-app.use(json({ limit: '50mb' }));
+app.use(json({ limit: '200mb' }));
 
 app.use('/login', loginRouter);
 app.use('/games', gamesRouter);
