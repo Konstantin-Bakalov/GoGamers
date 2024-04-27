@@ -26,6 +26,6 @@ mediaRouter.post(
       secure: true,
     });
 
-    res.status(200).json({ url: result.url });
+    res.status(200).json({ url: result.url.replace('http://', 'https://') });
   })
 );
