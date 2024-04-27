@@ -31,7 +31,7 @@
 
 **Others:** Prettier, ESLint
 
-## Deployment on AWS
+## Deployment
 
 The client is deployed using ngrok. The server runs on render.com. Images and videos are stored in Cloudinary.
 
