@@ -1,6 +1,8 @@
 # GoGamers
 
-Your personal library for pc games. Create, discover and comment on games.
+- Your personal library for pc games. Create, discover and comment on games.
+
+- Live demo https://go-gamers.onrender.com/ (need a gmail account to log in)
 
 ## Preview
 
@@ -31,7 +33,7 @@ Your personal library for pc games. Create, discover and comment on games.
 
 ## Deployment on AWS
 
-The client is deployed on an EC2 instance with a SSL certificate. The server runs on CloudFront. Images and videos are stored in S3.
+The client is deployed using ngrok. The server runs on render.com. Images and videos are stored in Cloudinary.
 
 ## Environment Variables
 

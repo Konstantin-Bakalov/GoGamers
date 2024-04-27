@@ -23,7 +23,6 @@ mediaRouter.post(
       upload_preset: config.get('cloudinary.preset'),
       discard_original_filename: true,
       resource_type: type,
-      secure: true,
     });
 
     res.status(200).json({ url: result.url.replace('http://', 'https://') });
